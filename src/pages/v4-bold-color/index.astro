@@ -1,29 +1,1521 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Nav from '../../components/themed/Nav.astro';
-import HeroV4 from '../../components/heroes/HeroV4.astro';
-import InfoBar from '../../components/themed/InfoBar.astro';
-import Menu from '../../components/themed/Menu.astro';
-import Gallery from '../../components/themed/Gallery.astro';
-import About from '../../components/themed/About.astro';
-import Reservations from '../../components/themed/Reservations.astro';
-import Contact from '../../components/themed/Contact.astro';
-import Footer from '../../components/themed/Footer.astro';
 import { restaurant } from '../../data/restaurants/v4';
+
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap';
+
+const firstCategory = restaurant.menu.categories[0];
 ---
 
 <Layout
   restaurant={restaurant}
   theme="v4"
-  fontUrl="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap"
+  fontUrl={fontUrl}
 >
-  <Nav restaurant={restaurant} />
-  <HeroV4 restaurant={restaurant} />
-  <InfoBar restaurant={restaurant} />
-  <Menu restaurant={restaurant} />
-  <Gallery restaurant={restaurant} />
-  <About restaurant={restaurant} />
-  <Reservations restaurant={restaurant} />
-  <Contact restaurant={restaurant} />
-  <Footer restaurant={restaurant} />
+
+  <!-- ============================================================
+       STYLES
+  ============================================================ -->
+  <style>
+    /* ---- CSS Custom Properties ---- */
+    :root {
+      --v4-terra: #D64A1A;
+      --v4-terra-dark: #B23A10;
+      --v4-yellow: #F5C842;
+      --v4-teal: #0A6B6B;
+      --v4-white: #FFFFFF;
+      --v4-dark: #180A00;
+      --v4-black: #0D0500;
+      --v4-muted: #6B5A48;
+      --v4-border: rgba(24,10,0,0.12);
+    }
+
+    /* ---- Scroll-reveal ---- */
+    .sr {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .sr-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ---- Base typography reset ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Source Sans 3', sans-serif; background: var(--v4-white); color: var(--v4-dark); }
+    h1, h2, h3, h4, h5, h6, .v4-oswald { font-family: 'Oswald', sans-serif; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .v4-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 4rem;
+      background: var(--v4-terra);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .v4-nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      color: var(--v4-white);
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .v4-nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+      list-style: none;
+    }
+
+    .v4-nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      transition: color 0.2s;
+    }
+    .v4-nav-links a:hover { color: var(--v4-yellow); }
+
+    .v4-nav-reserve {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--v4-white);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .v4-nav-reserve:hover { border-color: var(--v4-white); }
+
+    .v4-nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .v4-nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--v4-white);
+      border-radius: 1px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .v4-nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .v4-nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .v4-nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .v4-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: var(--v4-teal);
+      padding: 2rem;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+    .v4-mobile-menu.open { transform: translateY(0); }
+    .v4-mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .v4-mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--v4-white);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .v4-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: row;
+      padding-top: 4rem;
+    }
+
+    /* Left Panel */
+    .v4-hero-left {
+      width: 48%;
+      background: var(--v4-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 4rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .v4-hero-yellow-stripe {
+      width: 4rem;
+      height: 6px;
+      background: var(--v4-yellow);
+      margin-bottom: 1.5rem;
+    }
+
+    .v4-hero-eyebrow {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.25rem;
+    }
+
+    .v4-hero-h1 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(4.5rem, 8vw, 9rem);
+      line-height: 0.85;
+      text-transform: uppercase;
+      color: var(--v4-white);
+      letter-spacing: -0.01em;
+    }
+
+    .v4-hero-rule {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      margin: 1.5rem 0;
+    }
+
+    .v4-hero-subtitle {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 26rem;
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+    }
+
+    .v4-hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .v4-btn-yellow {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--v4-yellow);
+      color: var(--v4-dark);
+      padding: 0.85rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .v4-btn-yellow:hover { background: #e0b430; transform: translateY(-1px); }
+
+    .v4-btn-outline-white {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--v4-white);
+      padding: 0.85rem 2rem;
+      border: 1.5px solid var(--v4-white);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .v4-btn-outline-white:hover {
+      background: var(--v4-white);
+      color: var(--v4-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Right Panel */
+    .v4-hero-right {
+      width: 52%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .v4-hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.15) contrast(1.05);
+    }
+
+    .v4-hero-img-frame {
+      position: absolute;
+      inset: 0;
+      outline: 4px solid var(--v4-white);
+      outline-offset: -12px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .v4-hero-teal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,107,107,0.08);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Hero entrance animation */
+    .v4-hero-left { animation: v4HeroLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .v4-hero-right { animation: v4HeroRight 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    @keyframes v4HeroLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes v4HeroRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ============================================================
+       YELLOW TAGLINE BAR
+    ============================================================ */
+    .v4-tagline-bar {
+      background: var(--v4-yellow);
+      padding: 1.1rem 2rem;
+      text-align: center;
+    }
+    .v4-tagline-bar-text {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--v4-dark);
+    }
+
+    /* ============================================================
+       MENU
+    ============================================================ */
+    .v4-menu-section {
+      background: var(--v4-white);
+      padding: 7rem 0;
+    }
+
+    .v4-menu-inner {
+      display: flex;
+      flex-direction: row;
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: 540px;
+    }
+
+    /* Sidebar */
+    .v4-menu-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--v4-teal);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 4rem;
+      align-self: flex-start;
+      min-height: 400px;
+    }
+
+    .v4-menu-tab-btn {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      background: transparent;
+      border: none;
+      padding: 1.1rem 1.5rem;
+      text-align: left;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      width: 100%;
+    }
+    .v4-menu-tab-btn:hover { color: var(--v4-white); background: rgba(255,255,255,0.07); }
+    .v4-menu-tab-btn.active {
+      background: var(--v4-terra);
+      color: var(--v4-white);
+      border-left-color: var(--v4-yellow);
+    }
+
+    /* Menu content */
+    .v4-menu-content {
+      flex: 1;
+      padding: 0 3rem 0 3.5rem;
+    }
+
+    .v4-menu-header {
+      margin-bottom: 2rem;
+    }
+
+    .v4-menu-title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 3rem;
+      text-transform: uppercase;
+      color: var(--v4-dark);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .v4-menu-note {
+      font-family: 'Source Sans 3', sans-serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--v4-muted);
+      line-height: 1.55;
+      max-width: 36rem;
+    }
+
+    /* Category panel */
+    .v4-menu-panel { display: none; }
+    .v4-menu-panel.active { display: block; }
+
+    .v4-menu-category-heading {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      color: var(--v4-terra);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--v4-yellow);
+    }
+
+    .v4-menu-items { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+    .v4-menu-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--v4-border);
+    }
+
+    .v4-menu-item-body { flex: 1; }
+
+    .v4-menu-item-name {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: var(--v4-dark);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .v4-menu-item-desc {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.82rem;
+      color: var(--v4-muted);
+      line-height: 1.5;
+    }
+
+    .v4-menu-item-price {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--v4-terra);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       GALLERY (bento grid)
+    ============================================================ */
+    .v4-gallery-section {
+      background: var(--v4-dark);
+      padding: 7rem 2.5rem;
+    }
+
+    .v4-gallery-heading {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 4rem;
+      text-transform: uppercase;
+      color: var(--v4-white);
+      letter-spacing: 0.04em;
+      margin-bottom: 3rem;
+    }
+
+    .v4-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 220px;
+      gap: 10px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .v4-gallery-cell {
+      overflow: hidden;
+      position: relative;
+    }
+    .v4-gallery-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.1) contrast(1.05);
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+    .v4-gallery-cell:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.25) contrast(1.08);
+    }
+
+    .v4-gallery-cell.span-col-2 { grid-column: span 2; }
+    .v4-gallery-cell.span-row-2 { grid-row: span 2; }
+    .v4-gallery-cell.span-both { grid-column: span 2; grid-row: span 2; }
+
+    .v4-gallery-color-terra {
+      background: var(--v4-terra);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .v4-gallery-color-terra-text {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--v4-white);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+
+    .v4-gallery-color-yellow {
+      background: var(--v4-yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .v4-gallery-color-yellow-text {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--v4-dark);
+    }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    .v4-about-section {
+      background: var(--v4-terra);
+      padding: 7rem 2.5rem;
+    }
+
+    .v4-about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .v4-about-label {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--v4-yellow);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .v4-about-h2 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      text-transform: uppercase;
+      color: var(--v4-white);
+      line-height: 0.92;
+      margin-bottom: 2rem;
+    }
+
+    .v4-about-story {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .v4-about-chef-rule {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      margin: 2rem 0;
+    }
+
+    .v4-about-chef-name {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: var(--v4-white);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .v4-about-chef-title {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.8rem;
+      color: var(--v4-yellow);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .v4-about-chef-bio {
+      font-family: 'Source Sans 3', sans-serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+
+    /* Right column — chef photo */
+    .v4-about-photo-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .v4-about-photo-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .v4-about-chef-photo {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 4px solid var(--v4-yellow);
+    }
+
+    .v4-about-photo-accent {
+      position: absolute;
+      bottom: -12px;
+      right: -12px;
+      width: 100px;
+      height: 100px;
+      background: var(--v4-yellow);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    /* ============================================================
+       RESERVATIONS
+    ============================================================ */
+    .v4-reservations-section {
+      background: var(--v4-dark);
+      padding: 7rem 2.5rem;
+    }
+
+    .v4-reservations-inner {
+      max-width: 44rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .v4-reservations-heading {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      text-transform: uppercase;
+      color: var(--v4-white);
+      line-height: 0.92;
+      margin-bottom: 1rem;
+    }
+
+    .v4-reservations-heading em {
+      color: var(--v4-yellow);
+      font-style: normal;
+    }
+
+    .v4-reservations-subtitle {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 3rem;
+      line-height: 1.55;
+    }
+
+    .v4-res-form {
+      text-align: left;
+    }
+
+    .v4-res-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .v4-res-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .v4-res-field.full { grid-column: 1 / -1; }
+
+    .v4-res-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .v4-res-input,
+    .v4-res-select,
+    .v4-res-textarea {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      color: var(--v4-white);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.85rem 1rem;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+      border-radius: 2px;
+    }
+    .v4-res-input::placeholder,
+    .v4-res-textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .v4-res-input:focus,
+    .v4-res-select:focus,
+    .v4-res-textarea:focus { border-color: var(--v4-yellow); }
+    .v4-res-select option { background: var(--v4-dark); color: var(--v4-white); }
+    .v4-res-textarea { resize: vertical; min-height: 90px; }
+
+    .v4-res-submit {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--v4-dark);
+      background: var(--v4-yellow);
+      border: none;
+      padding: 1.1rem 2rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1.25rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .v4-res-submit:hover { background: #e0b430; transform: translateY(-1px); }
+
+    .v4-res-phone {
+      margin-top: 2rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .v4-res-phone a {
+      color: var(--v4-yellow);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    .v4-contact-section {
+      background: var(--v4-white);
+      padding: 7rem 2.5rem;
+    }
+
+    .v4-contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .v4-contact-heading {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      text-transform: uppercase;
+      color: var(--v4-dark);
+      margin-bottom: 2.5rem;
+      line-height: 0.95;
+    }
+
+    .v4-contact-block { margin-bottom: 2rem; }
+
+    .v4-contact-block-label {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--v4-terra);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .v4-contact-block-text {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      color: var(--v4-dark);
+      line-height: 1.7;
+    }
+    .v4-contact-block-text a { color: var(--v4-terra); }
+    .v4-contact-block-text a:hover { text-decoration: underline; }
+
+    .v4-hours-table { width: 100%; border-collapse: collapse; }
+    .v4-hours-table tr { border-bottom: 1px solid var(--v4-border); }
+    .v4-hours-table td {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.5rem 0;
+      color: var(--v4-dark);
+    }
+    .v4-hours-table td:first-child { font-weight: 600; width: 45%; }
+    .v4-hours-table .closed { color: var(--v4-muted); font-style: italic; }
+
+    .v4-map-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 75%;
+      height: 0;
+      overflow: hidden;
+      border: 2px solid var(--v4-border);
+    }
+    .v4-map-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .v4-footer {
+      background: var(--v4-yellow);
+      padding: 4rem 2.5rem 2rem;
+    }
+
+    .v4-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .v4-footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      color: var(--v4-dark);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .v4-footer-tagline {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.8rem;
+      color: rgba(24,10,0,0.6);
+      line-height: 1.5;
+    }
+
+    .v4-footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .v4-footer-nav-list a {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(24,10,0,0.7);
+      transition: color 0.2s;
+    }
+    .v4-footer-nav-list a:hover { color: var(--v4-dark); }
+
+    .v4-footer-info {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(24,10,0,0.7);
+      line-height: 1.7;
+    }
+    .v4-footer-info strong {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--v4-dark);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .v4-footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(24,10,0,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .v4-footer-bottom-text {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(24,10,0,0.5);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .v4-menu-inner { max-width: 100%; }
+      .v4-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .v4-gallery-cell.span-col-2,
+      .v4-gallery-cell.span-both { grid-column: span 1; }
+      .v4-gallery-cell.span-row-2,
+      .v4-gallery-cell.span-both { grid-row: span 1; }
+    }
+
+    @media (max-width: 768px) {
+      /* Nav */
+      .v4-nav-links { display: none; }
+      .v4-nav-reserve.desktop-only { display: none; }
+      .v4-nav-hamburger { display: flex; }
+      .v4-mobile-menu { display: block; }
+
+      /* Hero */
+      .v4-hero { flex-direction: column; min-height: auto; }
+      .v4-hero-left { width: 100%; padding: 5rem 2rem 3rem; min-height: auto; }
+      .v4-hero-right { width: 100%; height: 55vw; max-height: 320px; }
+      .v4-hero-img-frame { display: none; }
+      .v4-hero-h1 { font-size: clamp(3.5rem, 12vw, 6rem); }
+
+      /* Menu — horizontal scroll strip */
+      .v4-menu-section { padding: 4rem 0; }
+      .v4-menu-inner { flex-direction: column; }
+      .v4-menu-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        position: static;
+        min-height: auto;
+      }
+      .v4-menu-tab-btn {
+        white-space: nowrap;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        padding: 0.9rem 1.25rem;
+        flex-shrink: 0;
+      }
+      .v4-menu-tab-btn.active { border-bottom-color: var(--v4-yellow); }
+      .v4-menu-content { padding: 2rem 1.5rem; }
+      .v4-menu-title { font-size: 2rem; }
+
+      /* Gallery */
+      .v4-gallery-section { padding: 4rem 1rem; }
+      .v4-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .v4-gallery-cell.span-col-2,
+      .v4-gallery-cell.span-both { grid-column: span 1; }
+      .v4-gallery-cell.span-row-2,
+      .v4-gallery-cell.span-both { grid-row: span 1; }
+      .v4-gallery-heading { font-size: 2.5rem; margin-bottom: 1.5rem; }
+
+      /* About */
+      .v4-about-section { padding: 4rem 1.5rem; }
+      .v4-about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .v4-about-photo-col { order: -1; }
+      .v4-about-chef-photo { width: 220px; height: 220px; }
+
+      /* Reservations */
+      .v4-reservations-section { padding: 4rem 1.5rem; }
+      .v4-res-grid { grid-template-columns: 1fr; }
+      .v4-res-field.full { grid-column: 1; }
+
+      /* Contact */
+      .v4-contact-section { padding: 4rem 1.5rem; }
+      .v4-contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+
+      /* Footer */
+      .v4-footer { padding: 3rem 1.5rem 1.5rem; }
+      .v4-footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .v4-footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+
+  <!-- ============================================================
+       NAV
+  ============================================================ -->
+  <nav class="v4-nav" id="v4-nav">
+    <a href="#" class="v4-nav-logo">Casa Verde</a>
+
+    <ul class="v4-nav-links">
+      <li><a href="#v4-menu">Menu</a></li>
+      <li><a href="#v4-gallery">Gallery</a></li>
+      <li><a href="#v4-about">Our Story</a></li>
+      <li><a href="#v4-reservations">Reservations</a></li>
+      <li><a href="#v4-contact">Contact</a></li>
+    </ul>
+
+    <a href="#v4-reservations" class="v4-nav-reserve desktop-only">Reservations &rarr;</a>
+
+    <button class="v4-nav-hamburger" id="v4-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="v4-mobile-menu" id="v4-mobile-menu" aria-hidden="true">
+    <ul>
+      <li><a href="#v4-menu" class="v4-mobile-link">Menu</a></li>
+      <li><a href="#v4-gallery" class="v4-mobile-link">Gallery</a></li>
+      <li><a href="#v4-about" class="v4-mobile-link">Our Story</a></li>
+      <li><a href="#v4-reservations" class="v4-mobile-link">Reservations</a></li>
+      <li><a href="#v4-contact" class="v4-mobile-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="v4-hero" id="v4-hero">
+    <!-- Left color-block panel -->
+    <div class="v4-hero-left">
+      <div class="v4-hero-yellow-stripe"></div>
+      <p class="v4-hero-eyebrow">Echo Park &middot; Los Angeles</p>
+      <h1 class="v4-hero-h1">
+        Bold.<br>Bright.<br>Fresh.
+      </h1>
+      <hr class="v4-hero-rule" />
+      <p class="v4-hero-subtitle">{restaurant.heroSubtitle}</p>
+      <div class="v4-hero-buttons">
+        <a href="#v4-reservations" class="v4-btn-yellow">Reserve Now</a>
+        <a href="#v4-menu" class="v4-btn-outline-white">Menu</a>
+      </div>
+    </div>
+
+    <!-- Right image panel -->
+    <div class="v4-hero-right">
+      <img
+        src={restaurant.hero.image}
+        alt={restaurant.hero.imageAlt}
+        class="v4-hero-img"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="v4-hero-teal-overlay"></div>
+      <div class="v4-hero-img-frame"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       YELLOW TAGLINE BAR
+  ============================================================ -->
+  <div class="v4-tagline-bar">
+    <p class="v4-tagline-bar-text">
+      Wood-Fired Mezze &middot; Natural Wines &middot; California Sunshine
+    </p>
+  </div>
+
+  <!-- ============================================================
+       MENU
+  ============================================================ -->
+  <section class="v4-menu-section" id="v4-menu">
+    <div class="v4-menu-inner">
+
+      <!-- Vertical Sidebar Tabs -->
+      <nav class="v4-menu-sidebar" aria-label="Menu categories">
+        {restaurant.menu.categories.map((cat, i) => (
+          <button
+            class={`v4-menu-tab-btn${i === 0 ? ' active' : ''}`}
+            data-tab={cat.id}
+            type="button"
+          >
+            {cat.name}
+          </button>
+        ))}
+      </nav>
+
+      <!-- Menu Content -->
+      <div class="v4-menu-content">
+        <div class="v4-menu-header sr">
+          <h2 class="v4-menu-title">Our Menu</h2>
+          <p class="v4-menu-note">{restaurant.menu.note}</p>
+        </div>
+
+        {restaurant.menu.categories.map((cat, i) => (
+          <div
+            class={`v4-menu-panel${i === 0 ? ' active' : ''}`}
+            id={`v4-panel-${cat.id}`}
+            role="tabpanel"
+          >
+            <h3 class="v4-menu-category-heading">{cat.name}</h3>
+            <ul class="v4-menu-items">
+              {cat.items.map(item => (
+                <li class="v4-menu-item">
+                  <div class="v4-menu-item-body">
+                    <span class="v4-menu-item-name">{item.name}</span>
+                    {item.description && (
+                      <p class="v4-menu-item-desc">{item.description}</p>
+                    )}
+                  </div>
+                  <span class="v4-menu-item-price">${item.price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GALLERY (bento grid)
+  ============================================================ -->
+  <section class="v4-gallery-section" id="v4-gallery">
+    <h2 class="v4-gallery-heading sr">Gallery</h2>
+    <div class="v4-gallery-grid">
+      <!-- Row 1: tall photo (spans 2 rows), wide photo (spans 2 cols), normal -->
+      <div class="v4-gallery-cell span-row-2 sr">
+        <img
+          src={restaurant.gallery[0].url}
+          alt={restaurant.gallery[0].alt}
+          loading="lazy"
+        />
+      </div>
+      <div class="v4-gallery-cell span-col-2 sr">
+        <img
+          src={restaurant.gallery[1].url}
+          alt={restaurant.gallery[1].alt}
+          loading="lazy"
+        />
+      </div>
+      <!-- Terracotta color block -->
+      <div class="v4-gallery-cell v4-gallery-color-terra sr">
+        <span class="v4-gallery-color-terra-text">Casa Verde</span>
+      </div>
+
+      <!-- Row 2 continuation (first cell is the span-row-2 from above) -->
+      <div class="v4-gallery-cell sr">
+        <img
+          src={restaurant.gallery[2].url}
+          alt={restaurant.gallery[2].alt}
+          loading="lazy"
+        />
+      </div>
+      <div class="v4-gallery-cell sr">
+        <img
+          src={restaurant.gallery[3].url}
+          alt={restaurant.gallery[3].alt}
+          loading="lazy"
+        />
+      </div>
+      <div class="v4-gallery-cell sr">
+        <img
+          src={restaurant.gallery[4].url}
+          alt={restaurant.gallery[4].alt}
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Row 3: yellow block + photos -->
+      <div class="v4-gallery-cell v4-gallery-color-yellow sr">
+        <span class="v4-gallery-color-yellow-text">Echo Park &middot; LA</span>
+      </div>
+      <div class="v4-gallery-cell sr">
+        <img
+          src={restaurant.gallery[5].url}
+          alt={restaurant.gallery[5].alt}
+          loading="lazy"
+        />
+      </div>
+      <div class="v4-gallery-cell sr">
+        <img
+          src={restaurant.gallery[6].url}
+          alt={restaurant.gallery[6].alt}
+          loading="lazy"
+        />
+      </div>
+      <div class="v4-gallery-cell sr">
+        <img
+          src={restaurant.gallery[7].url}
+          alt={restaurant.gallery[7].alt}
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section class="v4-about-section" id="v4-about">
+    <div class="v4-about-inner">
+      <!-- Text column -->
+      <div class="v4-about-text sr">
+        <span class="v4-about-label">Our Story</span>
+        <h2 class="v4-about-h2">{restaurant.about.headline}</h2>
+        {restaurant.about.story.split('\n\n').map(para => (
+          <p class="v4-about-story">{para}</p>
+        ))}
+        <hr class="v4-about-chef-rule" />
+        <span class="v4-about-chef-name">{restaurant.about.chef.name}</span>
+        <span class="v4-about-chef-title">{restaurant.about.chef.title}</span>
+        <p class="v4-about-chef-bio">{restaurant.about.chef.bio}</p>
+      </div>
+
+      <!-- Photo column -->
+      <div class="v4-about-photo-col sr">
+        <div class="v4-about-photo-wrap">
+          <img
+            src={restaurant.about.chef.photo}
+            alt={restaurant.about.chef.photoAlt}
+            class="v4-about-chef-photo"
+            loading="lazy"
+          />
+          <div class="v4-about-photo-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RESERVATIONS
+  ============================================================ -->
+  <section class="v4-reservations-section" id="v4-reservations">
+    <div class="v4-reservations-inner sr">
+      <h2 class="v4-reservations-heading">Reserve Your <em>Spot</em></h2>
+      <p class="v4-reservations-subtitle">
+        Walk-ins always welcome — but book ahead for weekend evenings. We hold your table for 15 minutes.
+      </p>
+
+      <form class="v4-res-form" action="#" method="post" novalidate>
+        <div class="v4-res-grid">
+          <div class="v4-res-field">
+            <label class="v4-res-label" for="v4-res-name">Full Name</label>
+            <input class="v4-res-input" type="text" id="v4-res-name" name="name" placeholder="Your name" autocomplete="name" />
+          </div>
+          <div class="v4-res-field">
+            <label class="v4-res-label" for="v4-res-email">Email</label>
+            <input class="v4-res-input" type="email" id="v4-res-email" name="email" placeholder="you@email.com" autocomplete="email" />
+          </div>
+          <div class="v4-res-field">
+            <label class="v4-res-label" for="v4-res-phone">Phone</label>
+            <input class="v4-res-input" type="tel" id="v4-res-phone" name="phone" placeholder="(323) 000-0000" autocomplete="tel" />
+          </div>
+          <div class="v4-res-field">
+            <label class="v4-res-label" for="v4-res-party">Party Size</label>
+            <select class="v4-res-select" id="v4-res-party" name="party_size">
+              <option value="">Select size</option>
+              <option value="1">1 guest</option>
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+              <option value="5">5 guests</option>
+              <option value="6">6 guests</option>
+              <option value="7+">7+ guests</option>
+            </select>
+          </div>
+          <div class="v4-res-field">
+            <label class="v4-res-label" for="v4-res-date">Date</label>
+            <input class="v4-res-input" type="date" id="v4-res-date" name="date" />
+          </div>
+          <div class="v4-res-field">
+            <label class="v4-res-label" for="v4-res-time">Time</label>
+            <select class="v4-res-select" id="v4-res-time" name="time">
+              <option value="">Select time</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="12:30">12:30 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="13:30">1:30 PM</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="17:30">5:30 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="18:30">6:30 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="19:30">7:30 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="20:30">8:30 PM</option>
+              <option value="21:00">9:00 PM</option>
+            </select>
+          </div>
+          <div class="v4-res-field full">
+            <label class="v4-res-label" for="v4-res-notes">Special Requests</label>
+            <textarea class="v4-res-textarea" id="v4-res-notes" name="notes" placeholder="Dietary needs, occasions, seating preferences…"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="v4-res-submit">Reserve Now &rarr;</button>
+      </form>
+
+      <p class="v4-res-phone">
+        Prefer to call? <a href={`tel:${restaurant.phone.replace(/\D/g,'')}`}>{restaurant.phone}</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section class="v4-contact-section" id="v4-contact">
+    <div class="v4-contact-inner">
+      <!-- Info column -->
+      <div class="v4-contact-info sr">
+        <h2 class="v4-contact-heading">Find Us</h2>
+
+        <div class="v4-contact-block">
+          <span class="v4-contact-block-label">Address</span>
+          <p class="v4-contact-block-text">
+            {restaurant.address.street}<br />
+            Echo Park, Los Angeles CA {restaurant.address.zip}
+          </p>
+        </div>
+
+        <div class="v4-contact-block">
+          <span class="v4-contact-block-label">Hours</span>
+          <table class="v4-hours-table">
+            <tbody>
+              {restaurant.hours.map(h => (
+                <tr>
+                  <td>{h.day}</td>
+                  {h.open === null
+                    ? <td class="closed">Closed</td>
+                    : <td>{h.open} – {h.close}</td>
+                  }
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="v4-contact-block">
+          <span class="v4-contact-block-label">Contact</span>
+          <p class="v4-contact-block-text">
+            <a href={`tel:${restaurant.phone.replace(/\D/g,'')}`}>{restaurant.phone}</a><br />
+            <a href={`mailto:${restaurant.email}`}>{restaurant.email}</a>
+          </p>
+        </div>
+
+        <div class="v4-contact-block">
+          <span class="v4-contact-block-label">Follow Along</span>
+          <p class="v4-contact-block-text">
+            <a href={restaurant.social.instagram} target="_blank" rel="noopener">Instagram</a>
+            &nbsp;&middot;&nbsp;
+            <a href={restaurant.social.facebook} target="_blank" rel="noopener">Facebook</a>
+            &nbsp;&middot;&nbsp;
+            <a href={restaurant.social.yelp} target="_blank" rel="noopener">Yelp</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Map column -->
+      <div class="v4-contact-map sr">
+        <div class="v4-map-wrap">
+          <iframe
+            src={restaurant.mapEmbedUrl}
+            width="600"
+            height="450"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Casa Verde map"
+          ></iframe>
+        </div>
+        <a
+          href={restaurant.mapDirectionsUrl}
+          target="_blank"
+          rel="noopener"
+          class="v4-btn-yellow"
+          style="margin-top:1rem;display:inline-block;"
+        >
+          Get Directions &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="v4-footer">
+    <div class="v4-footer-inner">
+      <!-- Left: logo + tagline -->
+      <div>
+        <span class="v4-footer-logo">Casa Verde</span>
+        <p class="v4-footer-tagline">
+          Modern Mediterranean · Echo Park<br />
+          Sunset Blvd, Los Angeles CA 90026
+        </p>
+      </div>
+
+      <!-- Center: nav links -->
+      <nav>
+        <ul class="v4-footer-nav-list">
+          <li><a href="#v4-menu">Menu</a></li>
+          <li><a href="#v4-gallery">Gallery</a></li>
+          <li><a href="#v4-about">Our Story</a></li>
+          <li><a href="#v4-reservations">Reservations</a></li>
+          <li><a href="#v4-contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right: hours summary + phone -->
+      <div class="v4-footer-info">
+        <strong>Hours</strong>
+        Tue – Thu &nbsp;12 PM – 10 PM<br />
+        Fri – Sat &nbsp;&nbsp;12 PM – 12 AM<br />
+        Sun &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11 AM – 9 PM<br />
+        <strong style="margin-top:1rem;">Phone</strong>
+        <a href={`tel:${restaurant.phone.replace(/\D/g,'')}`} style="color:var(--v4-dark);">{restaurant.phone}</a>
+      </div>
+    </div>
+
+    <div class="v4-footer-bottom">
+      <span class="v4-footer-bottom-text">Echo Park, Los Angeles &mdash; {restaurant.address.street}</span>
+      <span class="v4-footer-bottom-text">&copy; {new Date().getFullYear()} Casa Verde. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ---- Smooth scroll ----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ---- Mobile menu toggle ----
+    const hamburger = document.getElementById('v4-hamburger');
+    const mobileMenu = document.getElementById('v4-mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      // Close on link click
+      document.querySelectorAll('.v4-mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    }
+
+    // ---- Vertical menu tabs ----
+    const tabBtns = document.querySelectorAll('.v4-menu-tab-btn');
+    const panels = document.querySelectorAll('.v4-menu-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+
+        // Remove active from all
+        tabBtns.forEach(b => b.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        // Activate clicked
+        btn.classList.add('active');
+        const panel = document.getElementById(`v4-panel-${tabId}`);
+        if (panel) panel.classList.add('active');
+      });
+    });
+
+    // ---- Hero entrance: stagger inner elements ----
+    (function() {
+      const leftItems = document.querySelectorAll(
+        '.v4-hero-yellow-stripe, .v4-hero-eyebrow, .v4-hero-h1, .v4-hero-rule, .v4-hero-subtitle, .v4-hero-buttons'
+      );
+      leftItems.forEach((el, i) => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.style.opacity = '0';
+        htmlEl.style.transform = 'translateY(20px)';
+        htmlEl.style.transition = `opacity 0.6s ease ${0.3 + i * 0.08}s, transform 0.6s ease ${0.3 + i * 0.08}s`;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            htmlEl.style.opacity = '1';
+            htmlEl.style.transform = 'none';
+          });
+        });
+      });
+    })();
+  </script>
+
 </Layout>

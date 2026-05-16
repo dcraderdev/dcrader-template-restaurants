@@ -1,29 +1,952 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Nav from '../../components/themed/Nav.astro';
-import HeroV2 from '../../components/heroes/HeroV2.astro';
-import InfoBar from '../../components/themed/InfoBar.astro';
-import Menu from '../../components/themed/Menu.astro';
-import Gallery from '../../components/themed/Gallery.astro';
-import About from '../../components/themed/About.astro';
-import Reservations from '../../components/themed/Reservations.astro';
-import Contact from '../../components/themed/Contact.astro';
-import Footer from '../../components/themed/Footer.astro';
 import { restaurant } from '../../data/restaurants/v2';
+
+const galleryItems = restaurant.gallery.slice(0, 8);
+const currentYear = new Date().getFullYear();
+
+const openHours = restaurant.hours.filter(h => h.open !== null);
+const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day);
 ---
 
 <Layout
   restaurant={restaurant}
   theme="v2"
-  fontUrl="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+  fontUrl="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
 >
-  <Nav restaurant={restaurant} initialDark={true} />
-  <HeroV2 restaurant={restaurant} />
-  <InfoBar restaurant={restaurant} />
-  <Menu restaurant={restaurant} />
-  <Gallery restaurant={restaurant} />
-  <About restaurant={restaurant} />
-  <Reservations restaurant={restaurant} />
-  <Contact restaurant={restaurant} />
-  <Footer restaurant={restaurant} />
+
+  <!-- NAV -->
+  <nav class="v2-nav">
+    <a href="#" class="v2-nav__name">North &amp; Pine</a>
+    <a href={`tel:${restaurant.phone}`} class="v2-nav__phone">{restaurant.phone}</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="v2-hero">
+    <div class="v2-hero__text-block">
+      <div class="v2-hero__inner sr">
+        <p class="v2-hero__eyebrow">{restaurant.tagline}</p>
+        <h1 class="v2-hero__h1">Precision.<br />Pleasure.</h1>
+        <div class="v2-hero__divider"></div>
+        <p class="v2-hero__subtitle">{restaurant.heroSubtitle}</p>
+        <div class="v2-hero__ctas">
+          <a href="#reservations" class="v2-cta-reserve">Reserve</a>
+          <a href="#menu" class="v2-cta-menu">Menu</a>
+        </div>
+      </div>
+    </div>
+    <div class="v2-hero__photo-block">
+      <img
+        src={restaurant.hero.image}
+        alt={restaurant.hero.imageAlt}
+        class="v2-hero__photo"
+        loading="eager"
+      />
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" class="v2-menu">
+    <div class="v2-menu__inner">
+      <div class="v2-menu__header sr">
+        <h2 class="v2-section-title">Menu</h2>
+        <div class="v2-menu__header-line"></div>
+      </div>
+
+      {restaurant.menu.categories.map((cat) => (
+        <div class="v2-menu__category sr">
+          <p class="v2-menu__cat-label">{cat.name}</p>
+          <div class="v2-menu__items">
+            {cat.items.map((item, idx) => (
+              <div class="v2-menu__item">
+                <div class="v2-menu__item-left">
+                  <span class="v2-menu__item-name">{item.name}</span>
+                  {item.description && (
+                    <span class="v2-menu__item-desc">{item.description}</span>
+                  )}
+                </div>
+                <span class="v2-menu__item-price">{item.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {restaurant.menu.note && (
+        <p class="v2-menu__note sr">{restaurant.menu.note}</p>
+      )}
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="v2-gallery">
+    <div class="v2-gallery__inner">
+      <h2 class="v2-section-title sr">Gallery</h2>
+      <div class="v2-gallery__grid sr">
+        {galleryItems.map((img) => (
+          <div class="v2-gallery__item">
+            <img
+              src={img.url}
+              alt={img.alt}
+              class="v2-gallery__img"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="v2-about">
+    <div class="v2-about__inner">
+      <div class="v2-about__left sr">
+        <p class="v2-about__label">Story</p>
+        <h2 class="v2-about__headline">{restaurant.about.headline}</h2>
+        <div class="v2-about__story">
+          {restaurant.about.story.split('\n\n').map((para) => (
+            <p class="v2-about__para">{para}</p>
+          ))}
+        </div>
+        <div class="v2-about__chef">
+          <p class="v2-about__chef-name">{restaurant.about.chef.name}</p>
+          <p class="v2-about__chef-title">{restaurant.about.chef.title}</p>
+          <p class="v2-about__chef-bio">{restaurant.about.chef.bio}</p>
+        </div>
+      </div>
+      <div class="v2-about__right sr">
+        <img
+          src={restaurant.about.chef.photo}
+          alt={restaurant.about.chef.photoAlt}
+          class="v2-about__chef-photo"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVATIONS -->
+  <section id="reservations" class="v2-reservations">
+    <div class="v2-reservations__inner sr">
+      <h2 class="v2-section-title">Reserve</h2>
+      <p class="v2-reservations__note">Reservations by phone or email only.</p>
+      <div class="v2-reservations__contacts">
+        <a href={`tel:${restaurant.phone}`} class="v2-reservations__phone">{restaurant.phone}</a>
+        <a href={`mailto:${restaurant.email}`} class="v2-reservations__email">{restaurant.email}</a>
+      </div>
+      <div class="v2-reservations__hours">
+        {openHours.map((h) => (
+          <div class="v2-reservations__hours-row">
+            <span class="v2-reservations__hours-day">{h.day}</span>
+            <span class="v2-reservations__hours-time">{h.open} – {h.close}</span>
+          </div>
+        ))}
+        {closedDays.length > 0 && (
+          <div class="v2-reservations__hours-row">
+            <span class="v2-reservations__hours-day">{closedDays.join(' & ')}</span>
+            <span class="v2-reservations__hours-time">Closed</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="v2-contact">
+    <div class="v2-contact__inner sr">
+      <div class="v2-contact__col">
+        <p class="v2-contact__label">Address</p>
+        <p class="v2-contact__content">
+          {restaurant.address.street}<br />
+          {restaurant.address.city}, {restaurant.address.state} {restaurant.address.zip}
+        </p>
+        <a
+          href={restaurant.mapDirectionsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="v2-contact__link"
+        >
+          Get Directions
+        </a>
+      </div>
+      <div class="v2-contact__col">
+        <p class="v2-contact__label">Hours</p>
+        <div class="v2-contact__content">
+          {openHours.map((h) => (
+            <div class="v2-contact__hours-row">
+              <span>{h.day.slice(0, 3)}</span>
+              <span>{h.open}–{h.close}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="v2-contact__col">
+        <p class="v2-contact__label">Connect</p>
+        <div class="v2-contact__content">
+          {restaurant.social.instagram && (
+            <a
+              href={restaurant.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="v2-contact__social-link"
+            >
+              Instagram
+            </a>
+          )}
+          {restaurant.social.facebook && (
+            <a
+              href={restaurant.social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="v2-contact__social-link"
+            >
+              Facebook
+            </a>
+          )}
+          {restaurant.social.yelp && (
+            <a
+              href={restaurant.social.yelp}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="v2-contact__social-link"
+            >
+              Yelp
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="v2-footer">
+    <div class="v2-footer__inner">
+      <span class="v2-footer__name">North &amp; Pine</span>
+      <span class="v2-footer__copy">&copy; {currentYear} North &amp; Pine. All rights reserved.</span>
+    </div>
+  </footer>
+
 </Layout>
+
+<style>
+  /* ── TOKENS ── */
+  :root {
+    --v2-white: #FAFAF8;
+    --v2-off-white: #F0EEE8;
+    --v2-black: #0C0C0A;
+    --v2-gray: #888880;
+    --v2-green: #1A3A2E;
+    --v2-border: rgba(12, 12, 10, 0.08);
+    --v2-border-strong: rgba(12, 12, 10, 0.15);
+    --v2-serif: 'DM Serif Display', Georgia, serif;
+    --v2-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  /* ── GLOBAL RESETS FOR THIS PAGE ── */
+  :global(body[data-theme="v2"]) {
+    background-color: var(--v2-white);
+    color: var(--v2-black);
+    font-family: var(--v2-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  :global(.sr) {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  :global(.sr-visible) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── NAV ── */
+  .v2-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 3.5rem;
+    background: var(--v2-white);
+    border-bottom: 1px solid var(--v2-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+
+  .v2-nav__name {
+    font-family: var(--v2-serif);
+    font-size: 1rem;
+    color: var(--v2-black);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+
+  .v2-nav__phone {
+    font-family: var(--v2-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(12, 12, 10, 0.6);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .v2-hero {
+    padding-top: 3.5rem; /* offset for fixed nav */
+  }
+
+  .v2-hero__text-block {
+    min-height: 85vh;
+    background: var(--v2-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+  }
+
+  .v2-hero__inner {
+    max-width: 60rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .v2-hero__eyebrow {
+    font-family: var(--v2-sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--v2-green);
+    margin: 0 0 2.5rem;
+  }
+
+  .v2-hero__h1 {
+    font-family: var(--v2-serif);
+    font-style: normal;
+    font-size: clamp(5rem, 13vw, 11rem);
+    line-height: 0.88;
+    color: var(--v2-black);
+    margin: 0 0 3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .v2-hero__divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(12, 12, 10, 0.1);
+    margin: 0 0 2.5rem;
+  }
+
+  .v2-hero__subtitle {
+    font-family: var(--v2-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--v2-gray);
+    max-width: 24rem;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+  }
+
+  .v2-hero__ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .v2-cta-reserve {
+    display: inline-block;
+    background: var(--v2-black);
+    color: var(--v2-white);
+    font-family: var(--v2-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    border-radius: 0;
+    transition: background 0.2s ease;
+  }
+
+  .v2-cta-reserve:hover {
+    background: var(--v2-green);
+  }
+
+  .v2-cta-menu {
+    font-family: var(--v2-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--v2-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+
+  .v2-cta-menu:hover {
+    opacity: 0.7;
+  }
+
+  .v2-hero__photo-block {
+    height: 60vh;
+    overflow: hidden;
+  }
+
+  .v2-hero__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.35) contrast(1.05);
+    display: block;
+  }
+
+  /* ── SECTION TITLE (shared) ── */
+  .v2-section-title {
+    font-family: var(--v2-serif);
+    font-style: normal;
+    font-size: 4rem;
+    color: var(--v2-black);
+    margin: 0 0 2rem;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  /* ── MENU ── */
+  .v2-menu {
+    background: var(--v2-white);
+    padding: 9rem 2.5rem;
+  }
+
+  .v2-menu__inner {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .v2-menu__header {
+    margin-bottom: 4rem;
+  }
+
+  .v2-menu__header-line {
+    width: 100%;
+    height: 1px;
+    background: var(--v2-border-strong);
+    margin-top: 1rem;
+  }
+
+  .v2-menu__category {
+    margin-bottom: 3rem;
+  }
+
+  .v2-menu__cat-label {
+    font-family: var(--v2-sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--v2-green);
+    margin: 0 0 1.25rem;
+    font-weight: 500;
+  }
+
+  .v2-menu__items {
+    border-top: 1px solid var(--v2-border);
+  }
+
+  .v2-menu__item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--v2-border);
+  }
+
+  .v2-menu__item-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .v2-menu__item-name {
+    display: block;
+    font-family: var(--v2-serif);
+    font-size: 1rem;
+    color: var(--v2-black);
+    margin-bottom: 0.25rem;
+  }
+
+  .v2-menu__item-desc {
+    display: block;
+    font-family: var(--v2-sans);
+    font-size: 0.8rem;
+    color: var(--v2-gray);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .v2-menu__item-price {
+    font-family: var(--v2-sans);
+    font-size: 0.85rem;
+    color: var(--v2-black);
+    font-weight: 400;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+  }
+
+  .v2-menu__note {
+    font-family: var(--v2-sans);
+    font-size: 0.72rem;
+    font-style: italic;
+    color: var(--v2-gray);
+    line-height: 1.65;
+    margin-top: 3rem;
+    font-weight: 300;
+  }
+
+  /* ── GALLERY ── */
+  .v2-gallery {
+    background: var(--v2-off-white);
+    padding: 9rem 2.5rem;
+  }
+
+  .v2-gallery__inner {
+    max-width: 100%;
+  }
+
+  .v2-gallery__inner .v2-section-title {
+    max-width: calc(100% - 5rem);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+  }
+
+  .v2-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .v2-gallery__item {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  .v2-gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.6) contrast(1.1);
+    transition: filter 0.5s ease;
+    display: block;
+  }
+
+  .v2-gallery__item:hover .v2-gallery__img {
+    filter: grayscale(0) contrast(1);
+  }
+
+  /* ── ABOUT ── */
+  .v2-about {
+    background: var(--v2-white);
+    padding: 9rem 2.5rem;
+  }
+
+  .v2-about__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 58% 42%;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .v2-about__label {
+    font-family: var(--v2-sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--v2-green);
+    margin: 0 0 1.5rem;
+    font-weight: 500;
+  }
+
+  .v2-about__headline {
+    font-family: var(--v2-serif);
+    font-style: normal;
+    font-size: 3.5rem;
+    color: var(--v2-black);
+    line-height: 1.05;
+    margin: 0 0 2.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .v2-about__story {
+    margin-bottom: 3rem;
+  }
+
+  .v2-about__para {
+    font-family: var(--v2-sans);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--v2-gray);
+    text-align: justify;
+    margin: 0 0 1.5rem;
+    font-weight: 300;
+  }
+
+  .v2-about__para:last-child {
+    margin-bottom: 0;
+  }
+
+  .v2-about__chef {
+    padding-top: 2rem;
+    border-top: 1px solid var(--v2-border);
+  }
+
+  .v2-about__chef-name {
+    font-family: var(--v2-serif);
+    font-size: 1.2rem;
+    color: var(--v2-black);
+    margin: 0 0 0.35rem;
+  }
+
+  .v2-about__chef-title {
+    font-family: var(--v2-sans);
+    font-size: 0.7rem;
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    color: var(--v2-green);
+    margin: 0 0 0.85rem;
+    font-weight: 500;
+  }
+
+  .v2-about__chef-bio {
+    font-family: var(--v2-sans);
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--v2-gray);
+    line-height: 1.65;
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .v2-about__right {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .v2-about__chef-photo {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    filter: grayscale(0.5) contrast(1.05);
+    border-radius: 0;
+  }
+
+  /* ── RESERVATIONS ── */
+  .v2-reservations {
+    background: var(--v2-off-white);
+    padding: 7rem 2.5rem;
+  }
+
+  .v2-reservations__inner {
+    max-width: 32rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .v2-reservations__note {
+    font-family: var(--v2-sans);
+    font-size: 0.9rem;
+    color: var(--v2-gray);
+    margin: 0 0 2.5rem;
+    font-weight: 300;
+  }
+
+  .v2-reservations__contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .v2-reservations__phone {
+    font-family: var(--v2-serif);
+    font-size: 1.8rem;
+    color: var(--v2-black);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .v2-reservations__phone:hover {
+    color: var(--v2-green);
+  }
+
+  .v2-reservations__email {
+    font-family: var(--v2-sans);
+    font-size: 0.9rem;
+    color: var(--v2-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+
+  .v2-reservations__email:hover {
+    opacity: 0.7;
+  }
+
+  .v2-reservations__hours {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 2rem;
+    max-width: 22rem;
+    margin: 0 auto;
+    text-align: left;
+    border-top: 1px solid var(--v2-border);
+    padding-top: 2rem;
+  }
+
+  .v2-reservations__hours-row {
+    display: contents;
+  }
+
+  .v2-reservations__hours-day {
+    font-family: var(--v2-sans);
+    font-size: 0.78rem;
+    color: var(--v2-black);
+    font-weight: 400;
+  }
+
+  .v2-reservations__hours-time {
+    font-family: var(--v2-sans);
+    font-size: 0.78rem;
+    color: var(--v2-gray);
+    font-weight: 300;
+  }
+
+  /* ── CONTACT ── */
+  .v2-contact {
+    background: var(--v2-white);
+    padding: 7rem 2.5rem;
+  }
+
+  .v2-contact__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+  }
+
+  .v2-contact__label {
+    font-family: var(--v2-sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--v2-green);
+    margin: 0 0 1.25rem;
+    font-weight: 500;
+  }
+
+  .v2-contact__content {
+    font-family: var(--v2-sans);
+    font-size: 0.85rem;
+    color: var(--v2-gray);
+    line-height: 1.7;
+    font-weight: 300;
+    margin: 0 0 1rem;
+  }
+
+  .v2-contact__link {
+    font-family: var(--v2-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--v2-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+
+  .v2-contact__link:hover {
+    opacity: 0.7;
+  }
+
+  .v2-contact__hours-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--v2-sans);
+    font-size: 0.85rem;
+    color: var(--v2-gray);
+    font-weight: 300;
+    margin-bottom: 0.35rem;
+  }
+
+  .v2-contact__social-link {
+    display: block;
+    font-family: var(--v2-sans);
+    font-size: 0.85rem;
+    color: var(--v2-gray);
+    text-decoration: none;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+  }
+
+  .v2-contact__social-link:hover {
+    color: var(--v2-green);
+  }
+
+  /* ── FOOTER ── */
+  .v2-footer {
+    background: var(--v2-black);
+    padding: 2.5rem;
+  }
+
+  .v2-footer__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .v2-footer__name {
+    font-family: var(--v2-serif);
+    font-size: 1rem;
+    color: var(--v2-white);
+    letter-spacing: 0.01em;
+  }
+
+  .v2-footer__copy {
+    font-family: var(--v2-sans);
+    font-size: 0.72rem;
+    color: var(--v2-gray);
+    font-weight: 300;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .v2-about__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .v2-about__right {
+      position: static;
+      order: -1;
+    }
+
+    .v2-gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .v2-contact__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .v2-nav {
+      padding: 0 1.25rem;
+    }
+
+    .v2-nav__phone {
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+    }
+
+    .v2-hero__text-block {
+      min-height: 75vh;
+      padding: 4rem 1.25rem;
+    }
+
+    .v2-hero__photo-block {
+      height: 45vh;
+    }
+
+    .v2-section-title {
+      font-size: 2.75rem;
+    }
+
+    .v2-menu {
+      padding: 6rem 1.25rem;
+    }
+
+    .v2-gallery {
+      padding: 6rem 1.25rem;
+    }
+
+    .v2-about {
+      padding: 6rem 1.25rem;
+    }
+
+    .v2-about__headline {
+      font-size: 2.5rem;
+    }
+
+    .v2-reservations {
+      padding: 5rem 1.25rem;
+    }
+
+    .v2-contact {
+      padding: 5rem 1.25rem;
+    }
+
+    .v2-footer {
+      padding: 2rem 1.25rem;
+    }
+
+    .v2-footer__inner {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .v2-reservations__hours {
+      grid-template-columns: auto auto;
+    }
+  }
+</style>
+
+<script>
+  // Hero entrance: stagger fade-in for hero elements
+  (function () {
+    const inner = document.querySelector('.v2-hero__inner');
+    if (!inner) return;
+
+    // Override the generic sr observer behavior for hero — animate immediately on load
+    inner.classList.remove('sr');
+    inner.style.opacity = '0';
+    inner.style.transform = 'translateY(24px)';
+    inner.style.transition = 'opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s';
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        inner.style.opacity = '1';
+        inner.style.transform = 'translateY(0)';
+      });
+    });
+  })();
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      const navHeight = 56; // 3.5rem at 16px
+      const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+</script>
