@@ -1,0 +1,96 @@
+---
+import { restaurant } from '../data/restaurant';
+
+// Determine today's hours
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const todayName = days[new Date().getDay()];
+const todayHours = restaurant.hours.find(h => h.day === todayName);
+const todayLabel = todayHours?.open
+  ? `${todayHours.open} – ${todayHours.close}`
+  : 'Closed today';
+---
+
+<!-- Sticky info bar — the #1 thing mobile visitors need -->
+<section
+  id="info"
+  class="bg-charcoal text-white"
+  aria-label="Location and hours"
+>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+
+      <!-- Address -->
+      <a
+        href={restaurant.mapDirectionsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex items-center gap-4 py-5 sm:py-6 sm:pr-8 hover:bg-white/5 transition-colors duration-200 px-2 sm:px-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset"
+        aria-label={`Get directions to ${restaurant.address.full}`}
+      >
+        <div class="flex-shrink-0 w-9 h-9 rounded-full bg-terracotta/20 flex items-center justify-center group-hover:bg-terracotta/30 transition-colors duration-200">
+          <svg class="w-4 h-4 text-terracotta" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 2C7.24 2 5 4.24 5 7c0 4 5 11 5 11s5-7 5-11c0-2.76-2.24-5-5-5z" />
+            <circle cx="10" cy="7" r="2" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-sans text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-white/40 mb-0.5">
+            Location
+          </p>
+          <p class="font-sans text-sm font-medium text-white/90 group-hover:text-white transition-colors">
+            {restaurant.address.street}
+          </p>
+          <p class="font-sans text-xs text-white/55">
+            {restaurant.address.city}, {restaurant.address.state} {restaurant.address.zip}
+          </p>
+        </div>
+      </a>
+
+      <!-- Hours -->
+      <a
+        href="#contact"
+        class="group flex items-center gap-4 py-5 sm:py-6 sm:px-8 hover:bg-white/5 transition-colors duration-200 px-2 sm:px-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset"
+        aria-label="View full hours"
+      >
+        <div class="flex-shrink-0 w-9 h-9 rounded-full bg-terracotta/20 flex items-center justify-center group-hover:bg-terracotta/30 transition-colors duration-200">
+          <svg class="w-4 h-4 text-terracotta" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" />
+            <path d="M10 6v4l3 2" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-sans text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-white/40 mb-0.5">
+            Hours — {todayName}
+          </p>
+          <p class="font-sans text-sm font-medium text-white/90 group-hover:text-white transition-colors">
+            {todayLabel}
+          </p>
+          <p class="font-sans text-xs text-white/55">Tue–Thu 5–10 PM · Fri–Sat 4:30–11 PM</p>
+        </div>
+      </a>
+
+      <!-- Phone -->
+      <a
+        href={`tel:${restaurant.phone.replace(/\D/g, '')}`}
+        class="group flex items-center gap-4 py-5 sm:py-6 sm:pl-8 hover:bg-white/5 transition-colors duration-200 px-2 sm:px-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset"
+        aria-label={`Call ${restaurant.phone}`}
+      >
+        <div class="flex-shrink-0 w-9 h-9 rounded-full bg-terracotta/20 flex items-center justify-center group-hover:bg-terracotta/30 transition-colors duration-200">
+          <svg class="w-4 h-4 text-terracotta" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 3.5C3 3.5 5 1 7 3s1 4 3 5 3-1 5 1-1.5 4-1.5 4S8 14 4 10 3 3.5 3 3.5z" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-sans text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-white/40 mb-0.5">
+            Reservations
+          </p>
+          <p class="font-sans text-sm font-medium text-white/90 group-hover:text-white transition-colors">
+            {restaurant.phone}
+          </p>
+          <p class="font-sans text-xs text-white/55">or reserve online below</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>

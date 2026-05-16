@@ -1,0 +1,171 @@
+---
+import { restaurant } from '../data/restaurant';
+---
+
+<header>
+  <nav
+    id="nav"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    aria-label="Main navigation"
+  >
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-[4.5rem] lg:h-20">
+
+        <!-- Logo / Name -->
+        <a
+          href="#hero"
+          id="nav-logo"
+          class="font-serif text-xl tracking-wide text-white transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          aria-label={`${restaurant.name} — back to top`}
+        >
+          {restaurant.name}
+        </a>
+
+        <!-- Desktop links -->
+        <div class="hidden md:flex items-center gap-6 lg:gap-8" role="list">
+          {[
+            { href: '#menu', label: 'Menu' },
+            { href: '#about', label: 'Our Story' },
+            { href: '#gallery', label: 'Gallery' },
+            { href: '#contact', label: 'Contact' },
+          ].map(({ href, label }) => (
+            <a
+              href={href}
+              role="listitem"
+              class="nav-link font-sans text-xs font-medium tracking-[0.2em] uppercase text-white/90 hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              {label}
+            </a>
+          ))}
+          <a
+            href="#reservations"
+            class="nav-reserve ml-2 px-6 py-2.5 bg-terracotta text-white font-sans text-xs font-semibold tracking-[0.2em] uppercase hover:bg-terracotta-dark transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+          >
+            Reserve
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button
+          id="nav-toggle"
+          class="md:hidden p-2 text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg id="icon-menu" class="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M2 5h16M2 10h16M2 15h16" />
+          </svg>
+          <svg id="icon-close" class="w-5 h-5 hidden" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 4l12 12M16 4L4 16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden bg-cream/98 backdrop-blur-sm border-t border-stone-200 shadow-lg"
+      role="dialog"
+      aria-label="Mobile navigation"
+    >
+      <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-5">
+        {[
+          { href: '#menu', label: 'Menu' },
+          { href: '#about', label: 'Our Story' },
+          { href: '#gallery', label: 'Gallery' },
+          { href: '#contact', label: 'Contact' },
+        ].map(({ href, label }) => (
+          <a
+            href={href}
+            class="mobile-nav-link font-sans text-sm font-medium tracking-[0.2em] uppercase text-charcoal hover:text-terracotta transition-colors duration-200"
+          >
+            {label}
+          </a>
+        ))}
+        <a
+          href="#reservations"
+          class="mobile-nav-link mt-2 px-6 py-3.5 bg-terracotta text-white font-sans text-sm font-semibold tracking-[0.2em] uppercase text-center hover:bg-terracotta-dark transition-colors duration-200"
+        >
+          Reserve a Table
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const navLogo = document.getElementById('nav-logo')!;
+  const navLinks = nav.querySelectorAll<HTMLAnchorElement>('.nav-link');
+  const navReserve = nav.querySelector<HTMLAnchorElement>('.nav-reserve')!;
+  const navToggle = document.getElementById('nav-toggle')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const iconMenu = document.getElementById('icon-menu')!;
+  const iconClose = document.getElementById('icon-close')!;
+
+  let scrolled = false;
+
+  function setScrolled(isScrolled: boolean) {
+    if (isScrolled === scrolled) return;
+    scrolled = isScrolled;
+
+    if (isScrolled) {
+      nav.classList.add('bg-cream/98', 'backdrop-blur-sm', 'shadow-sm', 'border-b', 'border-stone-200/60');
+      navLogo.classList.replace('text-white', 'text-charcoal');
+      navLinks.forEach(l => {
+        l.classList.replace('text-white/90', 'text-charcoal/70');
+        l.classList.replace('hover:text-white', 'hover:text-charcoal');
+        l.classList.remove('focus-visible:ring-white', 'focus-visible:ring-offset-transparent');
+        l.classList.add('focus-visible:ring-charcoal');
+      });
+    } else {
+      nav.classList.remove('bg-cream/98', 'backdrop-blur-sm', 'shadow-sm', 'border-b', 'border-stone-200/60');
+      navLogo.classList.replace('text-charcoal', 'text-white');
+      navLinks.forEach(l => {
+        l.classList.replace('text-charcoal/70', 'text-white/90');
+        l.classList.replace('hover:text-charcoal', 'hover:text-white');
+        l.classList.remove('focus-visible:ring-charcoal');
+        l.classList.add('focus-visible:ring-white', 'focus-visible:ring-offset-transparent');
+      });
+    }
+  }
+
+  window.addEventListener('scroll', () => setScrolled(window.scrollY > 60), { passive: true });
+
+  // Mobile toggle
+  navToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    iconMenu.classList.toggle('hidden');
+    iconClose.classList.toggle('hidden');
+    navToggle.setAttribute('aria-expanded', String(!open));
+    if (!open) setScrolled(true); // force scrolled style while mobile menu open
+  });
+
+  // Close mobile menu on link click
+  mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      iconMenu.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      setScrolled(window.scrollY > 60);
+    });
+  });
+
+  // Smooth scroll for all hash links
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      const offset = 72; // nav height
+      const top = (target as HTMLElement).getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+</script>

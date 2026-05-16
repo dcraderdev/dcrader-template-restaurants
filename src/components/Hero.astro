@@ -1,0 +1,98 @@
+---
+import { restaurant } from '../data/restaurant';
+
+const lines = restaurant.heroHeadline.split('\n');
+---
+
+<section
+  id="hero"
+  class="relative min-h-screen flex flex-col justify-end overflow-hidden"
+  aria-label="Hero"
+>
+  <!-- Background image with srcset for performance -->
+  <picture>
+    <source
+      media="(max-width: 640px)"
+      srcset={`${restaurant.hero.imageMobile} 800w`}
+      type="image/webp"
+    />
+    <img
+      src={restaurant.hero.image}
+      alt={restaurant.hero.imageAlt}
+      class="absolute inset-0 w-full h-full object-cover object-center"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+    />
+  </picture>
+
+  <!-- Layered gradient overlays for depth -->
+  <div
+    class="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/50 to-charcoal/20"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-charcoal/40 via-transparent to-transparent"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-8 pb-24 lg:pb-36">
+    <div class="max-w-3xl">
+
+      <!-- Cuisine label / eyebrow -->
+      <p class="font-sans text-gold text-xs font-semibold tracking-[0.35em] uppercase mb-6 opacity-90">
+        {restaurant.tagline}
+      </p>
+
+      <!-- Restaurant name -->
+      <h1 class="font-serif text-white leading-none mb-2">
+        {lines.map((line, i) => (
+          <span class={`block ${i === 0 ? 'text-[3.5rem] sm:text-[5rem] lg:text-[7rem] xl:text-[8.5rem]' : 'text-[3.5rem] sm:text-[5rem] lg:text-[7rem] xl:text-[8.5rem] text-white/80 italic'}`}>
+            {line}
+          </span>
+        ))}
+      </h1>
+
+      <!-- Decorative rule -->
+      <div class="flex items-center gap-4 my-8">
+        <div class="w-12 h-px bg-gold/70"></div>
+        <div class="w-2 h-2 rounded-full bg-gold/70"></div>
+        <div class="w-12 h-px bg-gold/70"></div>
+      </div>
+
+      <!-- Subtitle -->
+      <p class="font-sans text-white/75 text-lg sm:text-xl font-light max-w-md leading-relaxed mb-12">
+        {restaurant.heroSubtitle}
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#reservations" class="btn-primary">
+          <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="2" y="4" width="16" height="14" rx="1.5" />
+            <path d="M2 8h16M7 2v4M13 2v4" stroke-linecap="round" />
+          </svg>
+          Reserve a Table
+        </a>
+        <a href="#menu" class="btn-ghost-white">
+          View Menu
+          <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M4 10h12M10 4l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-2 text-white/40 select-none"
+    aria-hidden="true"
+  >
+    <span class="font-sans text-[0.65rem] tracking-[0.3em] uppercase">Discover</span>
+    <svg class="w-5 h-5 animate-float" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M10 4v12M4 12l6 6 6-6" />
+    </svg>
+  </div>
+</section>

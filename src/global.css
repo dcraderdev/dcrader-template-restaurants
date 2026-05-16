@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+/* ── Custom theme tokens (Tailwind v4 CSS-first config) ────────────────────── */
+@theme {
+  /* Fonts */
+  --font-family-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-family-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Brand colors */
+  --color-cream: #FDFAF4;
+  --color-wheat: #F5E8C8;
+
+  --color-terracotta: #C4714A;
+  --color-terracotta-dark: #A85C38;
+  --color-terracotta-light: #D9906E;
+
+  --color-charcoal: #1C1208;
+  --color-charcoal-light: #3A2D1E;
+
+  --color-sage: #8B9E6A;
+
+  --color-gold: #C9A84C;
+  --color-gold-light: #E5C97A;
+
+  /* Stone scale */
+  --color-stone-50: #FAFAF9;
+  --color-stone-100: #F3F1EC;
+  --color-stone-200: #E5E0D6;
+  --color-stone-300: #CFC8BC;
+  --color-stone-400: #B0A595;
+  --color-stone-500: #8F8070;
+  --color-stone-600: #6E6154;
+  --color-stone-700: #554B3F;
+  --color-stone-800: #3D3529;
+  --color-stone-900: #261F14;
+
+  /* Extra spacing */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-88: 22rem;
+  --spacing-120: 30rem;
+  --spacing-144: 36rem;
+
+  /* Extra font sizes */
+  --font-size-8xl: 6rem;
+  --font-size-9xl: 8rem;
+  --font-size-10xl: 10rem;
+
+  /* Animations */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-fade-up: fadeUp 0.6s ease-out forwards;
+  --animate-fade-in: fadeIn 0.4s ease-out forwards;
+}
+
+/* ── Keyframes ─────────────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    scroll-behavior: smooth;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+/* ── Reusable components ───────────────────────────────────────────────────── */
+@layer components {
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+
+  .container-narrow {
+    max-width: 64rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .container-narrow {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .container-wide {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .container-wide {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .section-label {
+    font-family: var(--font-family-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+  }
+
+  .section-title {
+    font-family: var(--font-family-serif);
+    color: var(--color-charcoal);
+    font-size: 2.25rem;
+    line-height: 1.2;
+  }
+  @media (min-width: 640px) {
+    .section-title {
+      font-size: 2.75rem;
+    }
+  }
+
+  .divider-gold {
+    width: 3rem;
+    height: 1px;
+    background-color: var(--color-gold);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background-color: var(--color-terracotta);
+    color: white;
+    font-family: var(--font-family-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-terracotta-dark);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: 1px solid var(--color-charcoal);
+    color: var(--color-charcoal);
+    font-family: var(--font-family-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-charcoal);
+    color: var(--color-cream);
+  }
+
+  .btn-ghost-white {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    font-family: var(--font-family-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-ghost-white:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: white;
+  }
+}
+
+/* ── Custom utilities ──────────────────────────────────────────────────────── */
+@layer utilities {
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .break-inside-avoid {
+    break-inside: avoid;
+  }
+}
+
+/* ── Print ─────────────────────────────────────────────────────────────────── */
+@media print {
+  nav, footer, #hero, #gallery, #about, #reservations, #contact, .no-print {
+    display: none !important;
+  }
+  #menu {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .menu-print-header {
+    display: block !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+  }
+}

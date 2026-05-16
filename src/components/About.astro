@@ -1,0 +1,102 @@
+---
+import { restaurant } from '../data/restaurant';
+const { about } = restaurant;
+const paragraphs = about.story.split('\n\n');
+---
+
+<section id="about" class="section-padding bg-cream overflow-hidden" aria-labelledby="about-heading">
+  <div class="container-wide">
+
+    <!-- Top: Story + ambiance image -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-24">
+
+      <!-- Text -->
+      <div>
+        <p class="section-label mb-4">Our Story</p>
+        <h2 id="about-heading" class="section-title mb-6 leading-tight">
+          {about.headline}
+        </h2>
+        <div class="divider-gold mb-8"></div>
+        <div class="space-y-5">
+          {paragraphs.map(p => (
+            <p class="font-sans text-stone-600 leading-relaxed text-[1.0625rem]">{p}</p>
+          ))}
+        </div>
+
+        <!-- Awards / recognition row -->
+        <div class="flex flex-wrap gap-6 mt-10 pt-8 border-t border-stone-200">
+          <div class="text-center">
+            <p class="font-serif text-3xl text-charcoal">2019</p>
+            <p class="font-sans text-xs text-stone-400 tracking-wider uppercase mt-1">Established</p>
+          </div>
+          <div class="w-px bg-stone-200 self-stretch hidden sm:block"></div>
+          <div class="text-center">
+            <p class="font-serif text-3xl text-charcoal">4.8★</p>
+            <p class="font-sans text-xs text-stone-400 tracking-wider uppercase mt-1">Yelp Rating</p>
+          </div>
+          <div class="w-px bg-stone-200 self-stretch hidden sm:block"></div>
+          <div class="text-center">
+            <p class="font-serif text-3xl text-charcoal">JB</p>
+            <p class="font-sans text-xs text-stone-400 tracking-wider uppercase mt-1">Semifinalist '23</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ambiance photo -->
+      <div class="relative">
+        <div class="absolute -top-6 -right-6 w-full h-full border-2 border-gold/30 hidden lg:block" aria-hidden="true"></div>
+        <img
+          src={`${about.ambiance}&w=1000`}
+          srcset={`${about.ambiance}&w=600 600w, ${about.ambiance}&w=1000 1000w`}
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          alt={about.ambianceAlt}
+          class="relative w-full object-cover aspect-[4/3] lg:aspect-[3/4]"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <!-- Chef bio -->
+    <div class="bg-charcoal text-white p-8 sm:p-12 lg:p-16 flex flex-col sm:flex-row items-start gap-8 lg:gap-12">
+
+      <!-- Chef portrait -->
+      <div class="flex-shrink-0">
+        <div class="relative w-28 h-28 sm:w-36 sm:h-36">
+          <img
+            src={`${about.chef.photo}&w=400`}
+            srcset={`${about.chef.photo}&w=200 200w, ${about.chef.photo}&w=400 400w`}
+            alt={about.chef.photoAlt}
+            class="w-full h-full object-cover object-top rounded-full border-2 border-gold/40"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="absolute inset-0 rounded-full ring-1 ring-gold/20" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div>
+        <p class="font-sans text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">
+          Meet the Chef
+        </p>
+        <h3 class="font-serif text-2xl sm:text-3xl text-white mb-1">
+          {about.chef.name}
+        </h3>
+        <p class="font-sans text-white/50 text-sm mb-5">{about.chef.title}</p>
+        <p class="font-sans text-white/70 leading-relaxed text-base max-w-xl">
+          {about.chef.bio}
+        </p>
+
+        <!-- Decorative quote mark -->
+        <blockquote class="mt-6 pl-5 border-l-2 border-gold/40">
+          <p class="font-serif italic text-white/60 text-base leading-relaxed">
+            "The ocean teaches you patience. Italy teaches you precision. San Diego taught me to love both."
+          </p>
+          <footer class="mt-2 font-sans text-white/40 text-xs">— {about.chef.name}</footer>
+        </blockquote>
+      </div>
+    </div>
+
+  </div>
+</section>

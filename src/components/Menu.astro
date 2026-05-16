@@ -1,0 +1,185 @@
+---
+import { restaurant } from '../data/restaurant';
+
+const { categories, note, dietaryKey } = restaurant.menu;
+
+const dietarySymbols: Record<string, string> = {
+  vegetarian: 'V',
+  vegan: 'VG',
+  'gluten-free': 'GF',
+  'contains-nuts': 'N',
+};
+---
+
+<section id="menu" class="section-padding bg-cream" aria-labelledby="menu-heading">
+  <div class="container-narrow">
+
+    <!-- Section header -->
+    <div class="text-center mb-14">
+      <p class="section-label mb-4">Curated Seasonal</p>
+      <h2 id="menu-heading" class="section-title">Our Menu</h2>
+      <div class="flex justify-center mt-5 mb-6">
+        <div class="divider-gold"></div>
+      </div>
+      <p class="font-sans text-stone-500 text-sm max-w-sm mx-auto leading-relaxed">
+        Menu reflects what's freshest today. Ask your server about tonight's catch.
+      </p>
+    </div>
+
+    <!-- Category tabs (desktop) -->
+    <div
+      class="flex flex-wrap justify-center gap-2 mb-12 no-print"
+      role="tablist"
+      aria-label="Menu categories"
+    >
+      {categories.map((cat, i) => (
+        <button
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${cat.id}`}
+          id={`tab-${cat.id}`}
+          class={`menu-tab font-sans text-xs font-semibold tracking-[0.2em] uppercase px-5 py-2.5 border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${
+            i === 0
+              ? 'bg-charcoal text-white border-charcoal'
+              : 'bg-transparent text-stone-500 border-stone-200 hover:border-charcoal hover:text-charcoal'
+          }`}
+          data-category={cat.id}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Print-only header (hidden on screen) -->
+    <div class="menu-print-header hidden text-center mb-8">
+      <h1 class="text-3xl font-serif">{restaurant.name}</h1>
+      <p class="text-sm text-stone-500 mt-1">{restaurant.address.full} · {restaurant.phone}</p>
+    </div>
+
+    <!-- Menu panels -->
+    <div>
+      {categories.map((cat, catIdx) => (
+        <div
+          id={`panel-${cat.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${cat.id}`}
+          class={`menu-panel ${catIdx === 0 ? '' : 'hidden'}`}
+        >
+          <!-- Print section heading -->
+          <h3 class="hidden print:block font-serif text-2xl mb-4 border-b border-stone-200 pb-2">
+            {cat.name}
+          </h3>
+
+          <div class="space-y-6">
+            {cat.items.map(item => (
+              <div class="group flex gap-6 items-start">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-1">
+                    <h3 class="font-serif text-lg text-charcoal font-medium">
+                      {item.name}
+                    </h3>
+                    {item.dietary && item.dietary.map(d => (
+                      <span
+                        class="font-sans text-[0.6rem] font-bold tracking-wider text-sage uppercase"
+                        aria-label={d}
+                        title={d.charAt(0).toUpperCase() + d.slice(1)}
+                      >
+                        {dietarySymbols[d]}
+                      </span>
+                    ))}
+                  </div>
+                  <p class="font-sans text-sm text-stone-500 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+                <!-- Dot leader + price -->
+                <div class="flex-shrink-0 pt-1 flex items-start gap-2">
+                  <div class="hidden sm:block w-16 border-b border-dotted border-stone-300 mt-2.5"></div>
+                  <span class="font-serif text-base text-charcoal font-medium whitespace-nowrap">
+                    {item.price === 'Market' ? 'M.P.' : `$${item.price}`}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Divider between print sections -->
+          <div class="hidden print:block my-6 border-b border-stone-200"></div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Dietary key + print action -->
+    <div class="mt-14 pt-8 border-t border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex flex-wrap gap-x-5 gap-y-1">
+        {dietaryKey.map(k => (
+          <span class="font-sans text-xs text-stone-400">
+            <span class="font-bold text-sage">{k.symbol}</span>
+            &nbsp;{k.label}
+          </span>
+        ))}
+      </div>
+
+      <div class="flex gap-3 no-print">
+        <button
+          id="print-menu"
+          class="flex items-center gap-2 font-sans text-xs font-semibold tracking-[0.15em] uppercase text-stone-500 hover:text-charcoal transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal focus-visible:ring-offset-2"
+          aria-label="Print menu"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 7V3h10v4" />
+            <rect x="2" y="7" width="16" height="9" rx="1" />
+            <path d="M5 12h10M5 15h6" />
+          </svg>
+          Print / PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu note -->
+    <p class="mt-6 font-sans text-xs text-stone-400 leading-relaxed max-w-2xl">
+      {note}
+    </p>
+  </div>
+</section>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.menu-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.menu-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.category!;
+
+      tabs.forEach(t => {
+        const active = t.dataset.category === target;
+        t.setAttribute('aria-selected', String(active));
+        t.classList.toggle('bg-charcoal', active);
+        t.classList.toggle('text-white', active);
+        t.classList.toggle('border-charcoal', active);
+        t.classList.toggle('text-stone-500', !active);
+        t.classList.toggle('border-stone-200', !active);
+      });
+
+      panels.forEach(p => {
+        p.classList.toggle('hidden', p.id !== `panel-${target}`);
+      });
+    });
+  });
+
+  // Print: show all panels before printing
+  const printBtn = document.getElementById('print-menu')!;
+  printBtn.addEventListener('click', () => {
+    panels.forEach(p => p.classList.remove('hidden'));
+    window.print();
+    // Restore after print dialog closes
+    window.addEventListener('afterprint', () => {
+      const activeTab = document.querySelector<HTMLButtonElement>('[aria-selected="true"]');
+      const activeId = activeTab?.dataset.category;
+      panels.forEach(p => {
+        p.classList.toggle('hidden', p.id !== `panel-${activeId}`);
+      });
+    }, { once: true });
+  });
+</script>
