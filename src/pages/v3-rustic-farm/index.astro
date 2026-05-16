@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/themed/Nav.astro';
+import HeroV3 from '../../components/heroes/HeroV3.astro';
+import InfoBar from '../../components/themed/InfoBar.astro';
+import Menu from '../../components/themed/Menu.astro';
+import Gallery from '../../components/themed/Gallery.astro';
+import About from '../../components/themed/About.astro';
+import Reservations from '../../components/themed/Reservations.astro';
+import Contact from '../../components/themed/Contact.astro';
+import Footer from '../../components/themed/Footer.astro';
+import { restaurant } from '../../data/restaurants/v3';
+---
+
+<Layout
+  restaurant={restaurant}
+  theme="v3"
+  fontUrl="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap"
+>
+  <Nav restaurant={restaurant} />
+  <HeroV3 restaurant={restaurant} />
+  <InfoBar restaurant={restaurant} />
+  <Menu restaurant={restaurant} />
+  <Gallery restaurant={restaurant} />
+  <About restaurant={restaurant} />
+  <Reservations restaurant={restaurant} />
+  <Contact restaurant={restaurant} />
+  <Footer restaurant={restaurant} />
+</Layout>

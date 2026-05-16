@@ -1,0 +1,129 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const { categories, note, dietaryKey } = restaurant.menu;
+const symbols: Record<string, string> = { vegetarian:'V', vegan:'VG', 'gluten-free':'GF', 'contains-nuts':'N' };
+---
+
+<section id="menu" class="section-padding" style="background-color: var(--t-bg);" aria-labelledby="t-menu-heading">
+  <div class="container-narrow">
+
+    <div class="text-center mb-14">
+      <p class="t-label mb-4">Curated Seasonal</p>
+      <h2 id="t-menu-heading" class="t-title">Our Menu</h2>
+      <div class="flex justify-center mt-5 mb-6"><div class="t-divider"></div></div>
+      <p class="text-sm max-w-xs mx-auto leading-relaxed" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+        Ask your server about tonight's specials and market availability.
+      </p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap justify-center gap-2 mb-12 no-print" role="tablist" aria-label="Menu categories">
+      {categories.map((cat, i) => (
+        <button role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`t-panel-${cat.id}`}
+          id={`t-tab-${cat.id}`}
+          class="t-tab text-xs font-semibold tracking-[0.2em] uppercase px-5 py-2.5 border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2"
+          data-category={cat.id}
+          data-active={String(i === 0)}
+          style={i === 0
+            ? `background-color: var(--t-dark); color: var(--t-text-light); border-color: var(--t-dark); font-family: var(--t-body-font);`
+            : `background: transparent; color: var(--t-text-muted); border-color: var(--t-border-strong); font-family: var(--t-body-font);`}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Print header -->
+    <div class="menu-print-header hidden text-center mb-8">
+      <h1 class="text-3xl" style="font-family: var(--t-heading-font);">{restaurant.name}</h1>
+      <p class="text-sm mt-1" style="color: var(--t-text-muted);">{restaurant.address.full} · {restaurant.phone}</p>
+    </div>
+
+    <!-- Panels -->
+    {categories.map((cat, catIdx) => (
+      <div id={`t-panel-${cat.id}`} role="tabpanel" aria-labelledby={`t-tab-${cat.id}`}
+        class={`t-menu-panel ${catIdx > 0 ? 'hidden' : ''}`}
+      >
+        <div class="space-y-6">
+          {cat.items.map(item => (
+            <div class="flex gap-6 items-start">
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-1">
+                  <h3 class="text-lg font-medium" style="font-family: var(--t-heading-font); color: var(--t-text);">{item.name}</h3>
+                  {item.dietary?.map(d => (
+                    <span class="text-[0.6rem] font-bold tracking-wider uppercase" style="color: var(--t-gold);" title={d}>{symbols[d]}</span>
+                  ))}
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--t-text-muted); font-family: var(--t-body-font);">{item.description}</p>
+              </div>
+              <div class="flex-shrink-0 pt-1 flex items-start gap-2">
+                <div class="hidden sm:block w-16 border-b border-dotted mt-2.5" style="border-color: var(--t-border-strong);"></div>
+                <span class="text-base font-medium whitespace-nowrap" style="font-family: var(--t-heading-font); color: var(--t-text);">
+                  {item.price === 'Market' ? 'M.P.' : `$${item.price}`}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <!-- Footer row -->
+    <div class="mt-14 pt-8 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style="border-color: var(--t-border);">
+      <div class="flex flex-wrap gap-x-5 gap-y-1">
+        {dietaryKey.map(k => (
+          <span class="text-xs" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+            <span class="font-bold" style="color: var(--t-gold);">{k.symbol}</span>&nbsp;{k.label}
+          </span>
+        ))}
+      </div>
+      <button id="t-print-menu" class="no-print flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2"
+        style="color: var(--t-text-muted); font-family: var(--t-body-font);"
+        aria-label="Print menu"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 7V3h10v4"/><rect x="2" y="7" width="16" height="9" rx="1"/><path d="M5 12h10M5 15h6"/>
+        </svg>
+        Print / PDF
+      </button>
+    </div>
+    <p class="mt-6 text-xs leading-relaxed max-w-2xl" style="color: var(--t-text-muted); font-family: var(--t-body-font);">{note}</p>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.t-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.t-menu-panel');
+  const dark = getComputedStyle(document.body).getPropertyValue('--t-dark').trim();
+  const light = getComputedStyle(document.body).getPropertyValue('--t-text-light').trim();
+  const muted = getComputedStyle(document.body).getPropertyValue('--t-text-muted').trim();
+  const border = getComputedStyle(document.body).getPropertyValue('--t-border-strong').trim();
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.category!;
+      tabs.forEach(t => {
+        const active = t.dataset.category === target;
+        t.style.backgroundColor = active ? dark : 'transparent';
+        t.style.color = active ? light : muted;
+        t.style.borderColor = active ? dark : border;
+        t.setAttribute('aria-selected', String(active));
+      });
+      panels.forEach(p => p.classList.toggle('hidden', p.id !== `t-panel-${target}`));
+    });
+  });
+
+  const printBtn = document.getElementById('t-print-menu');
+  printBtn?.addEventListener('click', () => {
+    panels.forEach(p => p.classList.remove('hidden'));
+    window.print();
+    window.addEventListener('afterprint', () => {
+      const active = document.querySelector<HTMLButtonElement>('[aria-selected="true"]')?.dataset.category;
+      panels.forEach(p => p.classList.toggle('hidden', p.id !== `t-panel-${active}`));
+    }, { once: true });
+  });
+</script>

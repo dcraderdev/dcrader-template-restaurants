@@ -1,0 +1,37 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const lines = restaurant.heroHeadline.split('\n');
+---
+
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden" aria-label="Hero">
+  <img
+    src={`${restaurant.hero.image}&w=1920`}
+    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    sizes="100vw"
+    alt={restaurant.hero.imageAlt}
+    class="absolute inset-0 w-full h-full object-cover object-center"
+    fetchpriority="high" loading="eager" decoding="async"
+  />
+  <!-- Warm earthy diagonal overlay -->
+  <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(42,26,10,0.88) 0%, rgba(42,26,10,0.60) 55%, rgba(42,26,10,0.28) 100%);" aria-hidden="true"></div>
+  <!-- Subtle texture -->
+  <div class="absolute inset-0 opacity-[0.07] bg-grain" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto w-full px-8 lg:px-16 py-24">
+    <div class="border-l-2 pl-8 sm:pl-12" style="border-color: var(--t-gold);">
+      <p class="text-[0.7rem] font-semibold uppercase mb-6 tracking-[0.3em]" style="color: var(--t-gold); font-family: var(--t-body-font);">Est. 2018 · {restaurant.city}</p>
+      <h1 class="leading-tight mb-8" style="font-family: var(--t-heading-font);">
+        {lines.map((line, i) => (
+          <span class={`block text-[2.75rem] sm:text-[4rem] lg:text-[5.5rem]${i > 0 ? ' italic' : ''}`} style="color: white;">{line}</span>
+        ))}
+      </h1>
+      <p class="text-base sm:text-lg leading-relaxed mb-10 max-w-md" style="color: rgba(248,243,232,0.72); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#reservations" class="t-btn-primary">Book a Table</a>
+        <a href="#menu" class="t-btn-ghost-white">This Week's Menu</a>
+      </div>
+    </div>
+  </div>
+</section>

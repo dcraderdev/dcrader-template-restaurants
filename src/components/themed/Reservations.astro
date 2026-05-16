@@ -1,0 +1,142 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+---
+
+<section id="reservations" class="section-padding relative overflow-hidden" style="background-color: var(--t-surface);" aria-labelledby="t-res-heading">
+  <div class="container-narrow relative">
+    <div class="text-center mb-12">
+      <p class="t-label mb-4">Join Us</p>
+      <h2 id="t-res-heading" class="t-title">Reserve a Table</h2>
+      <div class="flex justify-center mt-5 mb-6"><div class="t-divider"></div></div>
+      <p class="text-sm max-w-sm mx-auto leading-relaxed" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+        We hold reservations for 15 minutes. For groups of 8+, please call us directly.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+      <!-- Form -->
+      <form id="t-res-form" class="lg:col-span-3 p-8 sm:p-10" style="background-color: var(--t-bg);" novalidate aria-label="Reservation request">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+          <!-- Name -->
+          <div class="sm:col-span-2">
+            <label for="t-res-name" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+              Name <span style="color: var(--t-accent);" aria-hidden="true">*</span>
+            </label>
+            <input id="t-res-name" type="text" name="name" required autocomplete="name" placeholder="Your full name"
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            />
+          </div>
+          <!-- Email -->
+          <div>
+            <label for="t-res-email" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+              Email <span style="color: var(--t-accent);" aria-hidden="true">*</span>
+            </label>
+            <input id="t-res-email" type="email" name="email" required autocomplete="email" placeholder="you@example.com"
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            />
+          </div>
+          <!-- Phone -->
+          <div>
+            <label for="t-res-phone" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">Phone</label>
+            <input id="t-res-phone" type="tel" name="phone" autocomplete="tel" placeholder="(555) 555-0000"
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            />
+          </div>
+          <!-- Date -->
+          <div>
+            <label for="t-res-date" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+              Date <span style="color: var(--t-accent);" aria-hidden="true">*</span>
+            </label>
+            <input id="t-res-date" type="date" name="date" required
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            />
+          </div>
+          <!-- Time -->
+          <div>
+            <label for="t-res-time" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+              Time <span style="color: var(--t-accent);" aria-hidden="true">*</span>
+            </label>
+            <select id="t-res-time" name="time" required
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200 appearance-none"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            >
+              <option value="" disabled selected>Select a time</option>
+              {['5:00 PM','5:30 PM','6:00 PM','6:30 PM','7:00 PM','7:30 PM','8:00 PM','8:30 PM','9:00 PM','9:30 PM'].map(t => (
+                <option value={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+          <!-- Party -->
+          <div>
+            <label for="t-res-party" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">
+              Party Size <span style="color: var(--t-accent);" aria-hidden="true">*</span>
+            </label>
+            <select id="t-res-party" name="party" required
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200 appearance-none"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            >
+              <option value="" disabled selected>Select</option>
+              {[1,2,3,4,5,6,7].map(n => <option value={n}>{n} {n === 1 ? 'guest' : 'guests'}</option>)}
+              <option value="8+">8+ (call us)</option>
+            </select>
+          </div>
+          <!-- Notes -->
+          <div class="sm:col-span-2">
+            <label for="t-res-notes" class="block text-xs font-semibold tracking-[0.15em] uppercase mb-2" style="color: var(--t-text-muted); font-family: var(--t-body-font);">Special Requests</label>
+            <textarea id="t-res-notes" name="notes" rows="3" placeholder="Allergies, celebrations, seating preferences…"
+              class="w-full px-4 py-3 border text-sm focus:outline-none transition-colors duration-200 resize-none"
+              style="border-color: var(--t-border-strong); background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);"
+            ></textarea>
+          </div>
+        </div>
+        <button type="submit" class="t-btn-primary w-full justify-center">Request Reservation</button>
+        <div id="t-res-success" class="hidden mt-4 p-4 border text-sm text-center" style="border-color: var(--t-gold); color: var(--t-accent);" role="alert" aria-live="polite">
+          Thank you! We'll confirm your reservation within 2 hours.
+        </div>
+      </form>
+
+      <!-- Sidebar -->
+      <aside class="lg:col-span-2 flex flex-col gap-6">
+        <div class="p-7" style="background-color: var(--t-dark);">
+          <p class="text-xs font-semibold tracking-[0.2em] uppercase mb-3 opacity-40" style="color: var(--t-text-light); font-family: var(--t-body-font);">Prefer to call?</p>
+          <a href={`tel:${restaurant.phone.replace(/\D/g, '')}`}
+            class="text-2xl hover:opacity-80 transition-opacity"
+            style="font-family: var(--t-heading-font); color: var(--t-text-light);"
+          >{restaurant.phone}</a>
+          <p class="text-sm mt-2 opacity-50" style="color: var(--t-text-light); font-family: var(--t-body-font);">During dinner service hours</p>
+        </div>
+        <div class="space-y-4 text-sm" style="font-family: var(--t-body-font); color: var(--t-text-muted);">
+          {[
+            'We hold tables for 15 minutes. Please call if you\'ll be late.',
+            'Confirmation sent by email within 2 hours.',
+            'Groups of 8+ please call for private dining inquiry.',
+          ].map(text => (
+            <div class="flex gap-3 items-start">
+              <div class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background-color: var(--t-accent);"></div>
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('t-res-form') as HTMLFormElement | null;
+  if (form) {
+    const dateInput = document.getElementById('t-res-date') as HTMLInputElement;
+    if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('t-res-success')!.classList.remove('hidden');
+      form.reset();
+    });
+  }
+</script>

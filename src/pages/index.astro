@@ -1,26 +1,138 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import InfoBar from '../components/InfoBar.astro';
-import Menu from '../components/Menu.astro';
-import Gallery from '../components/Gallery.astro';
-import About from '../components/About.astro';
-import Reservations from '../components/Reservations.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
+import '../global.css';
+
+const templates = [
+  {
+    slug: 'v1-warm-italian',
+    name: 'Bella Sole',
+    style: 'Warm Italian',
+    description: 'Terracotta & cream. Playfair Display serif. Classic, candlelit warmth.',
+    cuisine: 'Coastal Italian · La Jolla, CA',
+    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80',
+    accent: '#C4714A',
+    bg: '#FDFAF4',
+    text: '#1C1208',
+  },
+  {
+    slug: 'v2-modern-minimal',
+    name: 'North & Pine',
+    style: 'Modern Minimal',
+    description: 'Near-mono palette. DM Serif Display. Extreme whitespace, no gradients.',
+    cuisine: 'Contemporary American · West Village, NYC',
+    image: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80',
+    accent: '#1A3A2E',
+    bg: '#FAFAF8',
+    text: '#0C0C0A',
+  },
+  {
+    slug: 'v3-rustic-farm',
+    name: 'Hen & Hearth',
+    style: 'Rustic Farm',
+    description: 'Warm parchment, earthy wood tones. Libre Baskerville italic. Border-left hero.',
+    cuisine: 'Farm-to-Table · Woodstock, VT',
+    image: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80',
+    accent: '#7A5230',
+    bg: '#F8F3E8',
+    text: '#2A1A0A',
+  },
+  {
+    slug: 'v4-bold-color',
+    name: 'Casa Verde',
+    style: 'Bold Color',
+    description: 'Vivid red-orange overlay. Oswald condensed at 10rem. High energy & contrast.',
+    cuisine: 'Modern Mediterranean · Echo Park, LA',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80',
+    accent: '#D64A1A',
+    bg: '#FFFEF9',
+    text: '#180A00',
+  },
+  {
+    slug: 'v5-dark-elegant',
+    name: 'Ember',
+    style: 'Dark Elegant',
+    description: 'Near-black with gold. Cormorant Garamond. Dramatic moody luxury steakhouse.',
+    cuisine: 'Prime Steaks & Spirits · River North, Chicago',
+    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80',
+    accent: '#C9A84C',
+    bg: '#0B0A08',
+    text: '#EDE8DE',
+  },
+];
 ---
 
-<Layout>
-  <Nav />
-  <main>
-    <Hero />
-    <InfoBar />
-    <Menu />
-    <Gallery />
-    <About />
-    <Reservations />
-    <Contact />
-  </main>
-  <Footer />
-</Layout>
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="5 distinct restaurant website templates — each a different aesthetic. Warm Italian, Modern Minimal, Rustic Farm, Bold Color, Dark Elegant." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <title>Restaurant Templates — 5 Distinct Designs</title>
+    <style>
+      body { background: #0D0C0A; color: #EDE8DE; font-family: 'Inter', system-ui, sans-serif; margin: 0; }
+      .card-img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+      .card:hover .card-img { transform: scale(1.04); }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header style="max-width: 64rem; margin: 0 auto; padding: 5rem 1.5rem 4rem; text-align: center;">
+      <p style="font-size: 0.67rem; font-weight: 600; letter-spacing: 0.4em; text-transform: uppercase; color: #C9A84C; margin: 0 0 1.5rem;">Restaurant Templates</p>
+      <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; color: #EDE8DE; margin: 0 0 1.5rem;">
+        Five Distinct<br /><em>Restaurant Designs</em>
+      </h1>
+      <p style="font-size: 1rem; line-height: 1.7; color: rgba(237,232,222,0.50); max-width: 36rem; margin: 0 auto;">
+        Each template is a complete, deployable restaurant website. Swap one config file to personalize for any establishment.
+      </p>
+    </header>
+
+    <!-- Template grid -->
+    <main style="max-width: 76rem; margin: 0 auto; padding: 0 1.5rem 6rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+        {templates.map((t, i) => (
+          <a
+            href={`/${t.slug}`}
+            class="card"
+            style={`display: block; text-decoration: none; overflow: hidden; background: ${t.bg};${i === 0 ? ' grid-column: span 2;' : ''}`}
+          >
+            <!-- Image -->
+            <div style={`overflow: hidden; height: ${i === 0 ? '440px' : '300px'};`}>
+              <img
+                src={t.image}
+                alt={`${t.name} — ${t.style} template preview`}
+                class="card-img"
+                style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                loading={i < 2 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </div>
+            <!-- Info -->
+            <div style={`padding: 1.5rem; background: ${t.bg};`}>
+              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
+                <div>
+                  <p style={`font-size: 0.62rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: ${t.accent}; margin: 0 0 0.25rem;`}>{t.style}</p>
+                  <h2 style={`font-family: 'Playfair Display', serif; font-size: 1.5rem; color: ${t.text}; margin: 0;`}>{t.name}</h2>
+                </div>
+                <span style={`flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: ${t.accent};`} aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </span>
+              </div>
+              <p style={`font-size: 0.875rem; line-height: 1.6; color: ${t.text}; opacity: 0.5; margin: 0 0 0.5rem;`}>{t.description}</p>
+              <p style={`font-size: 0.75rem; color: ${t.accent}; opacity: 0.7; margin: 0;`}>{t.cuisine}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Footer note -->
+      <div style="margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid rgba(237,232,222,0.08); text-align: center;">
+        <p style="font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,232,222,0.22);">
+          Built with Astro + Tailwind CSS · Photos via Unsplash (free commercial license)
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

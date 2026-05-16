@@ -1,18 +1,25 @@
 ---
 import '../global.css';
-import { restaurant } from '../data/restaurant';
+import type { RestaurantConfig } from '../data/restaurants/types';
 
 interface Props {
+  restaurant: RestaurantConfig;
+  /** data-theme attribute for CSS variable theming: v1|v2|v3|v4|v5 */
+  theme?: string;
+  /** Google Fonts URL for this template variant */
+  fontUrl?: string;
+  /** Override page title */
   title?: string;
-  description?: string;
-  ogImage?: string;
 }
 
 const {
+  restaurant,
+  theme = 'v1',
+  fontUrl = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap',
   title = restaurant.seo.title,
-  description = restaurant.seo.description,
-  ogImage = restaurant.seo.ogImage,
 } = Astro.props;
+
+const { description, ogImage, canonicalUrl } = restaurant.seo;
 ---
 
 <!doctype html>
@@ -28,7 +35,7 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:url" content={restaurant.seo.canonicalUrl} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
@@ -37,27 +44,21 @@ const {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Canonical -->
-    <link rel="canonical" href={restaurant.seo.canonicalUrl} />
-
-    <!-- Favicon -->
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Google Fonts — preconnect first for speed -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href={fontUrl} rel="stylesheet" />
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Restaurant',
       name: restaurant.name,
-      description: restaurant.seo.description,
-      url: restaurant.seo.canonicalUrl,
+      description,
+      url: canonicalUrl,
       telephone: restaurant.phone,
       email: restaurant.email,
       address: {
@@ -77,7 +78,7 @@ const {
 
     <title>{title}</title>
   </head>
-  <body class="bg-cream text-charcoal font-sans antialiased">
+  <body data-theme={theme} style="background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);">
     <slot />
   </body>
 </html>

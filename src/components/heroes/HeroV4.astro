@@ -1,0 +1,42 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const lines = restaurant.heroHeadline.split('\n');
+---
+
+<section id="hero" class="relative min-h-screen flex flex-col justify-center overflow-hidden" aria-label="Hero">
+  <img
+    src={`${restaurant.hero.image}&w=1920`}
+    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    sizes="100vw"
+    alt={restaurant.hero.imageAlt}
+    class="absolute inset-0 w-full h-full object-cover object-center"
+    style="transform: scale(1.04);"
+    fetchpriority="high" loading="eager" decoding="async"
+  />
+  <!-- Bold vivid color overlay — accent red-orange, left-heavy -->
+  <div class="absolute inset-0" style="background: linear-gradient(105deg, rgba(214,74,26,0.90) 0%, rgba(214,74,26,0.65) 45%, rgba(214,74,26,0.18) 100%);" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12 py-24">
+    <div class="max-w-2xl">
+      <div class="flex items-center gap-4 mb-8" aria-hidden="true">
+        <div class="w-8 h-0.5" style="background-color: rgba(255,255,255,0.7);"></div>
+        <p class="text-[0.68rem] font-semibold uppercase tracking-[0.45em]" style="color: rgba(255,255,255,0.82); font-family: var(--t-body-font);">{restaurant.city}</p>
+      </div>
+      <h1 class="mb-8 uppercase" style="font-family: var(--t-heading-font); font-weight: 700; line-height: 0.88;">
+        {lines.map(line => (
+          <span class="block text-[5rem] sm:text-[7rem] lg:text-[9rem] xl:text-[10.5rem]" style="color: white;">{line}</span>
+        ))}
+      </h1>
+      <p class="text-lg leading-relaxed mb-12 max-w-sm" style="color: rgba(255,255,255,0.85); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#reservations"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase transition-opacity hover:opacity-90"
+          style="background: white; color: var(--t-accent); font-family: var(--t-body-font);"
+        >Reserve Now</a>
+        <a href="#menu" class="t-btn-ghost-white">Explore Menu</a>
+      </div>
+    </div>
+  </div>
+</section>

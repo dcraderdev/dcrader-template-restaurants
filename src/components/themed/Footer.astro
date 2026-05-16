@@ -1,0 +1,94 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer style="background-color: var(--t-dark);" aria-label="Footer">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+
+      <!-- Brand -->
+      <div class="sm:col-span-2 lg:col-span-1">
+        <h2 class="text-3xl mb-2" style="font-family: var(--t-heading-font); color: var(--t-text-light);">{restaurant.name}</h2>
+        <p class="text-xs tracking-[0.2em] uppercase mb-6 opacity-40" style="color: var(--t-text-light); font-family: var(--t-body-font);">{restaurant.tagline}</p>
+        <p class="text-sm leading-relaxed max-w-xs opacity-55" style="color: var(--t-text-light); font-family: var(--t-body-font);">
+          {restaurant.cuisine} dining in {restaurant.address.city}, {restaurant.address.state}.
+        </p>
+        <div class="flex gap-3 mt-6">
+          {[
+            { href: restaurant.social.instagram, label: 'Instagram' },
+            { href: restaurant.social.facebook, label: 'Facebook' },
+            { href: restaurant.social.yelp, label: 'Yelp' },
+          ].map(({ href, label }) => (
+            <a href={href} target="_blank" rel="noopener noreferrer"
+              class="w-8 h-8 rounded-full border flex items-center justify-center transition-colors duration-200 text-xs font-bold"
+              style="border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4);"
+              aria-label={label}
+            >
+              {label[0]}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <nav aria-label="Footer navigation">
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase mb-5 opacity-40" style="color: var(--t-text-light); font-family: var(--t-body-font);">Explore</h3>
+        <ul class="space-y-3">
+          {[
+            { href: '#menu', label: 'Menu' },
+            { href: '#about', label: 'Our Story' },
+            { href: '#gallery', label: 'Gallery' },
+            { href: '#reservations', label: 'Reservations' },
+            { href: '#contact', label: 'Contact' },
+          ].map(({ href, label }) => (
+            <li>
+              <a href={href} class="text-sm opacity-55 hover:opacity-90 transition-opacity"
+                style="color: var(--t-text-light); font-family: var(--t-body-font);"
+              >{label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Hours -->
+      <div>
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase mb-5 opacity-40" style="color: var(--t-text-light); font-family: var(--t-body-font);">Hours</h3>
+        <ul class="space-y-2">
+          {restaurant.hours.map(h => (
+            <li class="flex justify-between gap-4 text-sm" style="font-family: var(--t-body-font);">
+              <span class="opacity-55" style="color: var(--t-text-light);">{h.day.slice(0,3)}</span>
+              <span class="opacity-75" style="color: var(--t-text-light);">
+                {h.open ? `${h.open.replace(':00 ', ' ')}–${h.close!.replace(':00', '')}` : 'Closed'}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase mb-5 opacity-40" style="color: var(--t-text-light); font-family: var(--t-body-font);">Contact</h3>
+        <address class="not-italic space-y-3 mb-6">
+          <p class="text-sm opacity-55 leading-relaxed" style="color: var(--t-text-light); font-family: var(--t-body-font);">
+            {restaurant.address.street}<br />{restaurant.address.city}, {restaurant.address.state} {restaurant.address.zip}
+          </p>
+          <a href={`tel:${restaurant.phone.replace(/\D/g, '')}`} class="block text-sm opacity-55 hover:opacity-90 transition-opacity" style="color: var(--t-text-light); font-family: var(--t-body-font);">{restaurant.phone}</a>
+          <a href={`mailto:${restaurant.email}`} class="block text-sm opacity-55 hover:opacity-90 transition-opacity" style="color: var(--t-text-light); font-family: var(--t-body-font);">{restaurant.email}</a>
+        </address>
+        <a href="#reservations" class="t-btn-primary text-xs py-3 px-5 inline-flex">Reserve a Table</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t" style="border-color: var(--t-border);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-xs opacity-30" style="color: var(--t-text-light); font-family: var(--t-body-font);">&copy; {year} {restaurant.name}. All rights reserved.</p>
+      <p class="text-xs opacity-20" style="color: var(--t-text-light); font-family: var(--t-body-font);">
+        Photos: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:opacity-40 transition-opacity">Unsplash</a> (free commercial license)
+      </p>
+    </div>
+  </div>
+</footer>

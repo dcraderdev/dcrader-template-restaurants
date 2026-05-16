@@ -1,0 +1,37 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const lines = restaurant.heroHeadline.split('\n');
+---
+
+<section id="hero" class="min-h-screen grid grid-cols-1 lg:grid-cols-2" aria-label="Hero">
+  <!-- Text panel -->
+  <div class="flex flex-col justify-center px-10 sm:px-16 lg:px-20 xl:px-24 py-28 lg:py-0 order-2 lg:order-1" style="background-color: var(--t-bg);">
+    <p class="text-[0.68rem] font-semibold uppercase mb-10" style="letter-spacing: var(--t-label-tracking); color: var(--t-text-muted); font-family: var(--t-body-font);">{restaurant.tagline}</p>
+    <h1 class="leading-[0.9] mb-10" style="font-family: var(--t-heading-font); color: var(--t-text);">
+      {lines.map(line => (
+        <span class="block text-[4rem] sm:text-[5.5rem] lg:text-[5.5rem] xl:text-[7rem]">{line}</span>
+      ))}
+    </h1>
+    <div class="w-10 h-px mb-10" style="background-color: var(--t-text); opacity: 0.18;" aria-hidden="true"></div>
+    <p class="text-base leading-relaxed mb-12 max-w-xs" style="color: var(--t-text-muted); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="#reservations" class="t-btn-primary">Reserve</a>
+      <a href="#menu" class="t-btn-outline">Menu</a>
+    </div>
+    <p class="mt-16 text-[0.65rem] tracking-[0.25em] uppercase" style="color: var(--t-text-muted); font-family: var(--t-body-font); opacity: 0.45;">{restaurant.address.city}, {restaurant.address.state}</p>
+  </div>
+
+  <!-- Image panel — full bleed, no overlay, pure image -->
+  <div class="relative h-64 sm:h-96 lg:h-auto order-1 lg:order-2 overflow-hidden">
+    <img
+      src={`${restaurant.hero.image}&w=1200`}
+      srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1200 1200w`}
+      sizes="(max-width: 1024px) 100vw, 50vw"
+      alt={restaurant.hero.imageAlt}
+      class="w-full h-full object-cover"
+      fetchpriority="high" loading="eager" decoding="async"
+    />
+  </div>
+</section>

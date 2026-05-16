@@ -1,0 +1,48 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const lines = restaurant.heroHeadline.split('\n');
+---
+
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden" aria-label="Hero">
+  <img
+    src={`${restaurant.hero.image}&w=1920`}
+    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    sizes="100vw"
+    alt={restaurant.hero.imageAlt}
+    class="absolute inset-0 w-full h-full object-cover object-center"
+    fetchpriority="high" loading="eager" decoding="async"
+  />
+  <!-- Near-black overlay, left-heavy for text legibility -->
+  <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(11,10,8,0.97) 0%, rgba(11,10,8,0.80) 50%, rgba(11,10,8,0.42) 100%);" aria-hidden="true"></div>
+  <!-- Vignette bottom -->
+  <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(11,10,8,0.55) 0%, transparent 40%);" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-8 lg:px-16 py-24">
+    <div class="max-w-2xl">
+      <!-- Gold eyebrow rule -->
+      <div class="flex items-center gap-4 mb-10" aria-hidden="true">
+        <div class="w-16 h-px" style="background-color: var(--t-gold);"></div>
+        <p class="text-[0.65rem] tracking-[0.45em] uppercase" style="color: var(--t-gold); font-family: var(--t-body-font);">{restaurant.city}</p>
+      </div>
+      <h1 class="leading-[0.92] mb-10" style="font-family: var(--t-heading-font);">
+        {lines.map((line, i) => (
+          <span class={`block text-[3.5rem] sm:text-[5rem] lg:text-[6.5rem] xl:text-[7.5rem]${i > 0 ? ' italic' : ''}`} style="color: var(--t-text-light);">{line}</span>
+        ))}
+      </h1>
+      <!-- Gold ornament -->
+      <div class="flex items-center gap-3 mb-10" aria-hidden="true">
+        <div class="w-8 h-px" style="background-color: var(--t-gold);"></div>
+        <div class="w-1.5 h-1.5 rounded-full" style="background-color: var(--t-gold);"></div>
+        <div class="w-8 h-px" style="background-color: var(--t-gold);"></div>
+      </div>
+      <p class="text-lg leading-relaxed mb-12 max-w-sm" style="color: rgba(237,232,222,0.62); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#reservations" class="t-btn-primary">Reserve Your Table</a>
+        <a href="#menu" class="t-btn-ghost-white">View Menu</a>
+      </div>
+      <p class="mt-14 text-[0.62rem] tracking-[0.4em] uppercase" style="color: var(--t-gold); opacity: 0.55; font-family: var(--t-body-font);">{restaurant.tagline}</p>
+    </div>
+  </div>
+</section>

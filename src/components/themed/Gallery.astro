@@ -1,0 +1,99 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const { gallery } = restaurant;
+---
+
+<section id="gallery" class="section-padding" style="background-color: var(--t-surface);" aria-labelledby="t-gallery-heading">
+  <div class="container-wide">
+    <div class="text-center mb-14">
+      <p class="t-label mb-4">A Taste of</p>
+      <h2 id="t-gallery-heading" class="t-title">{restaurant.name}</h2>
+      <div class="flex justify-center mt-5"><div class="t-divider"></div></div>
+    </div>
+
+    <!-- CSS masonry via columns -->
+    <div class="columns-2 md:columns-3 lg:columns-4 gap-3 lg:gap-4 [&>*]:mb-3 lg:[&>*]:mb-4">
+      {gallery.map((item, i) => (
+        <button
+          class="t-gallery-item group block w-full break-inside-avoid overflow-hidden focus-visible:outline-none focus-visible:ring-2"
+          style="background-color: var(--t-border);"
+          aria-label={`View photo: ${item.alt}`}
+          data-index={i}
+          data-src={item.url}
+          data-alt={item.alt}
+        >
+          <div class="relative overflow-hidden">
+            <img
+              src={`${item.url}&w=600`}
+              srcset={`${item.url}&w=400 400w, ${item.url}&w=600 600w, ${item.url}&w=900 900w`}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              alt={item.alt}
+              class="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading={i < 4 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+            <div class="absolute inset-0 transition-colors duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100" style="background-color: rgba(0,0,0,0.22);" aria-hidden="true">
+              <p class="text-white text-xs leading-snug line-clamp-2 drop-shadow">{item.alt}</p>
+            </div>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <!-- Lightbox -->
+    <div id="t-lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center" style="background-color: rgba(0,0,0,0.93);"
+      role="dialog" aria-modal="true" aria-label="Photo lightbox"
+    >
+      <button id="t-lb-close" class="absolute top-5 right-5 text-white/60 hover:text-white transition-colors" aria-label="Close">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <button id="t-lb-prev" class="absolute left-4 text-white/60 hover:text-white p-2" aria-label="Previous">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="max-w-4xl max-h-[85vh] mx-16 flex flex-col items-center gap-4">
+        <img id="t-lb-img" src="" alt="" class="max-w-full max-h-[75vh] object-contain" />
+        <p id="t-lb-cap" class="text-white/60 text-sm text-center"></p>
+      </div>
+      <button id="t-lb-next" class="absolute right-4 text-white/60 hover:text-white p-2" aria-label="Next">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = document.querySelectorAll<HTMLButtonElement>('.t-gallery-item');
+  const lb = document.getElementById('t-lightbox')!;
+  const lbImg = document.getElementById('t-lb-img') as HTMLImageElement;
+  const lbCap = document.getElementById('t-lb-cap')!;
+
+  const photos = Array.from(items).map(el => ({ src: el.dataset.src!, alt: el.dataset.alt! }));
+  let cur = 0;
+
+  function open(i: number) {
+    cur = (i + photos.length) % photos.length;
+    lbImg.src = `${photos[cur].src}&w=1200`;
+    lbImg.alt = photos[cur].alt;
+    lbCap.textContent = photos[cur].alt;
+    lb.classList.remove('hidden'); lb.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.classList.add('hidden'); lb.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  items.forEach((btn, i) => btn.addEventListener('click', () => open(i)));
+  document.getElementById('t-lb-close')!.addEventListener('click', close);
+  document.getElementById('t-lb-prev')!.addEventListener('click', () => open(cur - 1));
+  document.getElementById('t-lb-next')!.addEventListener('click', () => open(cur + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (lb.classList.contains('hidden')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') open(cur - 1);
+    if (e.key === 'ArrowRight') open(cur + 1);
+  });
+</script>

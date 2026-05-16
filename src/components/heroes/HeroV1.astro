@@ -1,0 +1,45 @@
+---
+import type { RestaurantConfig } from '../../data/restaurants/types';
+interface Props { restaurant: RestaurantConfig; }
+const { restaurant } = Astro.props;
+const lines = restaurant.heroHeadline.split('\n');
+---
+
+<section id="hero" class="relative min-h-screen flex flex-col justify-end overflow-hidden" aria-label="Hero">
+  <img
+    src={`${restaurant.hero.image}&w=1920`}
+    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    sizes="100vw"
+    alt={restaurant.hero.imageAlt}
+    class="absolute inset-0 w-full h-full object-cover object-center"
+    fetchpriority="high" loading="eager" decoding="async"
+  />
+  <div class="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 to-black/15" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-8 pb-24 lg:pb-36">
+    <div class="max-w-3xl">
+      <p class="text-[0.7rem] font-semibold tracking-[0.35em] uppercase mb-6" style="color: var(--t-gold); font-family: var(--t-body-font);">{restaurant.tagline}</p>
+      <h1 class="leading-none mb-2" style="font-family: var(--t-heading-font);">
+        {lines.map((line, i) => (
+          <span class={`block text-[3.25rem] sm:text-[4.75rem] lg:text-[6.75rem] xl:text-[8rem]${i > 0 ? ' italic' : ''}`} style="color: white;">{line}</span>
+        ))}
+      </h1>
+      <div class="flex items-center gap-4 my-8" aria-hidden="true">
+        <div class="w-12 h-px" style="background-color: var(--t-gold); opacity: 0.7;"></div>
+        <div class="w-2 h-2 rounded-full" style="background-color: var(--t-gold); opacity: 0.7;"></div>
+        <div class="w-12 h-px" style="background-color: var(--t-gold); opacity: 0.7;"></div>
+      </div>
+      <p class="text-lg sm:text-xl font-light max-w-md leading-relaxed mb-12" style="color: rgba(255,255,255,0.75); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#reservations" class="t-btn-primary">Reserve a Table</a>
+        <a href="#menu" class="t-btn-ghost-white">View Menu</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-2 select-none" style="color: rgba(255,255,255,0.38);" aria-hidden="true">
+    <span class="text-[0.6rem] tracking-[0.3em] uppercase" style="font-family: var(--t-body-font);">Discover</span>
+    <svg class="w-5 h-5 animate-float" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 4v12M4 12l6 6 6-6"/></svg>
+  </div>
+</section>
