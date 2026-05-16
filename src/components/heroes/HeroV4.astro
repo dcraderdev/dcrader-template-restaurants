@@ -18,18 +18,18 @@ const lines = restaurant.heroHeadline.split('\n');
   <div class="absolute inset-0" style="background: linear-gradient(105deg, rgba(214,74,26,0.82) 0%, rgba(214,74,26,0.52) 50%, rgba(214,74,26,0.08) 100%);" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12 py-24">
-    <div class="max-w-2xl">
-      <div class="flex items-center gap-4 mb-8" aria-hidden="true">
+    <div class="max-w-2xl" id="v4-hero-content">
+      <div class="flex items-center gap-4 mb-8 hero-line" aria-hidden="true" style="opacity:0; transform:translateY(12px); transition: opacity 0.55s ease 0.25s, transform 0.55s ease 0.25s;">
         <div class="w-8 h-0.5" style="background-color: rgba(255,255,255,0.7);"></div>
         <p class="text-[0.68rem] font-semibold uppercase tracking-[0.45em]" style="color: rgba(255,255,255,0.82); font-family: var(--t-body-font);">{restaurant.city}</p>
       </div>
       <h1 class="mb-8 uppercase" style="font-family: var(--t-heading-font); font-weight: 700; line-height: 0.88;">
-        {lines.map(line => (
-          <span class="block text-[5rem] sm:text-[7rem] lg:text-[9rem] xl:text-[10.5rem]" style="color: white;">{line}</span>
+        {lines.map((line, i) => (
+          <span class="block text-[5rem] sm:text-[7rem] lg:text-[9rem] xl:text-[10.5rem] hero-line" style={`color: white; opacity:0; transform:translateY(20px); transition: opacity 0.7s ease ${0.36 + i * 0.1}s, transform 0.7s ease ${0.36 + i * 0.1}s;`}>{line}</span>
         ))}
       </h1>
-      <p class="text-lg leading-relaxed mb-12 max-w-sm" style="color: rgba(255,255,255,0.85); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
-      <div class="flex flex-col sm:flex-row gap-4">
+      <p class="text-lg leading-relaxed mb-12 max-w-sm hero-line" style={`color: rgba(255,255,255,0.85); font-family: var(--t-body-font); opacity:0; transform:translateY(10px); transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s;`}>{restaurant.heroSubtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4 hero-line" style="opacity:0; transform:translateY(10px); transition: opacity 0.6s ease 0.82s, transform 0.6s ease 0.82s;">
         <a href="#reservations"
           class="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase transition-opacity hover:opacity-90"
           style="background: white; color: var(--t-accent); font-family: var(--t-body-font);"
@@ -39,3 +39,12 @@ const lines = restaurant.heroHeadline.split('\n');
     </div>
   </div>
 </section>
+
+<script>
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#v4-hero-content .hero-line').forEach(el => {
+      (el as HTMLElement).style.opacity = '1';
+      (el as HTMLElement).style.transform = 'translateY(0)';
+    });
+  });
+</script>

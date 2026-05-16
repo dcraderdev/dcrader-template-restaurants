@@ -80,5 +80,17 @@ const { description, ogImage, canonicalUrl } = restaurant.seo;
   </head>
   <body data-theme={theme} style="background-color: var(--t-bg); color: var(--t-text); font-family: var(--t-body-font);">
     <slot />
+    <script>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('sr-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+
+      document.querySelectorAll('.sr').forEach(el => observer.observe(el));
+    </script>
   </body>
 </html>

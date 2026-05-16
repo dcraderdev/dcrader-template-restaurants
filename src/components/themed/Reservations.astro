@@ -6,7 +6,7 @@ const { restaurant } = Astro.props;
 
 <section id="reservations" class="section-padding relative overflow-hidden" style="background-color: var(--t-surface);" aria-labelledby="t-res-heading">
   <div class="container-narrow relative">
-    <div class="text-center mb-12">
+    <div class="text-center mb-12 sr">
       <p class="t-label mb-4">Join Us</p>
       <h2 id="t-res-heading" class="t-title">Reserve a Table</h2>
       <div class="flex justify-center mt-5 mb-6"><div class="t-divider"></div></div>
@@ -15,7 +15,7 @@ const { restaurant } = Astro.props;
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 sr sr-delay-1">
       <!-- Form -->
       <form id="t-res-form" class="lg:col-span-3 p-8 sm:p-10" style="background-color: var(--t-bg);" novalidate aria-label="Reservation request">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">

@@ -20,18 +20,27 @@ const lines = restaurant.heroHeadline.split('\n');
   <div class="absolute inset-0 opacity-[0.07] bg-grain" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-5xl mx-auto w-full px-8 lg:px-16 py-24">
-    <div class="border-l-2 pl-8 sm:pl-12" style="border-color: var(--t-gold);">
-      <p class="text-[0.7rem] font-semibold uppercase mb-6 tracking-[0.3em]" style="color: var(--t-gold); font-family: var(--t-body-font);">Est. 2018 · {restaurant.city}</p>
-      <h1 class="leading-tight mb-8" style="font-family: var(--t-heading-font);">
+    <div class="border-l-2 pl-8 sm:pl-12" style="border-color: var(--t-gold);" id="v3-hero-content">
+      <p class="text-[0.7rem] font-semibold uppercase mb-6 tracking-[0.3em] hero-line" style="color: var(--t-gold); font-family: var(--t-body-font); opacity:0; transform:translateY(12px); transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;">Est. 2018 · {restaurant.city}</p>
+      <h1 class="leading-[0.95] mb-8" style="font-family: var(--t-heading-font);">
         {lines.map((line, i) => (
-          <span class={`block text-[2.75rem] sm:text-[4rem] lg:text-[5.5rem]${i > 0 ? ' italic' : ''}`} style="color: white;">{line}</span>
+          <span class={`block text-[3rem] sm:text-[4.5rem] lg:text-[6.25rem]${i > 0 ? ' italic' : ''} hero-line`} style={`color: white; opacity:0; transform:translateY(16px); transition: opacity 0.75s ease ${0.42 + i * 0.12}s, transform 0.75s ease ${0.42 + i * 0.12}s;`}>{line}</span>
         ))}
       </h1>
-      <p class="text-base sm:text-lg leading-relaxed mb-10 max-w-md" style="color: rgba(248,243,232,0.72); font-family: var(--t-body-font);">{restaurant.heroSubtitle}</p>
-      <div class="flex flex-col sm:flex-row gap-4">
+      <p class="text-base sm:text-lg leading-relaxed mb-10 max-w-md hero-line" style={`color: rgba(248,243,232,0.72); font-family: var(--t-body-font); opacity:0; transform:translateY(10px); transition: opacity 0.6s ease 0.72s, transform 0.6s ease 0.72s;`}>{restaurant.heroSubtitle}</p>
+      <div class="flex flex-col sm:flex-row gap-4 hero-line" style="opacity:0; transform:translateY(10px); transition: opacity 0.6s ease 0.84s, transform 0.6s ease 0.84s;">
         <a href="#reservations" class="t-btn-primary">Book a Table</a>
         <a href="#menu" class="t-btn-ghost-white">This Week's Menu</a>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#v3-hero-content .hero-line').forEach(el => {
+      (el as HTMLElement).style.opacity = '1';
+      (el as HTMLElement).style.transform = 'translateY(0)';
+    });
+  });
+</script>

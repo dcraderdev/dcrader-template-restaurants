@@ -7,14 +7,14 @@ const { gallery } = restaurant;
 
 <section id="gallery" class="section-padding" style="background-color: var(--t-surface);" aria-labelledby="t-gallery-heading">
   <div class="container-wide">
-    <div class="text-center mb-14">
+    <div class="text-center mb-14 sr">
       <p class="t-label mb-4">A Taste of</p>
       <h2 id="t-gallery-heading" class="t-title">{restaurant.name}</h2>
       <div class="flex justify-center mt-5"><div class="t-divider"></div></div>
     </div>
 
     <!-- CSS masonry via columns -->
-    <div class="columns-2 md:columns-3 lg:columns-4 gap-3 lg:gap-4 [&>*]:mb-3 lg:[&>*]:mb-4">
+    <div class="columns-2 md:columns-3 lg:columns-4 gap-3 lg:gap-4 [&>*]:mb-3 lg:[&>*]:mb-4 sr sr-delay-1">
       {gallery.map((item, i) => (
         <button
           class="t-gallery-item group block w-full break-inside-avoid overflow-hidden focus-visible:outline-none focus-visible:ring-2"

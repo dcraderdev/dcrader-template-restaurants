@@ -6,13 +6,13 @@ const { restaurant } = Astro.props;
 
 <section id="contact" class="section-padding" style="background-color: var(--t-surface);" aria-labelledby="t-contact-heading">
   <div class="container-wide">
-    <div class="text-center mb-14">
+    <div class="text-center mb-14 sr">
       <p class="t-label mb-4">Find Us</p>
       <h2 id="t-contact-heading" class="t-title">Visit {restaurant.name}</h2>
       <div class="flex justify-center mt-5"><div class="t-divider"></div></div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 shadow-sm overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 shadow-sm overflow-hidden sr sr-delay-1">
       <!-- Map -->
       <div class="lg:col-span-3 h-80 lg:h-full min-h-[320px]">
         <iframe

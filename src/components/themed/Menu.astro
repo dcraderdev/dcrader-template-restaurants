@@ -9,7 +9,7 @@ const symbols: Record<string, string> = { vegetarian:'V', vegan:'VG', 'gluten-fr
 <section id="menu" class="section-padding" style="background-color: var(--t-bg);" aria-labelledby="t-menu-heading">
   <div class="container-narrow">
 
-    <div class="text-center mb-14">
+    <div class="text-center mb-14 sr">
       <p class="t-label mb-4">Curated Seasonal</p>
       <h2 id="t-menu-heading" class="t-title">Our Menu</h2>
       <div class="flex justify-center mt-5 mb-6"><div class="t-divider"></div></div>
@@ -19,7 +19,7 @@ const symbols: Record<string, string> = { vegetarian:'V', vegan:'VG', 'gluten-fr
     </div>
 
     <!-- Tabs -->
-    <div class="flex flex-wrap justify-center gap-2 mb-12 no-print" role="tablist" aria-label="Menu categories">
+    <div class="flex flex-wrap justify-center gap-2 mb-12 no-print sr sr-delay-1" role="tablist" aria-label="Menu categories">
       {categories.map((cat, i) => (
         <button role="tab"
           aria-selected={i === 0 ? 'true' : 'false'}
@@ -46,7 +46,7 @@ const symbols: Record<string, string> = { vegetarian:'V', vegan:'VG', 'gluten-fr
     <!-- Panels -->
     {categories.map((cat, catIdx) => (
       <div id={`t-panel-${cat.id}`} role="tabpanel" aria-labelledby={`t-tab-${cat.id}`}
-        class={`t-menu-panel ${catIdx > 0 ? 'hidden' : ''}`}
+        class={`t-menu-panel sr sr-delay-2 ${catIdx > 0 ? 'hidden' : ''}`}
       >
         <div class="space-y-6">
           {cat.items.map(item => (

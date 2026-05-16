@@ -22,23 +22,32 @@ const lines = restaurant.heroHeadline.split('\n');
   </div>
 
   <!-- Text panel: below image on mobile, left side on desktop -->
-  <div style="order: 2; display: flex; flex-direction: column; justify-content: center; background-color: var(--t-bg); padding: 5rem 2.5rem 5rem; flex: 1 1 auto;">
-    <p style="font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: var(--t-label-tracking); color: var(--t-text-muted); font-family: var(--t-body-font); margin: 0 0 2.5rem;">{restaurant.tagline}</p>
+  <div style="order: 2; display: flex; flex-direction: column; justify-content: center; background-color: var(--t-bg); padding: 5rem 2.5rem 5rem; flex: 1 1 auto;" id="v2-hero-content">
+    <p class="v2-line" style="font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: var(--t-label-tracking); color: var(--t-text-muted); font-family: var(--t-body-font); margin: 0 0 2.5rem; opacity:0; transform:translateY(10px); transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;">{restaurant.tagline}</p>
     <h1 style="font-family: var(--t-heading-font); color: var(--t-text); line-height: 0.9; margin: 0 0 2.5rem;">
-      {lines.map(line => (
-        <span style="display: block; font-size: clamp(3rem, 8vw, 7rem);">{line}</span>
+      {lines.map((line, i) => (
+        <span class="v2-line" style={`display: block; font-size: clamp(3rem, 8vw, 7rem); opacity:0; transform:translateY(14px); transition: opacity 0.75s ease ${0.32 + i * 0.12}s, transform 0.75s ease ${0.32 + i * 0.12}s;`}>{line}</span>
       ))}
     </h1>
-    <div style="width: 2.5rem; height: 1px; background-color: var(--t-text); opacity: 0.18; margin: 0 0 2.5rem;" aria-hidden="true"></div>
-    <p style="font-size: 1rem; line-height: 1.7; color: var(--t-text-muted); font-family: var(--t-body-font); max-width: 22rem; margin: 0 0 3rem;">{restaurant.heroSubtitle}</p>
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    <div class="v2-line" style="width: 2.5rem; height: 1px; background-color: var(--t-text); opacity:0; margin: 0 0 2.5rem; transition: opacity 0.6s ease 0.66s;" aria-hidden="true"></div>
+    <p class="v2-line" style={`font-size: 1rem; line-height: 1.7; color: var(--t-text-muted); font-family: var(--t-body-font); max-width: 22rem; margin: 0 0 3rem; opacity:0; transform:translateY(8px); transition: opacity 0.6s ease 0.78s, transform 0.6s ease 0.78s;`}>{restaurant.heroSubtitle}</p>
+    <div class="v2-line" style="display: flex; gap: 1rem; flex-wrap: wrap; opacity:0; transform:translateY(8px); transition: opacity 0.6s ease 0.9s, transform 0.6s ease 0.9s;">
       <a href="#reservations" class="t-btn-primary">Reserve</a>
       <a href="#menu" class="t-btn-outline">Menu</a>
     </div>
-    <p style="margin-top: 4rem; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--t-text-muted); font-family: var(--t-body-font); opacity: 0.45;">{restaurant.address.city}, {restaurant.address.state}</p>
+    <p class="v2-line" style="margin-top: 4rem; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--t-text-muted); font-family: var(--t-body-font); opacity:0; transition: opacity 0.6s ease 1.02s;">{restaurant.address.city}, {restaurant.address.state}</p>
   </div>
 
 </section>
+
+<script>
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#v2-hero-content .v2-line').forEach(el => {
+      (el as HTMLElement).style.opacity = '1';
+      (el as HTMLElement).style.transform = 'translateY(0)';
+    });
+  });
+</script>
 
 <style>
   @media (min-width: 1024px) {
