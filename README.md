@@ -1,43 +1,73 @@
-# Astro Starter Kit: Minimal
+# dcrader-template-restaurants
+
+> Restaurant / café landing page template — one of 5 industry templates in Donovan's client outreach pipeline.
+
+**Live demo:** https://dcrader-template-restaurants.vercel.app
+
+**Demo restaurant:** Bella Sole — Coastal Italian, La Jolla, San Diego (fictional)
+
+---
+
+## Stack
+
+| Tool | Version |
+|------|---------|
+| Astro | 6.x |
+| Tailwind CSS | v4 (CSS-first config) |
+| Deploy | Vercel (static) |
+| Node | ≥ 22.12 |
+
+## Personalize in one file
+
+Every piece of content — name, cuisine, address, hours, menu, gallery photos, chef bio, social links, SEO tags — lives in **`src/data/restaurant.ts`**. Swap that file to generate a new prospect demo.
+
+```ts
+// src/data/restaurant.ts
+export const restaurant = {
+  name: 'Your Restaurant',
+  tagline: 'Cuisine · City',
+  heroHeadline: 'Your tagline\nhere',
+  phone: '(555) 555-0000',
+  address: { ... },
+  hours: [ ... ],
+  menu: { categories: [ ... ] },
+  gallery: [ ... ],
+  // ...
+};
+```
+
+## Sections
+
+| Section | Notes |
+|---------|-------|
+| **Nav** | Fixed, transparent over hero → solid on scroll. Mobile hamburger. |
+| **Hero** | Full-viewport photo, serif headline, dual CTA. |
+| **Info bar** | Address / today's hours / phone — instant mobile lookup. |
+| **Menu** | Tabbed categories, dietary labels, `window.print()` → PDF. |
+| **Gallery** | CSS masonry + lightbox (keyboard navigable). |
+| **About** | Story paragraphs + chef portrait + pull quote. |
+| **Reservations** | Form UI (wire up Formspree/your backend) or swap `openTableId` in config to embed OpenTable widget. |
+| **Contact** | Google Maps embed, hours by day, social links. |
+| **Footer** | Full hours, nav, contact, social, photo credits. |
+
+## Commands
 
 ```sh
-npm create astro@latest -- --template minimal
+# Requires Node 22+
+nvm use   # reads .nvmrc
+
+npm install
+npm run dev      # localhost:4321
+npm run build    # ./dist/
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deploy
 
-## 🚀 Project Structure
+Connected to Vercel via GitHub. Every push to `main` triggers a production deploy.
 
-Inside of your Astro project, you'll see the following folders and files:
+Target domain: `restaurants.dcrader.dev` (DNS CNAME → `cname.vercel-dns.com`)
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Photo credits
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+All photos from [Unsplash](https://unsplash.com/license) — free commercial license. Attribution listed in `src/data/restaurant.ts` comments.
