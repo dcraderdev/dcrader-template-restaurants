@@ -37,10 +37,10 @@ export const restaurant: RestaurantConfig = {
   openTableId: null,
   reservationPhone: '(212) 555-0831',
   hero: {
-    // Clean plated dish, fine dining
-    image: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=800&q=80',
-    imageAlt: 'North & Pine — a precisely plated seasonal tasting course',
+    // Fine dining dining room — portrait crop reads differently from V1's full-bleed treatment
+    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=85',
+    imageMobile: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+    imageAlt: 'North & Pine — the dining room at 14 Commerce Street',
   },
   about: {
     headline: 'Restraint as a form of generosity',
