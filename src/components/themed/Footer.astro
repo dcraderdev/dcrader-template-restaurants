@@ -86,9 +86,12 @@ const year = new Date().getFullYear();
   <div class="border-t" style="border-color: var(--t-border);">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
       <p class="text-xs opacity-30" style="color: var(--t-text-light); font-family: var(--t-body-font);">&copy; {year} {restaurant.name}. All rights reserved.</p>
-      <p class="text-xs opacity-20" style="color: var(--t-text-light); font-family: var(--t-body-font);">
-        Photos: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:opacity-40 transition-opacity">Unsplash</a> (free commercial license)
-      </p>
+      <div class="flex items-center gap-6">
+        <a href="/" class="text-xs opacity-20 hover:opacity-50 transition-opacity" style="color: var(--t-text-light); font-family: var(--t-body-font); text-decoration: none; letter-spacing: 0.12em;">← All Templates</a>
+        <p class="text-xs opacity-20" style="color: var(--t-text-light); font-family: var(--t-body-font);">
+          Photos: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:opacity-40 transition-opacity">Unsplash</a>
+        </p>
+      </div>
     </div>
   </div>
 </footer>

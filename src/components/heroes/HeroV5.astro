@@ -7,15 +7,15 @@ const lines = restaurant.heroHeadline.split('\n');
 
 <section id="hero" class="relative min-h-screen flex items-center overflow-hidden" aria-label="Hero">
   <img
-    src={`${restaurant.hero.image}&w=1920`}
-    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    src={restaurant.hero.image}
+    srcset={`${restaurant.hero.imageMobile} 800w, ${restaurant.hero.image} 1920w`}
     sizes="100vw"
     alt={restaurant.hero.imageAlt}
     class="absolute inset-0 w-full h-full object-cover object-center"
     fetchpriority="high" loading="eager" decoding="async"
   />
-  <!-- Near-black overlay, left-heavy for text legibility -->
-  <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(11,10,8,0.97) 0%, rgba(11,10,8,0.80) 50%, rgba(11,10,8,0.42) 100%);" aria-hidden="true"></div>
+  <!-- Near-black overlay — dramatic moody steakhouse, steak visible through right side -->
+  <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(11,10,8,0.93) 0%, rgba(11,10,8,0.72) 50%, rgba(11,10,8,0.35) 100%);" aria-hidden="true"></div>
   <!-- Vignette bottom -->
   <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(11,10,8,0.55) 0%, transparent 40%);" aria-hidden="true"></div>
 

@@ -7,8 +7,8 @@ const lines = restaurant.heroHeadline.split('\n');
 
 <section id="hero" class="relative min-h-screen flex items-center overflow-hidden" aria-label="Hero">
   <img
-    src={`${restaurant.hero.image}&w=1920`}
-    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    src={restaurant.hero.image}
+    srcset={`${restaurant.hero.imageMobile} 800w, ${restaurant.hero.image} 1920w`}
     sizes="100vw"
     alt={restaurant.hero.imageAlt}
     class="absolute inset-0 w-full h-full object-cover object-center"

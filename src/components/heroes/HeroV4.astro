@@ -7,16 +7,15 @@ const lines = restaurant.heroHeadline.split('\n');
 
 <section id="hero" class="relative min-h-screen flex flex-col justify-center overflow-hidden" aria-label="Hero">
   <img
-    src={`${restaurant.hero.image}&w=1920`}
-    srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1920 1920w`}
+    src={restaurant.hero.image}
+    srcset={`${restaurant.hero.imageMobile} 800w, ${restaurant.hero.image} 1920w`}
     sizes="100vw"
     alt={restaurant.hero.imageAlt}
     class="absolute inset-0 w-full h-full object-cover object-center"
-    style="transform: scale(1.04);"
     fetchpriority="high" loading="eager" decoding="async"
   />
-  <!-- Bold vivid color overlay — accent red-orange, left-heavy -->
-  <div class="absolute inset-0" style="background: linear-gradient(105deg, rgba(214,74,26,0.90) 0%, rgba(214,74,26,0.65) 45%, rgba(214,74,26,0.18) 100%);" aria-hidden="true"></div>
+  <!-- Color overlay: strong left for text legibility, fades right to reveal food image -->
+  <div class="absolute inset-0" style="background: linear-gradient(105deg, rgba(214,74,26,0.82) 0%, rgba(214,74,26,0.52) 50%, rgba(214,74,26,0.08) 100%);" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12 py-24">
     <div class="max-w-2xl">

@@ -24,13 +24,13 @@ const lines = restaurant.heroHeadline.split('\n');
   </div>
 
   <!-- Image panel — full bleed, no overlay, pure image -->
-  <div class="relative h-64 sm:h-96 lg:h-auto order-1 lg:order-2 overflow-hidden">
+  <div class="relative h-[55vw] sm:h-[45vw] lg:h-full lg:min-h-screen order-1 lg:order-2 overflow-hidden">
     <img
-      src={`${restaurant.hero.image}&w=1200`}
-      srcset={`${restaurant.hero.imageMobile}&w=800 800w, ${restaurant.hero.image}&w=1200 1200w`}
+      src={restaurant.hero.image}
+      srcset={`${restaurant.hero.imageMobile} 800w, ${restaurant.hero.image} 1920w`}
       sizes="(max-width: 1024px) 100vw, 50vw"
       alt={restaurant.hero.imageAlt}
-      class="w-full h-full object-cover"
+      class="absolute inset-0 w-full h-full object-cover"
       fetchpriority="high" loading="eager" decoding="async"
     />
   </div>

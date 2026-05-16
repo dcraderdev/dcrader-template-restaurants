@@ -1,11 +1,16 @@
 ---
 import type { RestaurantConfig } from '../../data/restaurants/types';
-interface Props { restaurant: RestaurantConfig; }
-const { restaurant } = Astro.props;
+interface Props {
+  restaurant: RestaurantConfig;
+  /** Start nav in scrolled/solid state — use for light-background heroes (V2) */
+  initialDark?: boolean;
+}
+const { restaurant, initialDark = false } = Astro.props;
 ---
 
 <header>
-  <nav id="t-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" aria-label="Main navigation">
+  <nav id="t-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" aria-label="Main navigation"
+    data-initial-dark={initialDark ? 'true' : 'false'}>
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="flex items-center justify-between h-[4.5rem] lg:h-20">
 
@@ -88,11 +93,12 @@ const { restaurant } = Astro.props;
 
   const bg = getComputedStyle(document.body).getPropertyValue('--t-bg').trim();
   const text = getComputedStyle(document.body).getPropertyValue('--t-text').trim();
+  const initialDark = nav.dataset.initialDark === 'true';
 
-  let scrolled = false;
+  let scrolled = initialDark;
 
   function setScrolled(v: boolean) {
-    if (v === scrolled) return;
+    if (v === scrolled && !initialDark) return;
     scrolled = v;
     if (v) {
       nav.style.backgroundColor = bg;
@@ -110,6 +116,9 @@ const { restaurant } = Astro.props;
       toggle.style.color = 'white';
     }
   }
+
+  // Apply initial state immediately (no scroll event needed)
+  if (initialDark) setScrolled(true);
 
   window.addEventListener('scroll', () => setScrolled(window.scrollY > 60), { passive: true });
 
