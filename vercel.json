@@ -19,5 +19,57 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "bellasole.dcrader.dev"
+        }
+      ],
+      "destination": "/v1-warm-italian/$1"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "northandpine.dcrader.dev"
+        }
+      ],
+      "destination": "/v2-modern-minimal/$1"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "henandhearth.dcrader.dev"
+        }
+      ],
+      "destination": "/v3-rustic-farm/$1"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "casaverde.dcrader.dev"
+        }
+      ],
+      "destination": "/v4-bold-color/$1"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "emberrestaurant.dcrader.dev"
+        }
+      ],
+      "destination": "/v5-dark-elegant/$1"
+    }
   ]
 }
