@@ -4,8 +4,12 @@ import { restaurant } from '../../data/restaurants/v1';
 
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Italianno&family=Raleway:wght@300;400;500;600;700&display=swap';
 
-const galleryItems = restaurant.gallery.slice(0, 6);
+const galleryItems = restaurant.gallery.slice(0, 8);
 const aboutParagraphs = restaurant.about.story.split('\n\n');
+const baseFor = (url: string) => url.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+const heroBase = baseFor(restaurant.hero.image);
+const ambianceBase = baseFor(restaurant.about.ambiance);
+const chefBase = baseFor(restaurant.about.chef.photo);
 ---
 
 <Layout restaurant={restaurant} theme="v1" fontUrl={fontUrl}>
@@ -33,16 +37,8 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     padding: 0;
   }
 
-  /* ── Scroll Reveal ── */
-  .sr {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.75s ease, transform 0.75s ease;
-  }
-  .sr-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ── Scroll Reveal disabled — content visible on render ── */
+  .sr, .sr-visible { opacity: 1; transform: none; }
 
   /* ── Section Label ── */
   .v1-section-label {
@@ -212,6 +208,11 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     overflow: hidden;
   }
 
+  .v1-hero-img-wrap {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
   .v1-hero-img {
     position: absolute;
     inset: 0;
@@ -518,21 +519,29 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
 
   .v1-gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 280px;
-    gap: 0.75rem;
-    max-width: 1200px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.875rem;
+    max-width: 1280px;
     margin: 0 auto;
   }
+  @media (max-width: 1024px) { .v1-gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 768px)  { .v1-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px)  { .v1-gallery-grid { grid-template-columns: 1fr; } }
 
   .v1-gallery-item {
     overflow: hidden;
     position: relative;
+    aspect-ratio: 4 / 3;
+  }
+
+  .v1-gallery-item img,
+  .v1-gallery-item picture {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   .v1-gallery-item img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease, filter 0.6s ease;
   }
@@ -540,18 +549,6 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   .v1-gallery-item:hover img {
     transform: scale(1.04);
     filter: brightness(0.88);
-  }
-
-  /* Tall item spans 2 rows */
-  .v1-gallery-item-tall {
-    grid-row: span 2;
-    min-height: 500px;
-  }
-
-  /* Wide item spans 2 columns */
-  .v1-gallery-item-wide {
-    grid-column: span 2;
-    aspect-ratio: 16 / 7;
   }
 
   /* ══════════════════════════════════════
@@ -1029,19 +1026,7 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
       padding: 3rem 1.75rem;
     }
 
-    /* Gallery: 2 cols, no spans */
-    .v1-gallery-grid {
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 200px;
-    }
-    .v1-gallery-item-tall {
-      grid-row: span 1;
-      min-height: 0;
-    }
-    .v1-gallery-item-wide {
-      grid-column: span 1;
-      aspect-ratio: unset;
-    }
+    /* Gallery handled above via responsive media queries */
 
     /* Reservation form: single column */
     .v1-res-form {
@@ -1134,13 +1119,19 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
 
   <!-- ═══ HERO ═══ -->
   <section class="v1-hero" aria-label="Hero">
-    <img
-      class="v1-hero-img"
-      src={restaurant.hero.image}
-      alt={restaurant.hero.imageAlt}
-      loading="eager"
-      fetchpriority="high"
-    />
+    <picture class="v1-hero-img-wrap">
+      <source type="image/webp" srcset={`${heroBase}-800.webp 800w, ${heroBase}-1600.webp 1600w`} sizes="100vw" />
+      <img
+        class="v1-hero-img"
+        src={`${heroBase}-1600.jpg`}
+        srcset={`${heroBase}-800.jpg 800w, ${heroBase}-1600.jpg 1600w`}
+        sizes="100vw"
+        alt={restaurant.hero.imageAlt}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
     <div class="v1-hero-overlay" aria-hidden="true"></div>
     <div class="v1-hero-grain" aria-hidden="true"></div>
 
@@ -1226,16 +1217,20 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
 
     <div class="v1-gallery-grid" role="list">
       {galleryItems.map((item, i) => {
-        const isTall = item.span === 'tall';
-        const isWide = item.span === 'wide';
-        const cls = [
-          'v1-gallery-item',
-          isTall ? 'v1-gallery-item-tall' : '',
-          isWide ? 'v1-gallery-item-wide' : '',
-        ].filter(Boolean).join(' ');
+        const b = baseFor(item.url);
         return (
-          <div class={cls} role="listitem">
-            <img src={item.url} alt={item.alt} loading="lazy" />
+          <div class="v1-gallery-item" role="listitem">
+            <picture>
+              <source type="image/webp" srcset={`${b}-400.webp 400w, ${b}-800.webp 800w`} sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" />
+              <img
+                src={`${b}-800.jpg`}
+                srcset={`${b}-400.jpg 400w, ${b}-800.jpg 800w`}
+                sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                alt={item.alt}
+                loading={i < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </picture>
           </div>
         );
       })}
@@ -1245,11 +1240,17 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   <!-- ═══ ABOUT ═══ -->
   <section class="v1-about" id="about" aria-label="Our story">
     <div class="v1-about-image-panel">
-      <img
-        src={restaurant.about.ambiance}
-        alt={restaurant.about.ambianceAlt}
-        loading="lazy"
-      />
+      <picture>
+        <source type="image/webp" srcset={`${ambianceBase}-400.webp 400w, ${ambianceBase}-800.webp 800w`} sizes="(max-width: 1024px) 100vw, 50vw" />
+        <img
+          src={`${ambianceBase}-800.jpg`}
+          srcset={`${ambianceBase}-400.jpg 400w, ${ambianceBase}-800.jpg 800w`}
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          alt={restaurant.about.ambianceAlt}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     </div>
     <div class="v1-about-text-panel">
       <span class="v1-section-label sr">Our Story</span>
@@ -1265,12 +1266,16 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
       ))}
 
       <div class="v1-chef-card sr">
-        <img
-          class="v1-chef-photo"
-          src={restaurant.about.chef.photo}
-          alt={restaurant.about.chef.photoAlt}
-          loading="lazy"
-        />
+        <picture class="v1-chef-photo-wrap">
+          <source type="image/webp" srcset={`${chefBase}-400.webp`} />
+          <img
+            class="v1-chef-photo"
+            src={`${chefBase}-400.jpg`}
+            alt={restaurant.about.chef.photoAlt}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
         <div>
           <div class="v1-chef-info-name">{restaurant.about.chef.name}</div>
           <div class="v1-chef-info-title">{restaurant.about.chef.title}</div>

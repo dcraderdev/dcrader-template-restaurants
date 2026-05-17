@@ -3,10 +3,10 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  output: 'static',
+  compressHTML: true,
+  prefetch: true,
   vite: {
     plugins: [tailwindcss()],
-  },
-  image: {
-    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
   },
 });

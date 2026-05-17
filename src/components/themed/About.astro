@@ -4,6 +4,8 @@ interface Props { restaurant: RestaurantConfig; }
 const { restaurant } = Astro.props;
 const { about } = restaurant;
 const paragraphs = about.story.split('\n\n');
+const ambianceBase = about.ambiance.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+const chefBase = about.chef.photo.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
 ---
 
 <section id="about" class="section-padding overflow-hidden" style="background-color: var(--t-bg);" aria-labelledby="t-about-heading">
@@ -24,14 +26,17 @@ const paragraphs = about.story.split('\n\n');
 
       <div class="relative">
         <div class="absolute -top-5 -right-5 w-full h-full border-2 hidden lg:block" style="border-color: var(--t-gold); opacity: 0.3;" aria-hidden="true"></div>
-        <img
-          src={`${about.ambiance}&w=1000`}
-          srcset={`${about.ambiance}&w=600 600w, ${about.ambiance}&w=1000 1000w`}
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          alt={about.ambianceAlt}
-          class="relative w-full object-cover aspect-[4/3] lg:aspect-[3/4]"
-          loading="lazy" decoding="async"
-        />
+        <picture>
+          <source type="image/webp" srcset={`${ambianceBase}-400.webp 400w, ${ambianceBase}-800.webp 800w`} sizes="(max-width: 1024px) 100vw, 50vw" />
+          <img
+            src={`${ambianceBase}-800.jpg`}
+            srcset={`${ambianceBase}-400.jpg 400w, ${ambianceBase}-800.jpg 800w`}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            alt={about.ambianceAlt}
+            class="relative w-full object-cover aspect-[4/3] lg:aspect-[3/4]"
+            loading="lazy" decoding="async"
+          />
+        </picture>
       </div>
     </div>
 
@@ -41,14 +46,16 @@ const paragraphs = about.story.split('\n\n');
     >
       <div class="flex-shrink-0">
         <div class="relative w-28 h-28 sm:w-36 sm:h-36">
-          <img
-            src={`${about.chef.photo}&w=400`}
-            srcset={`${about.chef.photo}&w=200 200w, ${about.chef.photo}&w=400 400w`}
-            alt={about.chef.photoAlt}
-            class="w-full h-full object-cover object-top rounded-full"
-            style="border: 2px solid var(--t-gold); opacity: 0.9;"
-            loading="lazy" decoding="async"
-          />
+          <picture>
+            <source type="image/webp" srcset={`${chefBase}-400.webp`} />
+            <img
+              src={`${chefBase}-400.jpg`}
+              alt={about.chef.photoAlt}
+              class="w-full h-full object-cover object-top rounded-full"
+              style="border: 2px solid var(--t-gold); opacity: 0.9;"
+              loading="lazy" decoding="async"
+            />
+          </picture>
         </div>
       </div>
       <div>

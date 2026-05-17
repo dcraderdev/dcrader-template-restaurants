@@ -9,7 +9,7 @@ const templates = [
     style: 'Warm Italian',
     description: 'Terracotta & cream. Playfair Display. Candlelit full-bleed hero anchored to the viewport floor.',
     cuisine: 'Coastal Italian · La Jolla, CA',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg',
     accent: '#C4714A',
     bg: '#FDFAF4',
     text: '#1C1208',
@@ -22,7 +22,7 @@ const templates = [
     style: 'Modern Minimal',
     description: 'Near-mono palette. DM Serif Display. Split-panel hero — image right, text left, extreme whitespace.',
     cuisine: 'Contemporary American · West Village, NYC',
-    image: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1504674900247-0877df9cc836-800.jpg',
     accent: '#1A3A2E',
     bg: '#FAFAF8',
     text: '#0C0C0A',
@@ -35,7 +35,7 @@ const templates = [
     style: 'Rustic Farm',
     description: 'Warm parchment, earthy tones. Libre Baskerville italic. Border-left gold accent on hero.',
     cuisine: 'Farm-to-Table · Woodstock, VT',
-    image: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1473093226795-af9932fe5856-800.jpg',
     accent: '#7A5230',
     bg: '#F8F3E8',
     text: '#2A1A0A',
@@ -48,7 +48,7 @@ const templates = [
     style: 'Bold Color',
     description: 'Vivid red-orange overlay. Oswald at 10rem, uppercase. High-energy Mediterranean contrast.',
     cuisine: 'Modern Mediterranean · Echo Park, LA',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1565299624946-b28f40a0ae38-800.jpg',
     accent: '#D64A1A',
     bg: '#FFFEF9',
     text: '#180A00',
@@ -61,7 +61,7 @@ const templates = [
     style: 'Dark Elegant',
     description: 'Near-black with gold. Cormorant Garamond. Dramatic moody steakhouse luxury.',
     cuisine: 'Prime Steaks & Spirits · River North, Chicago',
-    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1600891964092-4316c288032e-800.jpg',
     accent: '#C9A84C',
     bg: '#0B0A08',
     text: '#EDE8DE',
@@ -362,17 +362,25 @@ const templates = [
 
       <!-- Row 1: V1 (featured large) + V2 -->
       <div class="row1">
-        {templates.slice(0, 2).map((t, i) => (
+        {templates.slice(0, 2).map((t, i) => {
+          const b = t.image.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+          return (
           <a href={`/${t.slug}`} class="card" style={`--delay: ${0.45 + i * 0.1}s;`}>
             <div class="card-img-wrap" style={`height: ${i === 0 ? 'clamp(280px, 36vw, 500px)' : 'clamp(220px, 24vw, 340px)'};`}>
               <span class="card-num">{t.num}</span>
-              <img
-                src={t.image}
-                alt={`${t.name} — ${t.style} template preview`}
-                class="card-img"
-                loading="eager"
-                decoding="async"
-              />
+              <picture>
+                <source type="image/webp" srcset={`${b}-400.webp 400w, ${b}-800.webp 800w`} sizes="(max-width: 768px) 100vw, 50vw" />
+                <img
+                  src={`${b}-800.jpg`}
+                  srcset={`${b}-400.jpg 400w, ${b}-800.jpg 800w`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt={`${t.name} — ${t.style} template preview`}
+                  class="card-img"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div class="card-info">
               <p class="card-style" style={`color: ${t.accent};`}>{t.style}</p>
@@ -387,22 +395,30 @@ const templates = [
               </div>
             </div>
           </a>
-        ))}
+          );
+        })}
       </div>
 
       <!-- Row 2: V3, V4, V5 -->
       <div class="row2">
-        {templates.slice(2).map((t, i) => (
+        {templates.slice(2).map((t, i) => {
+          const b = t.image.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+          return (
           <a href={`/${t.slug}`} class="card" style={`--delay: ${0.55 + i * 0.08}s;`}>
             <div class="card-img-wrap" style="height: clamp(180px, 18vw, 260px);">
               <span class="card-num">{t.num}</span>
-              <img
-                src={t.image}
-                alt={`${t.name} — ${t.style} template preview`}
-                class="card-img"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source type="image/webp" srcset={`${b}-400.webp 400w, ${b}-800.webp 800w`} sizes="(max-width: 1024px) 50vw, 33vw" />
+                <img
+                  src={`${b}-800.jpg`}
+                  srcset={`${b}-400.jpg 400w, ${b}-800.jpg 800w`}
+                  sizes="(max-width: 1024px) 50vw, 33vw"
+                  alt={`${t.name} — ${t.style} template preview`}
+                  class="card-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div class="card-info">
               <p class="card-style" style={`color: ${t.accent};`}>{t.style}</p>
@@ -417,7 +433,8 @@ const templates = [
               </div>
             </div>
           </a>
-        ))}
+          );
+        })}
       </div>
     </main>
 

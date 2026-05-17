@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "export PATH=/Users/donovancrader/.nvm/versions/node/v22.15.0/bin:$PATH && exec npm run dev"],
       "port": 4321
     }
   ]

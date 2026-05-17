@@ -9,6 +9,10 @@ const dietaryMap: Record<string, string> = {
   vegan: 'VG',
   'gluten-free': 'GF',
 };
+
+const baseFor = (url: string) => url.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+const heroBase = baseFor(restaurant.hero.image);
+const chefBase = baseFor(restaurant.about.chef.photo);
 ---
 
 <Layout restaurant={restaurant} theme="v3" fontUrl={fontUrl}>
@@ -50,13 +54,19 @@ const dietaryMap: Record<string, string> = {
     </div>
   </div>
   <div class="v3-hero-right">
-    <img
-      src={restaurant.hero.image}
-      alt={restaurant.hero.imageAlt}
-      class="v3-hero-img"
-      loading="eager"
-      fetchpriority="high"
-    />
+    <picture class="v3-hero-pic">
+      <source type="image/webp" srcset={`${heroBase}-800.webp 800w, ${heroBase}-1600.webp 1600w`} sizes="(max-width: 1024px) 100vw, 60vw" />
+      <img
+        src={`${heroBase}-1600.jpg`}
+        srcset={`${heroBase}-800.jpg 800w, ${heroBase}-1600.jpg 1600w`}
+        sizes="(max-width: 1024px) 100vw, 60vw"
+        alt={restaurant.hero.imageAlt}
+        class="v3-hero-img"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
     <div class="v3-hero-overlay"></div>
   </div>
 </section>
@@ -125,16 +135,25 @@ const dietaryMap: Record<string, string> = {
       <h2 class="v3-section-title">The Farm &amp; Kitchen</h2>
     </div>
     <div class="v3-gallery-grid">
-      {restaurant.gallery.map((img, i) => (
-        <div class={`v3-gallery-item${[1,3,5].includes(i) ? ' v3-gallery-tilt-' + (i % 2 === 1 ? 'left' : 'right') : ''}`}>
-          <img
-            src={img.url}
-            alt={img.alt}
-            loading="lazy"
-            class="v3-gallery-img"
-          />
-        </div>
-      ))}
+      {restaurant.gallery.map((img, i) => {
+        const b = baseFor(img.url);
+        return (
+          <div class="v3-gallery-item">
+            <picture>
+              <source type="image/webp" srcset={`${b}-400.webp 400w, ${b}-800.webp 800w`} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw" />
+              <img
+                src={`${b}-800.jpg`}
+                srcset={`${b}-400.jpg 400w, ${b}-800.jpg 800w`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                alt={img.alt}
+                loading={i < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+                class="v3-gallery-img"
+              />
+            </picture>
+          </div>
+        );
+      })}
     </div>
   </div>
 </section>
@@ -154,12 +173,16 @@ const dietaryMap: Record<string, string> = {
     </div>
     <div class="v3-about-chef sr">
       <div class="v3-chef-photo-wrap">
-        <img
-          src={restaurant.about.chef.photo}
-          alt={restaurant.about.chef.photoAlt}
-          class="v3-chef-photo"
-          loading="lazy"
-        />
+        <picture>
+          <source type="image/webp" srcset={`${chefBase}-400.webp`} />
+          <img
+            src={`${chefBase}-400.jpg`}
+            alt={restaurant.about.chef.photoAlt}
+            class="v3-chef-photo"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </div>
       <div class="v3-chef-info">
         <span class="v3-chef-name">{restaurant.about.chef.name}</span>
@@ -356,18 +379,9 @@ const dietaryMap: Record<string, string> = {
   }
 
   /* =============================================
-     SCROLL REVEAL
+     SCROLL REVEAL (disabled — content visible on render)
   ============================================= */
-  .sr {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .sr-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .sr, .sr-visible { opacity: 1; transform: none; }
 
   /* =============================================
      NAV
@@ -814,46 +828,35 @@ const dietaryMap: Record<string, string> = {
   }
 
   .v3-gallery-grid {
-    columns: 3;
-    column-gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
     margin-top: 3rem;
   }
+  @media (max-width: 1024px) { .v3-gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 768px)  { .v3-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px)  { .v3-gallery-grid { grid-template-columns: 1fr; } }
 
   .v3-gallery-item {
-    break-inside: avoid;
-    margin-bottom: 1rem;
     overflow: hidden;
     border-radius: 3px;
     border: 2px solid var(--v3-cream);
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    aspect-ratio: 4 / 3;
   }
+  .v3-gallery-item picture { display: block; width: 100%; height: 100%; }
 
   .v3-gallery-item:hover {
     transform: scale(1.02);
     box-shadow: 0 6px 24px rgba(0,0,0,0.14);
   }
 
-  .v3-gallery-tilt-left {
-    transform: rotate(-1.5deg);
-  }
-
-  .v3-gallery-tilt-left:hover {
-    transform: rotate(-1.5deg) scale(1.02);
-  }
-
-  .v3-gallery-tilt-right {
-    transform: rotate(1deg);
-  }
-
-  .v3-gallery-tilt-right:hover {
-    transform: rotate(1deg) scale(1.02);
-  }
-
   .v3-gallery-img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     filter: saturate(0.9) brightness(1.0);
     transition: filter 0.3s ease;
   }
@@ -1349,10 +1352,7 @@ const dietaryMap: Record<string, string> = {
       grid-template-columns: 1fr;
     }
 
-    /* Gallery 2 columns */
-    .v3-gallery-grid {
-      columns: 2;
-    }
+    /* Gallery handled via .v3-gallery-grid responsive grid above */
 
     /* About single column */
     .v3-about-inner {
@@ -1402,10 +1402,6 @@ const dietaryMap: Record<string, string> = {
   }
 
   @media (max-width: 480px) {
-    .v3-gallery-grid {
-      columns: 1;
-    }
-
     .v3-hero-btns {
       flex-direction: column;
     }

@@ -7,6 +7,10 @@ const currentYear = new Date().getFullYear();
 
 const openHours = restaurant.hours.filter(h => h.open !== null);
 const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day);
+
+const baseFor = (url: string) => url.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+const heroBase = baseFor(restaurant.hero.image);
+const chefBase = baseFor(restaurant.about.chef.photo);
 ---
 
 <Layout
@@ -36,12 +40,19 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
       </div>
     </div>
     <div class="v2-hero__photo-block">
-      <img
-        src={restaurant.hero.image}
-        alt={restaurant.hero.imageAlt}
-        class="v2-hero__photo"
-        loading="eager"
-      />
+      <picture>
+        <source type="image/webp" srcset={`${heroBase}-800.webp 800w, ${heroBase}-1600.webp 1600w`} sizes="(max-width: 1024px) 100vw, 50vw" />
+        <img
+          src={`${heroBase}-1600.jpg`}
+          srcset={`${heroBase}-800.jpg 800w, ${heroBase}-1600.jpg 1600w`}
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          alt={restaurant.hero.imageAlt}
+          class="v2-hero__photo"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
     </div>
   </section>
 
@@ -83,16 +94,25 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     <div class="v2-gallery__inner">
       <h2 class="v2-section-title sr">Gallery</h2>
       <div class="v2-gallery__grid sr">
-        {galleryItems.map((img) => (
-          <div class="v2-gallery__item">
-            <img
-              src={img.url}
-              alt={img.alt}
-              class="v2-gallery__img"
-              loading="lazy"
-            />
-          </div>
-        ))}
+        {galleryItems.map((img, i) => {
+          const b = baseFor(img.url);
+          return (
+            <div class="v2-gallery__item">
+              <picture>
+                <source type="image/webp" srcset={`${b}-400.webp 400w, ${b}-800.webp 800w`} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw" />
+                <img
+                  src={`${b}-800.jpg`}
+                  srcset={`${b}-400.jpg 400w, ${b}-800.jpg 800w`}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                  alt={img.alt}
+                  class="v2-gallery__img"
+                  loading={i < 4 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </picture>
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -115,12 +135,16 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
         </div>
       </div>
       <div class="v2-about__right sr">
-        <img
-          src={restaurant.about.chef.photo}
-          alt={restaurant.about.chef.photoAlt}
-          class="v2-about__chef-photo"
-          loading="lazy"
-        />
+        <picture>
+          <source type="image/webp" srcset={`${chefBase}-400.webp`} />
+          <img
+            src={`${chefBase}-400.jpg`}
+            alt={restaurant.about.chef.photoAlt}
+            class="v2-about__chef-photo"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </div>
     </div>
   </section>
@@ -251,16 +275,8 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ── SCROLL REVEAL ── */
-  :global(.sr) {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  :global(.sr-visible) {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ── SCROLL REVEAL disabled — content visible on render ── */
+  :global(.sr), :global(.sr-visible) { opacity: 1; transform: none; }
 
   /* ── NAV ── */
   .v2-nav {
@@ -535,6 +551,7 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     aspect-ratio: 3 / 4;
     overflow: hidden;
   }
+  .v2-gallery__item picture { display: block; width: 100%; height: 100%; }
 
   .v2-gallery__img {
     width: 100%;

@@ -3,43 +3,58 @@ import type { RestaurantConfig } from '../../data/restaurants/types';
 interface Props { restaurant: RestaurantConfig; }
 const { restaurant } = Astro.props;
 const { gallery } = restaurant;
+
+function baseFor(url: string) {
+  return url.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+}
 ---
 
 <section id="gallery" class="section-padding" style="background-color: var(--t-surface);" aria-labelledby="t-gallery-heading">
   <div class="container-wide">
-    <div class="text-center mb-14 sr">
+    <div class="text-center mb-14">
       <p class="t-label mb-4">A Taste of</p>
       <h2 id="t-gallery-heading" class="t-title">{restaurant.name}</h2>
       <div class="flex justify-center mt-5"><div class="t-divider"></div></div>
     </div>
 
-    <!-- CSS masonry via columns -->
-    <div class="columns-2 md:columns-3 lg:columns-4 gap-3 lg:gap-4 [&>*]:mb-3 lg:[&>*]:mb-4 sr sr-delay-1">
-      {gallery.map((item, i) => (
-        <button
-          class="t-gallery-item group block w-full break-inside-avoid overflow-hidden focus-visible:outline-none focus-visible:ring-2"
-          style="background-color: var(--t-border);"
-          aria-label={`View photo: ${item.alt}`}
-          data-index={i}
-          data-src={item.url}
-          data-alt={item.alt}
-        >
-          <div class="relative overflow-hidden">
-            <img
-              src={`${item.url}&w=600`}
-              srcset={`${item.url}&w=400 400w, ${item.url}&w=600 600w, ${item.url}&w=900 900w`}
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              alt={item.alt}
-              class="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              loading={i < 4 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
-            <div class="absolute inset-0 transition-colors duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100" style="background-color: rgba(0,0,0,0.22);" aria-hidden="true">
+    <!-- Uniform aspect-ratio grid: 1 / 2 / 3 / 4 columns responsive -->
+    <div class="t-gallery-grid">
+      {gallery.map((item, i) => {
+        const base = baseFor(item.url);
+        const eager = i < 3;
+        return (
+          <button
+            class="t-gallery-item group block overflow-hidden focus-visible:outline-none focus-visible:ring-2"
+            style="background-color: var(--t-border);"
+            aria-label={`View photo: ${item.alt}`}
+            data-index={i}
+            data-base={base}
+            data-alt={item.alt}
+          >
+            <picture>
+              <source
+                type="image/webp"
+                srcset={`${base}-400.webp 400w, ${base}-800.webp 800w`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+              />
+              <img
+                src={`${base}-800.jpg`}
+                srcset={`${base}-400.jpg 400w, ${base}-800.jpg 800w`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                alt={item.alt}
+                class="t-gallery-img"
+                loading={eager ? 'eager' : 'lazy'}
+                decoding="async"
+                width="800"
+                height="600"
+              />
+            </picture>
+            <div class="t-gallery-overlay" aria-hidden="true">
               <p class="text-white text-xs leading-snug line-clamp-2 drop-shadow">{item.alt}</p>
             </div>
-          </div>
-        </button>
-      ))}
+          </button>
+        );
+      })}
     </div>
 
     <!-- Lightbox -->
@@ -63,18 +78,59 @@ const { gallery } = restaurant;
   </div>
 </section>
 
+<style>
+  .t-gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  @media (min-width: 640px) { .t-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.875rem; } }
+  @media (min-width: 1024px) { .t-gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
+  @media (min-width: 1280px) { .t-gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 1rem; } }
+
+  .t-gallery-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+  }
+  .t-gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .t-gallery-item:hover .t-gallery-img { transform: scale(1.04); }
+
+  .t-gallery-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.22);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .t-gallery-item:hover .t-gallery-overlay,
+  .t-gallery-item:focus-visible .t-gallery-overlay { opacity: 1; }
+</style>
+
 <script>
   const items = document.querySelectorAll<HTMLButtonElement>('.t-gallery-item');
   const lb = document.getElementById('t-lightbox')!;
   const lbImg = document.getElementById('t-lb-img') as HTMLImageElement;
   const lbCap = document.getElementById('t-lb-cap')!;
 
-  const photos = Array.from(items).map(el => ({ src: el.dataset.src!, alt: el.dataset.alt! }));
+  const photos = Array.from(items).map(el => ({ base: el.dataset.base!, alt: el.dataset.alt! }));
   let cur = 0;
 
   function open(i: number) {
     cur = (i + photos.length) % photos.length;
-    lbImg.src = `${photos[cur].src}&w=1200`;
+    lbImg.src = `${photos[cur].base}-1600.jpg`;
     lbImg.alt = photos[cur].alt;
     lbCap.textContent = photos[cur].alt;
     lb.classList.remove('hidden'); lb.classList.add('flex');

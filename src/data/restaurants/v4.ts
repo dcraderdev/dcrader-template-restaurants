@@ -38,8 +38,8 @@ export const restaurant: RestaurantConfig = {
   reservationPhone: '(323) 555-0219',
   hero: {
     // Vibrant mezze spread, natural colors
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1565299624946-b28f40a0ae38-1600.jpg',
+    imageMobile: '/images/photos/photo-1565299624946-b28f40a0ae38-800.jpg',
     imageAlt: 'Casa Verde — vibrant wood-fired dishes, fresh from the kitchen',
   },
   about: {
@@ -49,10 +49,10 @@ export const restaurant: RestaurantConfig = {
       name: 'Sofia Reyes',
       title: 'Chef & Co-Owner',
       bio: 'Born in Barcelona, raised in Los Angeles. Trained under José Andrés before opening Casa Verde with partner Nadia Okafor.',
-      photo: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80',
+      photo: '/images/photos/photo-1577219491135-ce391730fb2c-400.jpg',
       photoAlt: 'Chef Sofia Reyes at the Casa Verde wood-fire grill',
     },
-    ambiance: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    ambiance: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg',
     ambianceAlt: 'Casa Verde dining room — vibrant, colorful, full of life',
   },
   menu: {
@@ -115,19 +115,19 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Wood-fire grill — bold flames', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80', alt: 'Mezze spread — vibrant colors', span: 'wide' },
-    { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Labneh board with fresh herbs', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Handmade pita, hot off the stone', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80', alt: 'Casa Verde dining room, lively and bright', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'Natural wine service at the bar', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: 'Basque cheesecake, fresh-baked', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80', alt: 'Whole roasted branzino', span: 'normal' },
+    { url: '/images/photos/photo-1565299624946-b28f40a0ae38-800.jpg', alt: 'Wood-fire grill — bold flames', span: 'tall' },
+    { url: '/images/photos/photo-1473093226795-af9932fe5856-800.jpg', alt: 'Mezze spread — vibrant colors', span: 'wide' },
+    { url: '/images/photos/photo-1551782450-17144efb9c50-800.jpg', alt: 'Labneh board with fresh herbs', span: 'normal' },
+    { url: '/images/photos/photo-1504674900247-0877df9cc836-800.jpg', alt: 'Handmade pita, hot off the stone', span: 'normal' },
+    { url: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg', alt: 'Casa Verde dining room, lively and bright', span: 'normal' },
+    { url: '/images/photos/photo-1516450360452-9312f5e86fc7-800.jpg', alt: 'Natural wine service at the bar', span: 'tall' },
+    { url: '/images/photos/photo-1490645935967-10de6ba17061-800.jpg', alt: 'Basque cheesecake, fresh-baked', span: 'normal' },
+    { url: '/images/photos/photo-1555396273-367ea4eb4db5-800.jpg', alt: 'Whole roasted branzino', span: 'normal' },
   ],
   seo: {
     title: 'Casa Verde | Modern Mediterranean Restaurant | Echo Park, Los Angeles',
     description: 'Bold Mediterranean flavors on Sunset Blvd, Echo Park. Wood-fire mezze, natural wines, California-fresh ingredients by Chef Sofia Reyes. Open Tue–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80',
+    ogImage: '/images/photos/photo-1565299624946-b28f40a0ae38-800.jpg',
     canonicalUrl: 'https://restaurants.dcrader.dev/v4-bold-color',
   },
 };

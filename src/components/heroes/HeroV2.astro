@@ -3,22 +3,26 @@ import type { RestaurantConfig } from '../../data/restaurants/types';
 interface Props { restaurant: RestaurantConfig; }
 const { restaurant } = Astro.props;
 const lines = restaurant.heroHeadline.split('\n');
+const heroBase = restaurant.hero.image.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
 ---
 
 <section id="hero" aria-label="Hero" style="display: flex; flex-direction: column; min-height: 100vh;">
 
   <!-- Image panel: top on mobile, right side on desktop -->
   <div style="position: relative; overflow: hidden; min-height: 55vw; flex: 1 1 auto; order: 1;">
-    <img
-      src={restaurant.hero.image}
-      srcset={`${restaurant.hero.imageMobile} 800w, ${restaurant.hero.image} 1920w`}
-      sizes="(max-width: 1024px) 100vw, 50vw"
-      alt={restaurant.hero.imageAlt}
-      style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;"
-      fetchpriority="high"
-      loading="eager"
-      decoding="async"
-    />
+    <picture>
+      <source type="image/webp" srcset={`${heroBase}-800.webp 800w, ${heroBase}-1600.webp 1600w`} sizes="(max-width: 1024px) 100vw, 50vw" />
+      <img
+        src={`${heroBase}-1600.jpg`}
+        srcset={`${heroBase}-800.jpg 800w, ${heroBase}-1600.jpg 1600w`}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        alt={restaurant.hero.imageAlt}
+        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
   </div>
 
   <!-- Text panel: below image on mobile, left side on desktop -->

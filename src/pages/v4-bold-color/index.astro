@@ -5,6 +5,10 @@ import { restaurant } from '../../data/restaurants/v4';
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap';
 
 const firstCategory = restaurant.menu.categories[0];
+
+const baseFor = (url: string) => url.replace(/-(\d+)\.(jpg|jpeg|png|webp)$/i, '');
+const heroBase = baseFor(restaurant.hero.image);
+const chefBase = baseFor(restaurant.about.chef.photo);
 ---
 
 <Layout
@@ -30,16 +34,8 @@ const firstCategory = restaurant.menu.categories[0];
       --v4-border: rgba(24,10,0,0.12);
     }
 
-    /* ---- Scroll-reveal ---- */
-    .sr {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .sr-visible {
-      opacity: 1;
-      transform: none;
-    }
+    /* ---- Scroll-reveal disabled — content visible on render ---- */
+    .sr, .sr-visible { opacity: 1; transform: none; }
 
     /* ---- Base typography reset ---- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -478,16 +474,20 @@ const firstCategory = restaurant.menu.categories[0];
     .v4-gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 220px;
       gap: 10px;
       max-width: 1280px;
       margin: 0 auto;
     }
+    @media (max-width: 1024px) { .v4-gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px)  { .v4-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px)  { .v4-gallery-grid { grid-template-columns: 1fr; } }
 
     .v4-gallery-cell {
       overflow: hidden;
       position: relative;
+      aspect-ratio: 4 / 3;
     }
+    .v4-gallery-cell picture { display: block; width: 100%; height: 100%; }
     .v4-gallery-cell img {
       width: 100%;
       height: 100%;
@@ -499,43 +499,6 @@ const firstCategory = restaurant.menu.categories[0];
     .v4-gallery-cell:hover img {
       transform: scale(1.04);
       filter: saturate(1.25) contrast(1.08);
-    }
-
-    .v4-gallery-cell.span-col-2 { grid-column: span 2; }
-    .v4-gallery-cell.span-row-2 { grid-row: span 2; }
-    .v4-gallery-cell.span-both { grid-column: span 2; grid-row: span 2; }
-
-    .v4-gallery-color-terra {
-      background: var(--v4-terra);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .v4-gallery-color-terra-text {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--v4-white);
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      transform: rotate(180deg);
-    }
-
-    .v4-gallery-color-yellow {
-      background: var(--v4-yellow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .v4-gallery-color-yellow-text {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--v4-dark);
     }
 
     /* ============================================================
@@ -932,10 +895,6 @@ const firstCategory = restaurant.menu.categories[0];
     @media (max-width: 1024px) {
       .v4-menu-inner { max-width: 100%; }
       .v4-gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      .v4-gallery-cell.span-col-2,
-      .v4-gallery-cell.span-both { grid-column: span 1; }
-      .v4-gallery-cell.span-row-2,
-      .v4-gallery-cell.span-both { grid-row: span 1; }
     }
 
     @media (max-width: 768px) {
@@ -975,11 +934,7 @@ const firstCategory = restaurant.menu.categories[0];
 
       /* Gallery */
       .v4-gallery-section { padding: 4rem 1rem; }
-      .v4-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-      .v4-gallery-cell.span-col-2,
-      .v4-gallery-cell.span-both { grid-column: span 1; }
-      .v4-gallery-cell.span-row-2,
-      .v4-gallery-cell.span-both { grid-row: span 1; }
+      .v4-gallery-grid { gap: 6px; }
       .v4-gallery-heading { font-size: 2.5rem; margin-bottom: 1.5rem; }
 
       /* About */
@@ -1059,13 +1014,19 @@ const firstCategory = restaurant.menu.categories[0];
 
     <!-- Right image panel -->
     <div class="v4-hero-right">
-      <img
-        src={restaurant.hero.image}
-        alt={restaurant.hero.imageAlt}
-        class="v4-hero-img"
-        loading="eager"
-        fetchpriority="high"
-      />
+      <picture class="v4-hero-pic">
+        <source type="image/webp" srcset={`${heroBase}-800.webp 800w, ${heroBase}-1600.webp 1600w`} sizes="(max-width: 1024px) 100vw, 60vw" />
+        <img
+          src={`${heroBase}-1600.jpg`}
+          srcset={`${heroBase}-800.jpg 800w, ${heroBase}-1600.jpg 1600w`}
+          sizes="(max-width: 1024px) 100vw, 60vw"
+          alt={restaurant.hero.imageAlt}
+          class="v4-hero-img"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
       <div class="v4-hero-teal-overlay"></div>
       <div class="v4-hero-img-frame"></div>
     </div>
@@ -1138,74 +1099,24 @@ const firstCategory = restaurant.menu.categories[0];
   <section class="v4-gallery-section" id="v4-gallery">
     <h2 class="v4-gallery-heading sr">Gallery</h2>
     <div class="v4-gallery-grid">
-      <!-- Row 1: tall photo (spans 2 rows), wide photo (spans 2 cols), normal -->
-      <div class="v4-gallery-cell span-row-2 sr">
-        <img
-          src={restaurant.gallery[0].url}
-          alt={restaurant.gallery[0].alt}
-          loading="lazy"
-        />
-      </div>
-      <div class="v4-gallery-cell span-col-2 sr">
-        <img
-          src={restaurant.gallery[1].url}
-          alt={restaurant.gallery[1].alt}
-          loading="lazy"
-        />
-      </div>
-      <!-- Terracotta color block -->
-      <div class="v4-gallery-cell v4-gallery-color-terra sr">
-        <span class="v4-gallery-color-terra-text">Casa Verde</span>
-      </div>
-
-      <!-- Row 2 continuation (first cell is the span-row-2 from above) -->
-      <div class="v4-gallery-cell sr">
-        <img
-          src={restaurant.gallery[2].url}
-          alt={restaurant.gallery[2].alt}
-          loading="lazy"
-        />
-      </div>
-      <div class="v4-gallery-cell sr">
-        <img
-          src={restaurant.gallery[3].url}
-          alt={restaurant.gallery[3].alt}
-          loading="lazy"
-        />
-      </div>
-      <div class="v4-gallery-cell sr">
-        <img
-          src={restaurant.gallery[4].url}
-          alt={restaurant.gallery[4].alt}
-          loading="lazy"
-        />
-      </div>
-
-      <!-- Row 3: yellow block + photos -->
-      <div class="v4-gallery-cell v4-gallery-color-yellow sr">
-        <span class="v4-gallery-color-yellow-text">Echo Park &middot; LA</span>
-      </div>
-      <div class="v4-gallery-cell sr">
-        <img
-          src={restaurant.gallery[5].url}
-          alt={restaurant.gallery[5].alt}
-          loading="lazy"
-        />
-      </div>
-      <div class="v4-gallery-cell sr">
-        <img
-          src={restaurant.gallery[6].url}
-          alt={restaurant.gallery[6].alt}
-          loading="lazy"
-        />
-      </div>
-      <div class="v4-gallery-cell sr">
-        <img
-          src={restaurant.gallery[7].url}
-          alt={restaurant.gallery[7].alt}
-          loading="lazy"
-        />
-      </div>
+      {restaurant.gallery.map((item, i) => {
+        const b = baseFor(item.url);
+        return (
+          <div class="v4-gallery-cell">
+            <picture>
+              <source type="image/webp" srcset={`${b}-400.webp 400w, ${b}-800.webp 800w`} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw" />
+              <img
+                src={`${b}-800.jpg`}
+                srcset={`${b}-400.jpg 400w, ${b}-800.jpg 800w`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                alt={item.alt}
+                loading={i < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </picture>
+          </div>
+        );
+      })}
     </div>
   </section>
 
@@ -1230,12 +1141,16 @@ const firstCategory = restaurant.menu.categories[0];
       <!-- Photo column -->
       <div class="v4-about-photo-col sr">
         <div class="v4-about-photo-wrap">
-          <img
-            src={restaurant.about.chef.photo}
-            alt={restaurant.about.chef.photoAlt}
-            class="v4-about-chef-photo"
-            loading="lazy"
-          />
+          <picture>
+            <source type="image/webp" srcset={`${chefBase}-400.webp`} />
+            <img
+              src={`${chefBase}-400.jpg`}
+              alt={restaurant.about.chef.photoAlt}
+              class="v4-about-chef-photo"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <div class="v4-about-photo-accent"></div>
         </div>
       </div>

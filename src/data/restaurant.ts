@@ -80,8 +80,8 @@ export const restaurant = {
   // Photo credits: Unsplash contributors (free commercial license)
   hero: {
     // Warm candlelit restaurant interior
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1414235077428-338989a2e8c0-1600.jpg',
+    imageMobile: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg',
     imageAlt: 'Bella Sole dining room — warm candlelit evening service',
   },
 
@@ -94,11 +94,11 @@ export const restaurant = {
       title: 'Executive Chef & Owner',
       bio: 'Trained at ALMA in Colorno, shaped by seasons in Rome, Naples, and the San Diego fishing community. James Beard semifinalist 2023.',
       // Professional chef in kitchen
-      photo: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80',
+      photo: '/images/photos/photo-1577219491135-ce391730fb2c-400.jpg',
       photoAlt: 'Chef Marco Bellini in the Bella Sole open kitchen',
     },
     // Interior wide shot
-    ambiance: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80',
+    ambiance: '/images/photos/photo-1559339352-11d035aa65de-800.jpg',
     ambianceAlt: 'Bella Sole dining room at golden hour',
   },
 
@@ -284,52 +284,52 @@ export const restaurant = {
   // Photo credits: Unsplash contributors (free commercial license)
   gallery: [
     {
-      url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1555396273-367ea4eb4db5-800.jpg',
       alt: 'Linguine alle vongole — Pacific clams, white wine, house-dried pasta',
       span: 'normal',
     },
     {
-      url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg',
       alt: 'Bella Sole dining room, candlelit evening service',
       span: 'tall',
     },
     {
-      url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1565299624946-b28f40a0ae38-800.jpg',
       alt: 'Wood-fired pizza, fresh from the forno',
       span: 'normal',
     },
     {
-      url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1551782450-17144efb9c50-800.jpg',
       alt: 'Burrata Pugliese with heirloom tomatoes',
       span: 'normal',
     },
     {
-      url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1504674900247-0877df9cc836-800.jpg',
       alt: 'Fresh pasta course — house-made egg tagliatelle',
       span: 'tall',
     },
     {
-      url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1516450360452-9312f5e86fc7-800.jpg',
       alt: 'Bella Sole bar — aperitivo hour',
       span: 'normal',
     },
     {
-      url: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1473093226795-af9932fe5856-800.jpg',
       alt: 'Antipasti spread — seasonal market ingredients',
       span: 'wide',
     },
     {
-      url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1490645935967-10de6ba17061-800.jpg',
       alt: 'Tiramisù della Casa — house-made mascarpone, dark cocoa',
       span: 'normal',
     },
     {
-      url: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1600891964092-4316c288032e-800.jpg',
       alt: 'Bistecca Fiorentina — dry-aged Porterhouse, sea salt, herbs',
       span: 'normal',
     },
     {
-      url: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80',
+      url: '/images/photos/photo-1559339352-11d035aa65de-800.jpg',
       alt: 'Bella Sole terrace dining at golden hour',
       span: 'normal',
     },
@@ -340,7 +340,7 @@ export const restaurant = {
     title: 'Bella Sole | Coastal Italian Restaurant | La Jolla, San Diego',
     description:
       'Coastal Italian dining in La Jolla, San Diego. Fresh Pacific seafood, house-made pasta, and an all-Italian wine list by Executive Chef Marco Bellini. Open Tue–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    ogImage: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg',
     canonicalUrl: 'https://restaurants.dcrader.dev',
   },
 };

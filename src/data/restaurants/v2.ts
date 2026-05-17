@@ -38,8 +38,8 @@ export const restaurant: RestaurantConfig = {
   reservationPhone: '(212) 555-0831',
   hero: {
     // Fine dining dining room — portrait crop reads differently from V1's full-bleed treatment
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+    image: '/images/photos/photo-1414235077428-338989a2e8c0-1600.jpg',
+    imageMobile: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg',
     imageAlt: 'North & Pine — the dining room at 14 Commerce Street',
   },
   about: {
@@ -49,10 +49,10 @@ export const restaurant: RestaurantConfig = {
       name: 'Elena Voss',
       title: 'Chef & Partner',
       bio: 'Formerly of Eleven Madison Park and Blue Hill at Stone Barns. James Beard Award: Best Chef NYC, 2024.',
-      photo: 'https://images.unsplash.com/photo-1595257841889-eca2678454e2?auto=format&fit=crop&w=600&q=80',
+      photo: '/images/photos/photo-1595257841889-eca2678454e2-400.jpg',
       photoAlt: 'Chef Elena Voss in the North & Pine kitchen',
     },
-    ambiance: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+    ambiance: '/images/photos/photo-1517248135467-4c7edcad34c4-800.jpg',
     ambianceAlt: 'North & Pine dining room — clean lines, warm light',
   },
   menu: {
@@ -112,19 +112,19 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Precision-plated pasta course', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80', alt: 'North & Pine dining room', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Seasonal ingredient study', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Chef\'s tasting: wood-fire course', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80', alt: 'Seafood course — dressed', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80', alt: 'The 32-seat dining room', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: 'Dessert course', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80', alt: 'Dry-aged duck, plated', span: 'normal' },
+    { url: '/images/photos/photo-1504674900247-0877df9cc836-800.jpg', alt: 'Precision-plated pasta course', span: 'tall' },
+    { url: '/images/photos/photo-1517248135467-4c7edcad34c4-800.jpg', alt: 'North & Pine dining room', span: 'normal' },
+    { url: '/images/photos/photo-1551782450-17144efb9c50-800.jpg', alt: 'Seasonal ingredient study', span: 'normal' },
+    { url: '/images/photos/photo-1565299624946-b28f40a0ae38-800.jpg', alt: 'Chef\'s tasting: wood-fire course', span: 'normal' },
+    { url: '/images/photos/photo-1555396273-367ea4eb4db5-800.jpg', alt: 'Seafood course — dressed', span: 'tall' },
+    { url: '/images/photos/photo-1414235077428-338989a2e8c0-800.jpg', alt: 'The 32-seat dining room', span: 'normal' },
+    { url: '/images/photos/photo-1490645935967-10de6ba17061-800.jpg', alt: 'Dessert course', span: 'normal' },
+    { url: '/images/photos/photo-1600891964092-4316c288032e-800.jpg', alt: 'Dry-aged duck, plated', span: 'normal' },
   ],
   seo: {
     title: 'North & Pine | Contemporary American | West Village, New York',
     description: 'A 32-seat contemporary American restaurant in New York\'s West Village. Nightly tasting menu by Chef Elena Voss. Open Wed–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=1200&q=80',
+    ogImage: '/images/photos/photo-1504674900247-0877df9cc836-800.jpg',
     canonicalUrl: 'https://restaurants.dcrader.dev/v2-modern-minimal',
   },
 };
