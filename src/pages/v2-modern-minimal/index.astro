@@ -917,25 +917,6 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
 </style>
 
 <script>
-  // Hero entrance: stagger fade-in for hero elements
-  (function () {
-    const inner = document.querySelector('.v2-hero__inner');
-    if (!inner) return;
-
-    // Override the generic sr observer behavior for hero — animate immediately on load
-    inner.classList.remove('sr');
-    inner.style.opacity = '0';
-    inner.style.transform = 'translateY(24px)';
-    inner.style.transition = 'opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s';
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        inner.style.opacity = '1';
-        inner.style.transform = 'translateY(0)';
-      });
-    });
-  })();
-
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

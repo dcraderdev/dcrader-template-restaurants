@@ -40,15 +40,6 @@ const lines = restaurant.heroHeadline.split('\n');
 
 </section>
 
-<script>
-  requestAnimationFrame(() => {
-    document.querySelectorAll('#v2-hero-content .v2-line').forEach(el => {
-      (el as HTMLElement).style.opacity = '1';
-      (el as HTMLElement).style.transform = 'translateY(0)';
-    });
-  });
-</script>
-
 <style>
   @media (min-width: 1024px) {
     #hero {

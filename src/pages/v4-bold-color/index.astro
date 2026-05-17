@@ -1498,24 +1498,6 @@ const firstCategory = restaurant.menu.categories[0];
       });
     });
 
-    // ---- Hero entrance: stagger inner elements ----
-    (function() {
-      const leftItems = document.querySelectorAll(
-        '.v4-hero-yellow-stripe, .v4-hero-eyebrow, .v4-hero-h1, .v4-hero-rule, .v4-hero-subtitle, .v4-hero-buttons'
-      );
-      leftItems.forEach((el, i) => {
-        const htmlEl = el as HTMLElement;
-        htmlEl.style.opacity = '0';
-        htmlEl.style.transform = 'translateY(20px)';
-        htmlEl.style.transition = `opacity 0.6s ease ${0.3 + i * 0.08}s, transform 0.6s ease ${0.3 + i * 0.08}s`;
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            htmlEl.style.opacity = '1';
-            htmlEl.style.transform = 'none';
-          });
-        });
-      });
-    })();
   </script>
 
 </Layout>

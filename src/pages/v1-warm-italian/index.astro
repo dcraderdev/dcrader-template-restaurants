@@ -1480,28 +1480,6 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     link.addEventListener('click', closeMobileMenu);
   });
 
-  // ── 3. Hero entrance animation ───────────────────────
-  const heroElements = [
-    { id: 'v1HeroEyebrow', delay: 80 },
-    { id: 'v1HeroH1', delay: 220 },
-    { id: 'v1HeroOrnament', delay: 360 },
-    { id: 'v1HeroSubtitle', delay: 460 },
-    { id: 'v1HeroButtons', delay: 560 },
-  ];
-
-  requestAnimationFrame(() => {
-    heroElements.forEach(({ id, delay }) => {
-      const el = document.getElementById(id);
-      if (el) {
-        setTimeout(() => {
-          el.style.transition = 'opacity 0.75s ease, transform 0.75s ease';
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, delay);
-      }
-    });
-  });
-
   // ── 4. Smooth scroll for anchor links ────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

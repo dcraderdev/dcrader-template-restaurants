@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
+/* ── Kill all animations & transitions (perf override) ─────────────────────── */
+*, *::before, *::after {
+  animation: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: no-preference) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* Force visibility of scroll-reveal and hero entrance elements (they relied on
+   transitions/animations to fade in from opacity:0 / translateY). With those
+   killed, override initial states so content is visible immediately. */
+.sr,
+.hero-line,
+.v2-line,
+.v1-hero-eyebrow,
+.v1-hero-h1,
+.v1-hero-ornament,
+.v1-hero-subtitle,
+.v1-hero-buttons,
+.v3-hero-eyebrow,
+.v3-hero-h1,
+.v3-hero-sub,
+.v3-hero-btns,
+.v5-hero__top,
+.v5-hero__top .v5-hero__eyebrow,
+.v5-hero__top .v5-hero__h1,
+.v5-hero__top .v5-hero__ornament,
+.v5-hero__top .v5-hero__subtitle,
+.v5-hero__top .v5-hero__cta,
+.v5-hero__image-wrap,
+.eyebrow,
+.header-sub,
+.grid-rule,
+.card,
+header h1 {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* ── Custom theme tokens (Tailwind v4 CSS-first config) ────────────────────── */
 @theme {
   /* Fonts */
