@@ -1,6 +1,8 @@
 // Shared interfaces for all restaurant data configs.
 // Each variant has its own file in src/data/restaurants/vN.ts.
 
+import type { ImageMetadata } from 'astro';
+
 export interface MenuItem {
   name: string;
   description: string;
@@ -15,7 +17,7 @@ export interface MenuCategory {
 }
 
 export interface GalleryItem {
-  url: string;
+  url: ImageMetadata;
   alt: string;
   span?: 'normal' | 'tall' | 'wide';
 }
@@ -53,8 +55,8 @@ export interface RestaurantConfig {
   openTableId: string | null;
   reservationPhone: string;
   hero: {
-    image: string;
-    imageMobile: string;
+    image: ImageMetadata;
+    imageMobile: ImageMetadata;
     imageAlt: string;
   };
   about: {
@@ -64,10 +66,10 @@ export interface RestaurantConfig {
       name: string;
       title: string;
       bio: string;
-      photo: string;
+      photo: ImageMetadata;
       photoAlt: string;
     };
-    ambiance: string;
+    ambiance: ImageMetadata;
     ambianceAlt: string;
   };
   menu: {
@@ -79,7 +81,7 @@ export interface RestaurantConfig {
   seo: {
     title: string;
     description: string;
-    ogImage: string;
+    ogImage: ImageMetadata;
     canonicalUrl: string;
   };
 }

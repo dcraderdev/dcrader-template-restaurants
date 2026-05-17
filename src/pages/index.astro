@@ -1,5 +1,11 @@
 ---
 import '../global.css';
+import { Picture } from 'astro:assets';
+import v1Img from '../assets/restaurants/landing/v1-card.jpg';
+import v2Img from '../assets/restaurants/landing/v2-card.jpg';
+import v3Img from '../assets/restaurants/landing/v3-card.jpg';
+import v4Img from '../assets/restaurants/landing/v4-card.jpg';
+import v5Img from '../assets/restaurants/landing/v5-card.jpg';
 
 const templates = [
   {
@@ -9,7 +15,7 @@ const templates = [
     style: 'Warm Italian',
     description: 'Terracotta & cream. Playfair Display. Candlelit full-bleed hero anchored to the viewport floor.',
     cuisine: 'Coastal Italian · La Jolla, CA',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    image: v1Img,
     accent: '#C4714A',
     bg: '#FDFAF4',
     text: '#1C1208',
@@ -22,7 +28,7 @@ const templates = [
     style: 'Modern Minimal',
     description: 'Near-mono palette. DM Serif Display. Split-panel hero — image right, text left, extreme whitespace.',
     cuisine: 'Contemporary American · West Village, NYC',
-    image: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=800&q=80',
+    image: v2Img,
     accent: '#1A3A2E',
     bg: '#FAFAF8',
     text: '#0C0C0A',
@@ -35,7 +41,7 @@ const templates = [
     style: 'Rustic Farm',
     description: 'Warm parchment, earthy tones. Libre Baskerville italic. Border-left gold accent on hero.',
     cuisine: 'Farm-to-Table · Woodstock, VT',
-    image: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=800&q=80',
+    image: v3Img,
     accent: '#7A5230',
     bg: '#F8F3E8',
     text: '#2A1A0A',
@@ -48,7 +54,7 @@ const templates = [
     style: 'Bold Color',
     description: 'Vivid red-orange overlay. Oswald at 10rem, uppercase. High-energy Mediterranean contrast.',
     cuisine: 'Modern Mediterranean · Echo Park, LA',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
+    image: v4Img,
     accent: '#D64A1A',
     bg: '#FFFEF9',
     text: '#180A00',
@@ -61,7 +67,7 @@ const templates = [
     style: 'Dark Elegant',
     description: 'Near-black with gold. Cormorant Garamond. Dramatic moody steakhouse luxury.',
     cuisine: 'Prime Steaks & Spirits · River North, Chicago',
-    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80',
+    image: v5Img,
     accent: '#C9A84C',
     bg: '#0B0A08',
     text: '#EDE8DE',
@@ -366,11 +372,15 @@ const templates = [
           <a href={`/${t.slug}`} class="card" style={`--delay: ${0.45 + i * 0.1}s;`}>
             <div class="card-img-wrap" style={`height: ${i === 0 ? 'clamp(280px, 36vw, 500px)' : 'clamp(220px, 24vw, 340px)'};`}>
               <span class="card-num">{t.num}</span>
-              <img
+              <Picture
                 src={t.image}
                 alt={`${t.name} — ${t.style} template preview`}
                 class="card-img"
+                formats={['avif', 'webp']}
+                widths={[320, 640, 1024, 1200]}
+                sizes={i === 0 ? '(max-width:768px) 100vw, 66vw' : '(max-width:768px) 100vw, 33vw'}
                 loading="eager"
+                fetchpriority="high"
                 decoding="async"
               />
             </div>
@@ -396,10 +406,13 @@ const templates = [
           <a href={`/${t.slug}`} class="card" style={`--delay: ${0.55 + i * 0.08}s;`}>
             <div class="card-img-wrap" style="height: clamp(180px, 18vw, 260px);">
               <span class="card-num">{t.num}</span>
-              <img
+              <Picture
                 src={t.image}
                 alt={`${t.name} — ${t.style} template preview`}
                 class="card-img"
+                formats={['avif', 'webp']}
+                widths={[320, 640, 800]}
+                sizes="(max-width:768px) 100vw, 33vw"
                 loading="lazy"
                 decoding="async"
               />
@@ -423,7 +436,7 @@ const templates = [
 
     <!-- Footer -->
     <footer>
-      <p>Astro · Tailwind CSS v4 · Photos: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+      <p>Astro · Tailwind CSS v4 · Photos: Unsplash</p>
     </footer>
 
   </body>

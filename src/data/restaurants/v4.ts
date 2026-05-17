@@ -1,6 +1,15 @@
 // V4: Casa Verde — Modern Mediterranean, Echo Park Los Angeles
 // Theme: Bold Color (vibrant red-orange + citrus yellow, Oswald, high energy)
 import type { RestaurantConfig } from './types';
+import heroImg from '../../assets/restaurants/v4/hero.jpg';
+import chefImg from '../../assets/restaurants/v4/chef.jpg';
+import ambianceImg from '../../assets/restaurants/v4/ambiance.jpg';
+import g2 from '../../assets/restaurants/v4/g2-mezze.jpg';
+import g3 from '../../assets/restaurants/v4/g3-labneh.jpg';
+import g4 from '../../assets/restaurants/v4/g4-pita.jpg';
+import g6 from '../../assets/restaurants/v4/g6-wine.jpg';
+import g7 from '../../assets/restaurants/v4/g7-cheesecake.jpg';
+import g8 from '../../assets/restaurants/v4/g8-branzino.jpg';
 
 export const restaurant: RestaurantConfig = {
   name: 'Casa Verde',
@@ -37,9 +46,8 @@ export const restaurant: RestaurantConfig = {
   openTableId: null,
   reservationPhone: '(323) 555-0219',
   hero: {
-    // Vibrant mezze spread, natural colors
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
+    image: heroImg,
+    imageMobile: heroImg,
     imageAlt: 'Casa Verde — vibrant wood-fired dishes, fresh from the kitchen',
   },
   about: {
@@ -49,10 +57,10 @@ export const restaurant: RestaurantConfig = {
       name: 'Sofia Reyes',
       title: 'Chef & Co-Owner',
       bio: 'Born in Barcelona, raised in Los Angeles. Trained under José Andrés before opening Casa Verde with partner Nadia Okafor.',
-      photo: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80',
+      photo: chefImg,
       photoAlt: 'Chef Sofia Reyes at the Casa Verde wood-fire grill',
     },
-    ambiance: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    ambiance: ambianceImg,
     ambianceAlt: 'Casa Verde dining room — vibrant, colorful, full of life',
   },
   menu: {
@@ -115,19 +123,19 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Wood-fire grill — bold flames', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80', alt: 'Mezze spread — vibrant colors', span: 'wide' },
-    { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Labneh board with fresh herbs', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Handmade pita, hot off the stone', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80', alt: 'Casa Verde dining room, lively and bright', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'Natural wine service at the bar', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: 'Basque cheesecake, fresh-baked', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80', alt: 'Whole roasted branzino', span: 'normal' },
+    { url: heroImg, alt: 'Wood-fire grill — bold flames', span: 'tall' },
+    { url: g2, alt: 'Mezze spread — vibrant colors', span: 'wide' },
+    { url: g3, alt: 'Labneh board with fresh herbs', span: 'normal' },
+    { url: g4, alt: 'Handmade pita, hot off the stone', span: 'normal' },
+    { url: ambianceImg, alt: 'Casa Verde dining room, lively and bright', span: 'normal' },
+    { url: g6, alt: 'Natural wine service at the bar', span: 'tall' },
+    { url: g7, alt: 'Basque cheesecake, fresh-baked', span: 'normal' },
+    { url: g8, alt: 'Whole roasted branzino', span: 'normal' },
   ],
   seo: {
     title: 'Casa Verde | Modern Mediterranean Restaurant | Echo Park, Los Angeles',
     description: 'Bold Mediterranean flavors on Sunset Blvd, Echo Park. Wood-fire mezze, natural wines, California-fresh ingredients by Chef Sofia Reyes. Open Tue–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80',
+    ogImage: heroImg,
     canonicalUrl: 'https://restaurants.dcrader.dev/v4-bold-color',
   },
 };

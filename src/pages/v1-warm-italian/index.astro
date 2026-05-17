@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
 import { restaurant } from '../../data/restaurants/v1';
 
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Italianno&family=Raleway:wght@300;400;500;600;700&display=swap';
@@ -1130,10 +1131,13 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
 
   <!-- ═══ HERO ═══ -->
   <section class="v1-hero" aria-label="Hero">
-    <img
+    <Picture
       class="v1-hero-img"
       src={restaurant.hero.image}
       alt={restaurant.hero.imageAlt}
+      formats={['avif', 'webp']}
+      widths={[320, 640, 1024, 1920]}
+      sizes="100vw"
       loading="eager"
       fetchpriority="high"
     />
@@ -1231,7 +1235,15 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
         ].filter(Boolean).join(' ');
         return (
           <div class={cls} role="listitem">
-            <img src={item.url} alt={item.alt} loading="lazy" />
+            <Picture
+              src={item.url}
+              alt={item.alt}
+              formats={['avif', 'webp']}
+              widths={[320, 640, 1024]}
+              sizes="(max-width:768px) 100vw, 33vw"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         );
       })}
@@ -1241,10 +1253,14 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   <!-- ═══ ABOUT ═══ -->
   <section class="v1-about" id="about" aria-label="Our story">
     <div class="v1-about-image-panel">
-      <img
+      <Picture
         src={restaurant.about.ambiance}
         alt={restaurant.about.ambianceAlt}
+        formats={['avif', 'webp']}
+        widths={[640, 1024, 1600]}
+        sizes="(max-width:768px) 100vw, 50vw"
         loading="lazy"
+        decoding="async"
       />
     </div>
     <div class="v1-about-text-panel">
@@ -1261,11 +1277,15 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
       ))}
 
       <div class="v1-chef-card sr">
-        <img
+        <Picture
           class="v1-chef-photo"
           src={restaurant.about.chef.photo}
           alt={restaurant.about.chef.photoAlt}
+          formats={['avif', 'webp']}
+          widths={[160, 320, 480]}
+          sizes="120px"
           loading="lazy"
+          decoding="async"
         />
         <div>
           <div class="v1-chef-info-name">{restaurant.about.chef.name}</div>

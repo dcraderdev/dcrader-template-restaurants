@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
 import { restaurant } from '../../data/restaurants/v4';
 
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap';
@@ -1055,10 +1056,13 @@ const firstCategory = restaurant.menu.categories[0];
 
     <!-- Right image panel -->
     <div class="v4-hero-right">
-      <img
+      <Picture
         src={restaurant.hero.image}
         alt={restaurant.hero.imageAlt}
         class="v4-hero-img"
+        formats={['avif', 'webp']}
+        widths={[320, 640, 1024, 1920]}
+        sizes="(max-width:900px) 100vw, 50vw"
         loading="eager"
         fetchpriority="high"
       />
@@ -1136,17 +1140,25 @@ const firstCategory = restaurant.menu.categories[0];
     <div class="v4-gallery-grid">
       <!-- Row 1: tall photo (spans 2 rows), wide photo (spans 2 cols), normal -->
       <div class="v4-gallery-cell span-row-2 sr">
-        <img
+        <Picture
           src={restaurant.gallery[0].url}
           alt={restaurant.gallery[0].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="v4-gallery-cell span-col-2 sr">
-        <img
+        <Picture
           src={restaurant.gallery[1].url}
           alt={restaurant.gallery[1].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <!-- Terracotta color block -->
@@ -1156,24 +1168,36 @@ const firstCategory = restaurant.menu.categories[0];
 
       <!-- Row 2 continuation (first cell is the span-row-2 from above) -->
       <div class="v4-gallery-cell sr">
-        <img
+        <Picture
           src={restaurant.gallery[2].url}
           alt={restaurant.gallery[2].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="v4-gallery-cell sr">
-        <img
+        <Picture
           src={restaurant.gallery[3].url}
           alt={restaurant.gallery[3].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="v4-gallery-cell sr">
-        <img
+        <Picture
           src={restaurant.gallery[4].url}
           alt={restaurant.gallery[4].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
 
@@ -1182,24 +1206,36 @@ const firstCategory = restaurant.menu.categories[0];
         <span class="v4-gallery-color-yellow-text">Echo Park &middot; LA</span>
       </div>
       <div class="v4-gallery-cell sr">
-        <img
+        <Picture
           src={restaurant.gallery[5].url}
           alt={restaurant.gallery[5].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="v4-gallery-cell sr">
-        <img
+        <Picture
           src={restaurant.gallery[6].url}
           alt={restaurant.gallery[6].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="v4-gallery-cell sr">
-        <img
+        <Picture
           src={restaurant.gallery[7].url}
           alt={restaurant.gallery[7].alt}
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 33vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -1226,11 +1262,15 @@ const firstCategory = restaurant.menu.categories[0];
       <!-- Photo column -->
       <div class="v4-about-photo-col sr">
         <div class="v4-about-photo-wrap">
-          <img
+          <Picture
             src={restaurant.about.chef.photo}
             alt={restaurant.about.chef.photoAlt}
             class="v4-about-chef-photo"
+            formats={['avif', 'webp']}
+            widths={[200, 400, 600]}
+            sizes="(max-width:768px) 200px, 280px"
             loading="lazy"
+            decoding="async"
           />
           <div class="v4-about-photo-accent"></div>
         </div>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
 import { restaurant } from '../../data/restaurants/v3';
 
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Caveat:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap';
@@ -50,10 +51,13 @@ const dietaryMap: Record<string, string> = {
     </div>
   </div>
   <div class="v3-hero-right">
-    <img
+    <Picture
       src={restaurant.hero.image}
       alt={restaurant.hero.imageAlt}
       class="v3-hero-img"
+      formats={['avif', 'webp']}
+      widths={[320, 640, 1024, 1920]}
+      sizes="(max-width:900px) 100vw, 50vw"
       loading="eager"
       fetchpriority="high"
     />
@@ -127,11 +131,15 @@ const dietaryMap: Record<string, string> = {
     <div class="v3-gallery-grid">
       {restaurant.gallery.map((img, i) => (
         <div class={`v3-gallery-item${[1,3,5].includes(i) ? ' v3-gallery-tilt-' + (i % 2 === 1 ? 'left' : 'right') : ''}`}>
-          <img
+          <Picture
             src={img.url}
             alt={img.alt}
-            loading="lazy"
             class="v3-gallery-img"
+            formats={['avif', 'webp']}
+            widths={[320, 640, 1024]}
+            sizes="(max-width:768px) 100vw, 33vw"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       ))}
@@ -154,11 +162,15 @@ const dietaryMap: Record<string, string> = {
     </div>
     <div class="v3-about-chef sr">
       <div class="v3-chef-photo-wrap">
-        <img
+        <Picture
           src={restaurant.about.chef.photo}
           alt={restaurant.about.chef.photoAlt}
           class="v3-chef-photo"
+          formats={['avif', 'webp']}
+          widths={[200, 400, 600]}
+          sizes="200px"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="v3-chef-info">

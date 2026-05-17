@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
 import { restaurant } from '../../data/restaurants/v2';
 
 const galleryItems = restaurant.gallery.slice(0, 8);
@@ -36,11 +37,15 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
       </div>
     </div>
     <div class="v2-hero__photo-block">
-      <img
+      <Picture
         src={restaurant.hero.image}
         alt={restaurant.hero.imageAlt}
         class="v2-hero__photo"
+        formats={['avif', 'webp']}
+        widths={[320, 640, 1024, 1920]}
+        sizes="(max-width:768px) 100vw, 50vw"
         loading="eager"
+        fetchpriority="high"
       />
     </div>
   </section>
@@ -85,11 +90,15 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
       <div class="v2-gallery__grid sr">
         {galleryItems.map((img) => (
           <div class="v2-gallery__item">
-            <img
+            <Picture
               src={img.url}
               alt={img.alt}
               class="v2-gallery__img"
+              formats={['avif', 'webp']}
+              widths={[320, 640, 1024]}
+              sizes="(max-width:768px) 100vw, 33vw"
               loading="lazy"
+              decoding="async"
             />
           </div>
         ))}
@@ -115,11 +124,15 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
         </div>
       </div>
       <div class="v2-about__right sr">
-        <img
+        <Picture
           src={restaurant.about.chef.photo}
           alt={restaurant.about.chef.photoAlt}
           class="v2-about__chef-photo"
+          formats={['avif', 'webp']}
+          widths={[320, 640, 1024]}
+          sizes="(max-width:768px) 100vw, 40vw"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
