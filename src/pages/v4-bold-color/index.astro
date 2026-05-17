@@ -30,15 +30,11 @@ const firstCategory = restaurant.menu.categories[0];
       --v4-border: rgba(24,10,0,0.12);
     }
 
-    /* ---- Scroll-reveal ---- */
-    .sr {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .sr-visible {
+    /* Scroll-reveal disabled: content visible immediately. */
+    .sr, .sr-visible {
       opacity: 1;
       transform: none;
+      transition: none;
     }
 
     /* ---- Base typography reset ---- */

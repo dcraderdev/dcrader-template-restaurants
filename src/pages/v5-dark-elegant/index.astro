@@ -33,9 +33,8 @@ const FONT_URL =
   html { scroll-behavior: smooth; }
   body { background: var(--v5-black); color: var(--v5-white); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; }
 
-  /* ---- Scroll-reveal (inherited from Layout) ---- */
-  .sr { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .sr-visible { opacity: 1; transform: none; }
+  /* Scroll-reveal disabled: content visible immediately. */
+  .sr, .sr-visible { opacity: 1; transform: none; transition: none; }
 
   /* =============================================
      NAV

@@ -479,23 +479,13 @@ header h1 {
   .t-btn-ghost-white:hover { background: rgba(255,255,255,0.12); border-color: white; }
 }
 
-/* ── Scroll reveal ─────────────────────────────────────────────────────────── */
-.sr {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.sr.sr-visible {
+/* Scroll-reveal disabled: content visible immediately, no pop-in on scroll. */
+.sr, .sr.sr-visible, .sr-visible {
   opacity: 1;
   transform: none;
+  transition: none;
 }
-.sr-delay-1 { transition-delay: 0.10s; }
-.sr-delay-2 { transition-delay: 0.20s; }
-.sr-delay-3 { transition-delay: 0.32s; }
-.sr-delay-4 { transition-delay: 0.44s; }
-@media (prefers-reduced-motion: reduce) {
-  .sr { opacity: 1; transform: none; transition: none; }
-}
+.sr-delay-1, .sr-delay-2, .sr-delay-3, .sr-delay-4 { transition-delay: 0s; }
 
 /* ── Print ─────────────────────────────────────────────────────────────────── */
 @media print {

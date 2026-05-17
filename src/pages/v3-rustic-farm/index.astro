@@ -355,18 +355,11 @@ const dietaryMap: Record<string, string> = {
     box-sizing: inherit;
   }
 
-  /* =============================================
-     SCROLL REVEAL
-  ============================================= */
-  .sr {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .sr-visible {
+  /* Scroll-reveal disabled: content visible immediately. */
+  .sr, .sr-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: none;
   }
 
   /* =============================================
