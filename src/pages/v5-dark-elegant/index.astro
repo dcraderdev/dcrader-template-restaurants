@@ -569,6 +569,152 @@ const FONT_URL =
   }
 
   /* =============================================
+     PROCESS  (uniquify module — v5)
+  ============================================= */
+  .v5-process {
+    background: var(--v5-black);
+    padding: 8rem 2.5rem;
+    position: relative;
+    border-top: 1px solid var(--v5-border-gold);
+    border-bottom: 1px solid var(--v5-border-gold);
+  }
+  .v5-process__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+  .v5-process__head {
+    text-align: center;
+    margin-bottom: 4.5rem;
+  }
+  .v5-process__label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--v5-gold);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .v5-process__h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    color: var(--v5-white);
+    margin: 0 0 1rem;
+    line-height: 1.1;
+  }
+  .v5-process__sub {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--v5-muted);
+    max-width: 32rem;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .v5-process__flow {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .v5-process__step {
+    text-align: center;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+  .v5-process__step + .v5-process__step::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    height: 1px;
+    width: calc(100% / 5);
+    transform: translate(-50%, -50%);
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--v5-gold) 50%,
+      transparent
+    );
+    opacity: 0.35;
+    pointer-events: none;
+    display: none; /* handled by ::after on previous element instead */
+  }
+  .v5-process__step::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    transform: translateY(-50%) translateX(50%);
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--v5-border-gold) 25%,
+      var(--v5-border-gold) 75%,
+      transparent
+    );
+    pointer-events: none;
+  }
+  .v5-process__step:last-child::after { display: none; }
+  .v5-process__num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--v5-gold);
+    margin: 0 auto 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--v5-gold);
+    background: var(--v5-black);
+    position: relative;
+    z-index: 1;
+  }
+  .v5-process__step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--v5-white);
+    margin: 0 0 0.65rem;
+    font-weight: 400;
+  }
+  .v5-process__step-meta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--v5-copper);
+    margin: 0 0 0.85rem;
+  }
+  .v5-process__step-body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--v5-muted);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .v5-process__flow { grid-template-columns: 1fr; }
+    .v5-process__step::after { display: none; }
+    .v5-process__step {
+      border-bottom: 1px solid var(--v5-border);
+      padding: 2rem 0;
+    }
+    .v5-process__step:last-child { border-bottom: none; }
+  }
+  @media (max-width: 600px) {
+    .v5-process { padding: 5rem 1.5rem; }
+  }
+
+  /* =============================================
      RESERVATIONS
   ============================================= */
   .v5-reserve {
@@ -1022,6 +1168,67 @@ const FONT_URL =
 </section>
 
 <!-- ===================== RESERVATIONS ===================== -->
+<!-- ===================== PROCESS (uniquify) ===================== -->
+<section class="v5-process" aria-label="How a steak gets to your table">
+  <div class="v5-process__inner sr">
+    <div class="v5-process__head">
+      <span class="v5-process__label">The Ember Method</span>
+      <h2 class="v5-process__h2">From pasture to plate — five quiet steps</h2>
+      <p class="v5-process__sub">
+        We don't do shortcuts. Every cut on the menu travels this exact path
+        before it reaches your fork.
+      </p>
+    </div>
+    <ol class="v5-process__flow">
+      <li class="v5-process__step">
+        <div class="v5-process__num">I</div>
+        <h3 class="v5-process__step-title">Source</h3>
+        <p class="v5-process__step-meta">Pasture · Day 1</p>
+        <p class="v5-process__step-body">
+          Whole primals from Creekstone Black Angus in Kansas and a small herd
+          of Wagyu we share with one other Chicago kitchen.
+        </p>
+      </li>
+      <li class="v5-process__step">
+        <div class="v5-process__num">II</div>
+        <h3 class="v5-process__step-title">Dry-Age</h3>
+        <p class="v5-process__step-meta">Cellar · 35–55 Days</p>
+        <p class="v5-process__step-body">
+          Hung in our glass cellar at 34&deg;F and 78% humidity. Long enough to
+          concentrate the beef, never long enough to taste of cabinet.
+        </p>
+      </li>
+      <li class="v5-process__step">
+        <div class="v5-process__num">III</div>
+        <h3 class="v5-process__step-title">Butcher</h3>
+        <p class="v5-process__step-meta">By Hand · Daily</p>
+        <p class="v5-process__step-body">
+          Cut to order each morning. Trim renders for the bordelaise; bones go
+          to the marrow service and tomorrow's stock.
+        </p>
+      </li>
+      <li class="v5-process__step">
+        <div class="v5-process__num">IV</div>
+        <h3 class="v5-process__step-title">Hearth</h3>
+        <p class="v5-process__step-meta">White Oak · 900&deg;F</p>
+        <p class="v5-process__step-body">
+          Open flame over Missouri white oak. Reverse-seared, rested twice,
+          finished with brown butter and a turn of black pepper.
+        </p>
+      </li>
+      <li class="v5-process__step">
+        <div class="v5-process__num">V</div>
+        <h3 class="v5-process__step-title">Plate</h3>
+        <p class="v5-process__step-meta">Tableside · Yours</p>
+        <p class="v5-process__step-body">
+          Carved in the dining room on warmed stone. Sauce poured at the table.
+          Your knife is the last hand it passes through.
+        </p>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <section class="v5-reserve" id="v5-reserve" aria-labelledby="v5ReserveTitle">
   <div class="v5-reserve__inner sr">
     <span class="v5-label v5-reserve__label">Reserve Your Table</span>

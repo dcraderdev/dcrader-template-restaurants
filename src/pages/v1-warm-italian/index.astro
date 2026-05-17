@@ -653,6 +653,113 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   }
 
   /* ══════════════════════════════════════
+     CHEF'S NOTE  (uniquify module — v1)
+  ══════════════════════════════════════ */
+  .v1-chefnote {
+    background: var(--v1-warm-white);
+    padding: 6rem 2.5rem;
+    position: relative;
+  }
+  .v1-chefnote-inner {
+    max-width: 52rem;
+    margin: 0 auto;
+    position: relative;
+    background: var(--v1-cream);
+    border: 1px solid var(--v1-border);
+    padding: 3.5rem 3rem 3rem;
+    box-shadow:
+      0 1px 0 var(--v1-border),
+      0 30px 60px -40px rgba(28,18,8,0.25);
+  }
+  .v1-chefnote-stamp {
+    position: absolute;
+    top: -1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--v1-terra);
+    color: var(--v1-cream);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.25rem;
+  }
+  .v1-chefnote-script {
+    font-family: 'Italianno', cursive;
+    font-size: 3.25rem;
+    line-height: 1.05;
+    color: var(--v1-terra-dark);
+    margin: 0 0 1.5rem;
+  }
+  .v1-chefnote-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.35rem;
+    line-height: 1.65;
+    color: var(--v1-dark);
+    margin: 0 0 1.5rem;
+  }
+  .v1-chefnote-recipe {
+    border-top: 1px dashed var(--v1-gold);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .v1-chefnote-recipe h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--v1-dark);
+    margin: 0 0 0.75rem;
+  }
+  .v1-chefnote-recipe ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--v1-muted);
+  }
+  .v1-chefnote-recipe li::before {
+    content: '·';
+    color: var(--v1-terra);
+    margin-right: 0.5rem;
+    font-weight: 700;
+  }
+  .v1-chefnote-sig {
+    margin-top: 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border-top: 1px solid var(--v1-border);
+    padding-top: 1.5rem;
+  }
+  .v1-chefnote-sig-name {
+    font-family: 'Italianno', cursive;
+    font-size: 2.25rem;
+    color: var(--v1-terra-dark);
+    line-height: 1;
+  }
+  .v1-chefnote-sig-meta {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--v1-muted);
+  }
+  @media (max-width: 720px) {
+    .v1-chefnote { padding: 4rem 1.25rem; }
+    .v1-chefnote-inner { padding: 2.5rem 1.5rem 2rem; }
+    .v1-chefnote-script { font-size: 2.5rem; }
+    .v1-chefnote-body { font-size: 1.1rem; }
+    .v1-chefnote-recipe { grid-template-columns: 1fr; gap: 1.25rem; }
+  }
+
+  /* ══════════════════════════════════════
      RESERVATIONS
   ══════════════════════════════════════ */
   .v1-reservations {
@@ -1292,6 +1399,45 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
           <div class="v1-chef-info-title">{restaurant.about.chef.title}</div>
           <div class="v1-chef-info-bio">{restaurant.about.chef.bio}</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CHEF'S NOTE (uniquify) ═══ -->
+  <section class="v1-chefnote" aria-label="A note from the chef">
+    <div class="v1-chefnote-inner sr">
+      <div class="v1-chefnote-stamp">Dal Quaderno · Chef's Notebook</div>
+      <p class="v1-chefnote-script">Buona sera —</p>
+      <p class="v1-chefnote-body">
+        Tonight's branzino comes in from a small dayboat out of Point Loma — same family
+        I've bought from for nine years. We brine it in Pacific seawater, roast it
+        whole over olive wood, and finish it with Cetara colatura and Meyer lemon
+        from a neighbor's backyard in La Jolla. If you order it, ask your server for a
+        spoon; the pan juices are the whole point.
+      </p>
+      <div class="v1-chefnote-recipe">
+        <div>
+          <h4>On the plate tonight</h4>
+          <ul>
+            <li>Wood-fired branzino, colatura, Meyer lemon</li>
+            <li>Burrata, persimmon, Calabrian chili honey</li>
+            <li>Hand-cut tonnarelli, sea urchin from Baja</li>
+            <li>Affogato, brown-butter gelato</li>
+          </ul>
+        </div>
+        <div>
+          <h4>From our pantry</h4>
+          <ul>
+            <li>Tonda Iblea olive oil, Sicily — pressed Nov '25</li>
+            <li>Acquerello rice, aged seven years</li>
+            <li>Colatura di alici from Cetara, Amalfi Coast</li>
+            <li>Sea salt from a tidepool friend in Encinitas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="v1-chefnote-sig">
+        <span class="v1-chefnote-sig-name">Marco Bellini</span>
+        <span class="v1-chefnote-sig-meta">Chef &amp; Proprietor · Bella Sole</span>
       </div>
     </div>
   </section>
