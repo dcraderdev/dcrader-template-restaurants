@@ -112,7 +112,7 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Precision-plated pasta course', span: 'tall' },
+    { url: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80', alt: 'Precision-plated pasta course', span: 'tall' },
     { url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80', alt: 'North & Pine dining room', span: 'normal' },
     { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Seasonal ingredient study', span: 'normal' },
     { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Chef\'s tasting: wood-fire course', span: 'normal' },
@@ -124,7 +124,7 @@ export const restaurant: RestaurantConfig = {
   seo: {
     title: 'North & Pine | Contemporary American | West Village, New York',
     description: 'A 32-seat contemporary American restaurant in New York\'s West Village. Nightly tasting menu by Chef Elena Voss. Open Wed–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=1200&q=80',
+    ogImage: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=80',
     canonicalUrl: 'https://restaurants.dcrader.dev/v2-modern-minimal',
   },
 };

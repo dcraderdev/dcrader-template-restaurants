@@ -119,7 +119,7 @@ export const restaurant: RestaurantConfig = {
   gallery: [
     { url: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80', alt: 'Dry-aged ribeye, carved tableside', span: 'tall' },
     { url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80', alt: 'Ember dining room — brick, candlelight', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Wagyu carpaccio', span: 'normal' },
+    { url: 'https://images.unsplash.com/photo-1546548970-71785318a17b?auto=format&fit=crop&w=900&q=80', alt: 'Wagyu carpaccio', span: 'normal' },
     { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'The whisky wall at Ember bar', span: 'wide' },
     { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Beef tartare, house preparation', span: 'normal' },
     { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Dry-aging vault, in-house program', span: 'tall' },

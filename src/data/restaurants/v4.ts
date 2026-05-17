@@ -118,7 +118,7 @@ export const restaurant: RestaurantConfig = {
     { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Wood-fire grill — bold flames', span: 'tall' },
     { url: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80', alt: 'Mezze spread — vibrant colors', span: 'wide' },
     { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Labneh board with fresh herbs', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Handmade pita, hot off the stone', span: 'normal' },
+    { url: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80', alt: 'Handmade pita, hot off the stone', span: 'normal' },
     { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80', alt: 'Casa Verde dining room, lively and bright', span: 'normal' },
     { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'Natural wine service at the bar', span: 'tall' },
     { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: 'Basque cheesecake, fresh-baked', span: 'normal' },
