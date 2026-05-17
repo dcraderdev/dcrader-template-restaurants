@@ -1,6 +1,17 @@
 // V1: Bella Sole — Coastal Italian, La Jolla San Diego
 // Theme: Warm Italian (terracotta, cream, Playfair Display)
 import type { RestaurantConfig } from './types';
+import heroImg from '../../assets/restaurants/v1/hero.jpg';
+import chefImg from '../../assets/restaurants/v1/chef.jpg';
+import ambianceImg from '../../assets/restaurants/v1/ambiance.jpg';
+import g1 from '../../assets/restaurants/v1/g1-vongole.jpg';
+import g3 from '../../assets/restaurants/v1/g3-pizza.jpg';
+import g4 from '../../assets/restaurants/v1/g4-burrata.jpg';
+import g5 from '../../assets/restaurants/v1/g5-pasta.jpg';
+import g6 from '../../assets/restaurants/v1/g6-bar.jpg';
+import g7 from '../../assets/restaurants/v1/g7-antipasti.jpg';
+import g8 from '../../assets/restaurants/v1/g8-tiramisu.jpg';
+import g9 from '../../assets/restaurants/v1/g9-bistecca.jpg';
 
 export const restaurant: RestaurantConfig = {
   name: 'Bella Sole',
@@ -37,8 +48,8 @@ export const restaurant: RestaurantConfig = {
   openTableId: null,
   reservationPhone: '(619) 555-0142',
   hero: {
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+    image: heroImg,
+    imageMobile: heroImg,
     imageAlt: 'Bella Sole dining room — warm candlelit evening service',
   },
   about: {
@@ -48,10 +59,10 @@ export const restaurant: RestaurantConfig = {
       name: 'Marco Bellini',
       title: 'Executive Chef & Owner',
       bio: 'Trained at ALMA in Colorno, shaped by seasons in Rome, Naples, and the San Diego fishing community. James Beard semifinalist 2023.',
-      photo: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80',
+      photo: chefImg,
       photoAlt: 'Chef Marco Bellini in the Bella Sole open kitchen',
     },
-    ambiance: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80',
+    ambiance: ambianceImg,
     ambianceAlt: 'Bella Sole dining room at golden hour',
   },
   menu: {
@@ -113,21 +124,21 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80', alt: 'Linguine alle vongole', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80', alt: 'Dining room, candlelit evening', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Wood-fired pizza', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Burrata Pugliese', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Fresh pasta', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'Bar — aperitivo hour', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80', alt: 'Antipasti spread', span: 'wide' },
-    { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: 'Tiramisù della Casa', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80', alt: 'Bistecca Fiorentina', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80', alt: 'Terrace dining at sunset', span: 'normal' },
+    { url: g1, alt: 'Linguine alle vongole', span: 'normal' },
+    { url: heroImg, alt: 'Dining room, candlelit evening', span: 'tall' },
+    { url: g3, alt: 'Wood-fired pizza', span: 'normal' },
+    { url: g4, alt: 'Burrata Pugliese', span: 'normal' },
+    { url: g5, alt: 'Fresh pasta', span: 'tall' },
+    { url: g6, alt: 'Bar — aperitivo hour', span: 'normal' },
+    { url: g7, alt: 'Antipasti spread', span: 'wide' },
+    { url: g8, alt: 'Tiramisù della Casa', span: 'normal' },
+    { url: g9, alt: 'Bistecca Fiorentina', span: 'normal' },
+    { url: ambianceImg, alt: 'Terrace dining at sunset', span: 'normal' },
   ],
   seo: {
     title: 'Bella Sole | Coastal Italian Restaurant | La Jolla, San Diego',
     description: 'Coastal Italian dining in La Jolla, San Diego. Fresh Pacific seafood, house-made pasta, and an all-Italian wine list. Open Tue–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    ogImage: heroImg,
     canonicalUrl: 'https://restaurants.dcrader.dev/v1-warm-italian',
   },
 };

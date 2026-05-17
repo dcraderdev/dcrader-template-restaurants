@@ -1,6 +1,15 @@
 // V5: Ember — Prime Steaks & Spirits, River North Chicago
 // Theme: Dark Elegant (near-black, gold, Cormorant Garamond, moody luxury)
 import type { RestaurantConfig } from './types';
+import heroImg from '../../assets/restaurants/v5/hero.jpg';
+import chefImg from '../../assets/restaurants/v5/chef.jpg';
+import ambianceImg from '../../assets/restaurants/v5/ambiance.jpg';
+import g3 from '../../assets/restaurants/v5/g3-carpaccio.jpg';
+import g4 from '../../assets/restaurants/v5/g4-whisky.jpg';
+import g5 from '../../assets/restaurants/v5/g5-tartare.jpg';
+import g6 from '../../assets/restaurants/v5/g6-vault.jpg';
+import g7 from '../../assets/restaurants/v5/g7-dessert.jpg';
+import g8 from '../../assets/restaurants/v5/g8-latenight.jpg';
 
 export const restaurant: RestaurantConfig = {
   name: 'Ember',
@@ -37,9 +46,8 @@ export const restaurant: RestaurantConfig = {
   openTableId: null,
   reservationPhone: '(312) 555-0588',
   hero: {
-    // Dramatic, moody steak shot
-    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80',
+    image: heroImg,
+    imageMobile: heroImg,
     imageAlt: 'Ember — a dry-aged prime cut, kissed by fire',
   },
   about: {
@@ -49,10 +57,10 @@ export const restaurant: RestaurantConfig = {
       name: 'James Callahan',
       title: 'Executive Chef & Partner',
       bio: 'Former butcher, Chicago native. 40-year career spanning Alinea, Blackbird, and three decades behind the block at Callahan & Sons Meats.',
-      photo: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80',
+      photo: chefImg,
       photoAlt: 'Chef James Callahan in the Ember dry-aging vault',
     },
-    ambiance: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+    ambiance: ambianceImg,
     ambianceAlt: 'Ember dining room — original brick, candlelight, whisky wall',
   },
   menu: {
@@ -117,19 +125,19 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80', alt: 'Dry-aged ribeye, carved tableside', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80', alt: 'Ember dining room — brick, candlelight', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Wagyu carpaccio', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'The whisky wall at Ember bar', span: 'wide' },
-    { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Beef tartare, house preparation', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Dry-aging vault, in-house program', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: 'Ember dessert — dark chocolate', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80', alt: 'Late-night dining, River North', span: 'normal' },
+    { url: heroImg, alt: 'Dry-aged ribeye, carved tableside', span: 'tall' },
+    { url: ambianceImg, alt: 'Ember dining room — brick, candlelight', span: 'normal' },
+    { url: g3, alt: 'Wagyu carpaccio', span: 'normal' },
+    { url: g4, alt: 'The whisky wall at Ember bar', span: 'wide' },
+    { url: g5, alt: 'Beef tartare, house preparation', span: 'normal' },
+    { url: g6, alt: 'Dry-aging vault, in-house program', span: 'tall' },
+    { url: g7, alt: 'Ember dessert — dark chocolate', span: 'normal' },
+    { url: g8, alt: 'Late-night dining, River North', span: 'normal' },
   ],
   seo: {
     title: 'Ember | Prime Steaks & Spirits | River North, Chicago',
     description: '45-day dry-aged prime beef, 240 Japanese and American whiskies, and a lounge open until 1 AM. River North\'s most celebrated steakhouse. Mon–Sat.',
-    ogImage: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=1200&q=80',
+    ogImage: heroImg,
     canonicalUrl: 'https://restaurants.dcrader.dev/v5-dark-elegant',
   },
 };

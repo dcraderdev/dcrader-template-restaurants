@@ -1,5 +1,6 @@
 ---
 import '../global.css';
+import { getImage } from 'astro:assets';
 import type { RestaurantConfig } from '../data/restaurants/types';
 
 interface Props {
@@ -20,6 +21,14 @@ const {
 } = Astro.props;
 
 const { description, ogImage, canonicalUrl } = restaurant.seo;
+
+// Resolve ImageMetadata to a final hashed URL for OG / JSON-LD / preload
+const ogProcessed = await getImage({ src: ogImage, width: 1200, format: 'jpg' });
+const ogImageUrl = new URL(ogProcessed.src, Astro.site ?? canonicalUrl).toString();
+
+// Hero preload (above-the-fold). Build a multi-format srcset using getImage.
+const heroAvif = await getImage({ src: restaurant.hero.image, format: 'avif', widths: [640, 1024, 1920], sizes: '100vw' });
+const heroWebp = await getImage({ src: restaurant.hero.image, format: 'webp', widths: [640, 1024, 1920], sizes: '100vw' });
 ---
 
 <!doctype html>
@@ -34,7 +43,7 @@ const { description, ogImage, canonicalUrl } = restaurant.seo;
     <meta property="og:type" content="restaurant.restaurant" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="en_US" />
 
@@ -42,10 +51,30 @@ const { description, ogImage, canonicalUrl } = restaurant.seo;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Hero image preload (above-the-fold, multi-format) -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href={heroAvif.src}
+      imagesrcset={heroAvif.srcSet.attribute}
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href={heroWebp.src}
+      imagesrcset={heroWebp.srcSet.attribute}
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -70,7 +99,7 @@ const { description, ogImage, canonicalUrl } = restaurant.seo;
         addressCountry: 'US',
       },
       servesCuisine: restaurant.cuisine,
-      image: restaurant.hero.image,
+      image: ogImageUrl,
       openingHours: restaurant.hours
         .filter(h => h.open !== null)
         .map(h => `${h.day.slice(0, 2)} ${h.open}–${h.close}`),

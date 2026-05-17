@@ -1,6 +1,15 @@
 // V3: Hen & Hearth — Farm-to-Table, Woodstock Vermont
 // Theme: Rustic Farm (warm parchment, earthy greens/browns, Libre Baskerville)
 import type { RestaurantConfig } from './types';
+import heroImg from '../../assets/restaurants/v3/hero.jpg';
+import chefImg from '../../assets/restaurants/v3/chef.jpg';
+import ambianceImg from '../../assets/restaurants/v3/ambiance.jpg';
+import g2 from '../../assets/restaurants/v3/g2-pasta.jpg';
+import g4 from '../../assets/restaurants/v3/g4-tomato.jpg';
+import g5 from '../../assets/restaurants/v3/g5-applecrisp.jpg';
+import g6 from '../../assets/restaurants/v3/g6-hearth.jpg';
+import g7 from '../../assets/restaurants/v3/g7-trout.jpg';
+import g8 from '../../assets/restaurants/v3/g8-pork.jpg';
 
 export const restaurant: RestaurantConfig = {
   name: 'Hen & Hearth',
@@ -37,9 +46,8 @@ export const restaurant: RestaurantConfig = {
   openTableId: null,
   reservationPhone: '(802) 555-0347',
   hero: {
-    // Rustic farm, warm, wood-fire kitchen feel
-    image: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1920&q=85',
-    imageMobile: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=800&q=80',
+    image: heroImg,
+    imageMobile: heroImg,
     imageAlt: 'Hen & Hearth — fresh ingredients from Connelly Farm spread across a wooden table',
   },
   about: {
@@ -49,10 +57,10 @@ export const restaurant: RestaurantConfig = {
       name: 'Birdie Connelly',
       title: 'Chef & Farmer',
       bio: 'Fourth-generation Vermont farmer and self-taught cook. Runs 40 acres of vegetables, herbs, and heritage breeds with her family.',
-      photo: 'https://images.unsplash.com/photo-1607631568010-a87245c0daf8?auto=format&fit=crop&w=600&q=80',
+      photo: chefImg,
       photoAlt: 'Chef Birdie Connelly at the wood-fire hearth',
     },
-    ambiance: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80',
+    ambiance: ambianceImg,
     ambianceAlt: 'Hen & Hearth dining room in the restored timber barn',
   },
   menu: {
@@ -115,19 +123,19 @@ export const restaurant: RestaurantConfig = {
     ],
   },
   gallery: [
-    { url: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80', alt: 'Farm harvest — morning pickup', span: 'wide' },
-    { url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80', alt: 'Farmhouse pasta, foraged mushrooms', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80', alt: 'The timber barn dining room', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=900&q=80', alt: 'Heirloom tomato board', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', alt: "Birdie's apple crisp, warm from the oven", span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80', alt: 'Wood-fire hearth', span: 'normal' },
-    { url: 'https://images.unsplash.com/photo-1476224203421-74177f72b58c?auto=format&fit=crop&w=900&q=80', alt: 'Cast iron trout, farm herbs', span: 'tall' },
-    { url: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80', alt: 'Smoked Berkshire pork chop', span: 'normal' },
+    { url: heroImg, alt: 'Farm harvest — morning pickup', span: 'wide' },
+    { url: g2, alt: 'Farmhouse pasta, foraged mushrooms', span: 'normal' },
+    { url: ambianceImg, alt: 'The timber barn dining room', span: 'tall' },
+    { url: g4, alt: 'Heirloom tomato board', span: 'normal' },
+    { url: g5, alt: "Birdie's apple crisp, warm from the oven", span: 'normal' },
+    { url: g6, alt: 'Wood-fire hearth', span: 'normal' },
+    { url: g7, alt: 'Cast iron trout, farm herbs', span: 'tall' },
+    { url: g8, alt: 'Smoked Berkshire pork chop', span: 'normal' },
   ],
   seo: {
     title: 'Hen & Hearth | Farm-to-Table Restaurant | Woodstock, Vermont',
     description: 'Farm-to-table dining in Woodstock, VT. Menu written weekly from Connelly Farm\'s 40-acre harvest. Wood-fire cooking, seasonal ingredients. Open Thu–Sun.',
-    ogImage: 'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=80',
+    ogImage: heroImg,
     canonicalUrl: 'https://restaurants.dcrader.dev/v3-rustic-farm',
   },
 };
