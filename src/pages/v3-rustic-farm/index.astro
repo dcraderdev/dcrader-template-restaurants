@@ -182,6 +182,83 @@ const dietaryMap: Record<string, string> = {
   </div>
 </section>
 
+<!-- ==================== PURVEYORS (uniquify) ==================== -->
+<section class="v3-purveyors" aria-label="Our farms and purveyors">
+  <div class="v3-purveyors-inner sr">
+    <div class="v3-purveyors-head">
+      <span class="v3-purveyors-eyebrow">Where it all comes from</span>
+      <h2 class="v3-purveyors-h2">From these woods, these fields, these barns</h2>
+      <p class="v3-purveyors-sub">
+        Every plate at Hen &amp; Hearth begins in a place we know by name. Here are
+        the people whose work shows up on your table this week.
+      </p>
+    </div>
+    <div class="v3-purveyors-grid">
+      <article class="v3-purveyor-card">
+        <span class="v3-purveyor-tag">Vegetables</span>
+        <h3 class="v3-purveyor-name">Connelly Farm</h3>
+        <p class="v3-purveyor-place">Our family acres</p>
+        <p class="v3-purveyor-distance">0.4 miles · Woodstock, VT</p>
+        <p class="v3-purveyor-supplies">
+          Heirloom squash, Sungold tomatoes, salt-frost spinach, the herb garden
+          out the kitchen door.
+        </p>
+      </article>
+      <article class="v3-purveyor-card">
+        <span class="v3-purveyor-tag">Cheese &amp; Dairy</span>
+        <h3 class="v3-purveyor-name">Sugar Brook Creamery</h3>
+        <p class="v3-purveyor-place">Marian &amp; Roy Tibbetts</p>
+        <p class="v3-purveyor-distance">6 miles · Pomfret, VT</p>
+        <p class="v3-purveyor-supplies">
+          Raw-milk cheddar aged in their barn, cultured butter, the morning's
+          buttermilk for our biscuits.
+        </p>
+      </article>
+      <article class="v3-purveyor-card">
+        <span class="v3-purveyor-tag">Meat</span>
+        <h3 class="v3-purveyor-name">Hidden Pasture Farm</h3>
+        <p class="v3-purveyor-place">The Whitcomb brothers</p>
+        <p class="v3-purveyor-distance">11 miles · Barnard, VT</p>
+        <p class="v3-purveyor-supplies">
+          Pasture-raised pork, dry-aged beef from their woodlot herd, Sunday
+          chickens for our hearth roast.
+        </p>
+      </article>
+      <article class="v3-purveyor-card">
+        <span class="v3-purveyor-tag">Bread &amp; Grain</span>
+        <h3 class="v3-purveyor-name">Red Hen Baking</h3>
+        <p class="v3-purveyor-place">Randy George</p>
+        <p class="v3-purveyor-distance">38 miles · Middlesex, VT</p>
+        <p class="v3-purveyor-supplies">
+          Hearth loaves and the pan loaves we tear for stuffing. Vermont-grown
+          wheat, milled fresh, baked overnight.
+        </p>
+      </article>
+      <article class="v3-purveyor-card">
+        <span class="v3-purveyor-tag">Cider &amp; Orchard</span>
+        <h3 class="v3-purveyor-name">Champlain Orchards</h3>
+        <p class="v3-purveyor-place">Bill &amp; Andrea Suhr</p>
+        <p class="v3-purveyor-distance">62 miles · Shoreham, VT</p>
+        <p class="v3-purveyor-supplies">
+          Heirloom apples for tarts, ice cider for the cellar, the still cider
+          we cook our pork shoulder in.
+        </p>
+      </article>
+      <article class="v3-purveyor-card">
+        <span class="v3-purveyor-tag">Maple &amp; Honey</span>
+        <h3 class="v3-purveyor-name">Bragg Farm Sugarhouse</h3>
+        <p class="v3-purveyor-place">Doug Bragg</p>
+        <p class="v3-purveyor-distance">29 miles · East Montpelier, VT</p>
+        <p class="v3-purveyor-supplies">
+          Wood-fired maple, Grade A dark robust. The honey too — from the hives
+          above the sugarhouse.
+        </p>
+      </article>
+    </div>
+    <p class="v3-purveyors-note">Thank you. — Birdie &amp; the kitchen</p>
+  </div>
+</section>
+
 <!-- ==================== RESERVATIONS ==================== -->
 <section class="v3-reservations" id="reservations">
   <div class="v3-reservations-inner sr">
@@ -970,6 +1047,117 @@ const dietaryMap: Record<string, string> = {
     line-height: 1.65;
     margin: 0.25rem 0 0;
     max-width: 260px;
+  }
+
+  /* =============================================
+     PURVEYORS  (uniquify module — v3)
+  ============================================= */
+  .v3-purveyors {
+    background: var(--v3-parchment);
+    padding: 7rem 2.5rem;
+    border-top: 1px solid var(--v3-border);
+  }
+  .v3-purveyors-inner {
+    max-width: 68rem;
+    margin: 0 auto;
+  }
+  .v3-purveyors-head {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .v3-purveyors-eyebrow {
+    font-family: var(--v3-font-hand);
+    color: var(--v3-brown);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .v3-purveyors-h2 {
+    font-family: var(--v3-font-display);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--v3-text);
+    margin: 0 0 0.75rem;
+    font-style: italic;
+  }
+  .v3-purveyors-sub {
+    font-family: var(--v3-font-body);
+    color: var(--v3-muted);
+    max-width: 36rem;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .v3-purveyors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .v3-purveyor-card {
+    background: #fff;
+    border: 1px solid var(--v3-border);
+    padding: 2rem 1.75rem;
+    position: relative;
+  }
+  .v3-purveyor-card::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(122,82,48,0.25);
+    pointer-events: none;
+  }
+  .v3-purveyor-tag {
+    display: inline-block;
+    background: var(--v3-butter);
+    color: var(--v3-dark);
+    font-family: var(--v3-font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    margin-bottom: 1.25rem;
+  }
+  .v3-purveyor-name {
+    font-family: var(--v3-font-display);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--v3-text);
+    margin: 0 0 0.25rem;
+  }
+  .v3-purveyor-place {
+    font-family: var(--v3-font-hand);
+    font-size: 1.15rem;
+    color: var(--v3-green);
+    margin: 0 0 0.85rem;
+  }
+  .v3-purveyor-distance {
+    font-family: var(--v3-font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--v3-muted);
+    margin: 0 0 0.85rem;
+  }
+  .v3-purveyor-supplies {
+    font-family: var(--v3-font-body);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--v3-text);
+    margin: 0;
+  }
+  .v3-purveyors-note {
+    margin-top: 3rem;
+    text-align: center;
+    font-family: var(--v3-font-hand);
+    font-size: 1.4rem;
+    color: var(--v3-brown);
+  }
+  @media (max-width: 900px) {
+    .v3-purveyors-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 600px) {
+    .v3-purveyors { padding: 4rem 1.25rem; }
+    .v3-purveyors-grid { grid-template-columns: 1fr; }
   }
 
   /* =============================================
