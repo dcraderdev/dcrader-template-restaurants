@@ -999,6 +999,12 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
      RESPONSIVE
   ══════════════════════════════════════ */
   @media (max-width: 768px) {
+    .v1-nav {
+      padding: 1.25rem 1.25rem;
+    }
+    .v1-nav.scrolled {
+      padding: 0.9rem 1.25rem;
+    }
     .v1-nav-links {
       display: none;
     }
@@ -1007,11 +1013,29 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     }
 
     .v1-hero-content {
-      padding: 0 1.75rem 5rem;
+      padding: 0 1.25rem 4rem;
+      max-width: 100%;
     }
 
     .v1-hero-h1 {
-      font-size: 3.5rem;
+      font-size: 2.6rem;
+      line-height: 1;
+    }
+
+    .v1-hero-subtitle {
+      font-size: 0.9rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .v1-hero-buttons {
+      gap: 0.65rem;
+    }
+
+    .v1-btn-primary,
+    .v1-btn-ghost {
+      padding: 0.8rem 1.25rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
     }
 
     /* About: single column */
@@ -1094,6 +1118,63 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     }
     .v1-info-strip-sep {
       display: none;
+    }
+  }
+
+  /* ── Small phones (≤ 420px) ── */
+  @media (max-width: 420px) {
+    .v1-nav {
+      padding: 1rem 1rem;
+    }
+    .v1-nav.scrolled {
+      padding: 0.75rem 1rem;
+    }
+    .v1-nav-logo {
+      font-size: 1.9rem;
+    }
+
+    .v1-hero-content {
+      padding: 0 1rem 3.5rem;
+    }
+    .v1-hero-h1 {
+      font-size: 2.2rem;
+    }
+    .v1-hero-subtitle {
+      font-size: 0.85rem;
+    }
+    .v1-btn-primary,
+    .v1-btn-ghost {
+      padding: 0.75rem 1rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+    }
+
+    .v1-menu,
+    .v1-gallery,
+    .v1-reservations,
+    .v1-contact {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .v1-footer {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .v1-menu-title {
+      font-size: 2.75rem;
+    }
+    .v1-gallery-title {
+      font-size: 2.5rem;
+    }
+    .v1-reservations-title {
+      font-size: 2.4rem;
+    }
+    .v1-contact-title {
+      font-size: 2.2rem;
+    }
+    .v1-about-title {
+      font-size: 2.1rem;
     }
   }
 </style>
