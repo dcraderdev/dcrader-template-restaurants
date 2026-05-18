@@ -1102,6 +1102,21 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     text-transform: uppercase;
   }
 
+  .v1-footer-attrib {
+    max-width: 1100px;
+    margin: 1rem auto 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+  }
+  .v1-footer-attrib a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .v1-footer-attrib a:hover { color: rgba(255,255,255,0.55); }
+
   /* ══════════════════════════════════════
      RESPONSIVE
   ══════════════════════════════════════ */
@@ -1673,6 +1688,9 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
         {restaurant.cuisine} &middot; {restaurant.address.city}
       </span>
     </div>
+    <p class="v1-footer-attrib">
+      Built by <a href="https://dcrader.dev" target="_blank" rel="noopener">Donovan Crader &middot; dcrader.dev</a>
+    </p>
   </footer>
 
 </div><!-- end .v1-page -->

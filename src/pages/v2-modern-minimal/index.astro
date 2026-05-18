@@ -284,6 +284,9 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
       <span class="v2-footer__name">North &amp; Pine</span>
       <span class="v2-footer__copy">&copy; {currentYear} North &amp; Pine. All rights reserved.</span>
     </div>
+    <div class="v2-footer__attrib">
+      Built by <a href="https://dcrader.dev" target="_blank" rel="noopener">Donovan Crader &middot; dcrader.dev</a>
+    </div>
   </footer>
 
 </Layout>
@@ -969,6 +972,22 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     color: var(--v2-gray);
     font-weight: 300;
   }
+
+  .v2-footer__attrib {
+    max-width: 72rem;
+    margin: 1rem auto 0;
+    text-align: center;
+    font-family: var(--v2-sans);
+    font-size: 0.72rem;
+    color: var(--v2-gray);
+    font-weight: 300;
+  }
+  .v2-footer__attrib a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+  }
+  .v2-footer__attrib a:hover { color: var(--v2-white); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
