@@ -97,7 +97,7 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   .v1-nav-logo {
     font-family: 'Italianno', cursive;
     font-size: 2.2rem;
-    color: #fff;
+    color: var(--v1-dark);
     text-decoration: none;
     line-height: 1;
     transition: color 0.35s ease;
@@ -119,7 +119,7 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     font-size: 0.6rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.85);
+    color: var(--v1-muted);
     text-decoration: none;
     transition: color 0.3s ease;
   }
@@ -149,7 +149,7 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     display: block;
     width: 24px;
     height: 1.5px;
-    background: #fff;
+    background: var(--v1-dark);
     transition: background 0.35s ease;
   }
   .v1-nav.scrolled .v1-hamburger span {
@@ -199,36 +199,21 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   }
 
   /* ══════════════════════════════════════
-     HERO
+     HERO — wordmark treatment
+     Restaurant name IS the centerpiece.
   ══════════════════════════════════════ */
   .v1-hero {
     position: relative;
     min-height: 100vh;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-  }
-
-  .v1-hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: saturate(1.1);
-  }
-
-  /* Gradient overlay */
-  .v1-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(0,0,0,0.90) 0%,
-      rgba(0,0,0,0.45) 40%,
-      rgba(0,0,0,0.18) 100%
-    );
-    z-index: 1;
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(196,113,74,0.10), transparent 60%),
+      var(--v1-cream);
+    padding: 8rem 2rem 4rem;
+    text-align: center;
   }
 
   /* Film grain overlay */
@@ -236,7 +221,7 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     position: absolute;
     inset: 0;
     z-index: 2;
-    opacity: 0.06;
+    opacity: 0.045;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
     background-repeat: repeat;
     pointer-events: none;
@@ -245,9 +230,72 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
   .v1-hero-content {
     position: relative;
     z-index: 3;
-    padding: 0 4rem 8rem;
-    max-width: 700px;
+    padding: 0;
+    max-width: 1100px;
+    margin: 0 auto;
   }
+
+  .v1-wordmark {
+    font-family: 'Italianno', cursive;
+    font-size: clamp(6rem, 22vw, 18rem);
+    line-height: 0.85;
+    color: var(--v1-terra-dark);
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 40px rgba(196,113,74,0.18);
+  }
+  .v1-wordmark-est {
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.6em;
+    text-transform: uppercase;
+    color: var(--v1-muted);
+    margin-bottom: 2rem;
+  }
+  .v1-wordmark-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.6rem);
+    color: var(--v1-dark);
+    margin: 1.5rem auto 0;
+    max-width: 36rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+  .v1-wordmark-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--v1-muted);
+  }
+  .v1-wordmark-meta span + span::before {
+    content: '·';
+    margin-right: 2rem;
+    color: var(--v1-gold);
+  }
+  .v1-wordmark-cta {
+    margin-top: 3rem;
+    display: inline-flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media (max-width: 768px) {
+    .v1-hero { padding: 6rem 1.25rem 3rem; min-height: 90vh; }
+    .v1-wordmark-meta { gap: 1rem; font-size: 0.55rem; letter-spacing: 0.25em; }
+    .v1-wordmark-meta span + span::before { margin-right: 1rem; }
+  }
+
+  /* Old hero styles still referenced elsewhere — keep minimal stubs to avoid breakage */
+  .v1-hero-img { display: none; }
+  .v1-hero-overlay { display: none; }
 
   .v1-hero-eyebrow {
     font-family: 'Raleway', sans-serif;
@@ -1332,39 +1380,26 @@ const aboutParagraphs = restaurant.about.story.split('\n\n');
     </button>
   </header>
 
-  <!-- ═══ HERO ═══ -->
+  <!-- ═══ HERO — WORDMARK TREATMENT ═══ -->
   <section class="v1-hero" aria-label="Hero">
-    <Picture
-      class="v1-hero-img"
-      src={restaurant.hero.image}
-      alt={restaurant.hero.imageAlt}
-      formats={['avif', 'webp']}
-      widths={[320, 640, 1024, 1920]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <div class="v1-hero-overlay" aria-hidden="true"></div>
     <div class="v1-hero-grain" aria-hidden="true"></div>
-
     <div class="v1-hero-content">
-      <span class="v1-hero-eyebrow" id="v1HeroEyebrow">{restaurant.tagline}</span>
-
-      <h1 class="v1-hero-h1" id="v1HeroH1">
-        Where the Pacific<em>Meets the Mediterranean</em>
-      </h1>
-
-      <div class="v1-hero-ornament" id="v1HeroOrnament" aria-hidden="true">
-        <div class="v1-hero-ornament-line"></div>
-        <div class="v1-hero-ornament-dot"></div>
-        <div class="v1-hero-ornament-line"></div>
+      <span class="v1-wordmark-est">Est. 2019 &middot; La Jolla</span>
+      <h1 class="v1-wordmark">{restaurant.name}</h1>
+      <div class="v1-ornament" aria-hidden="true" style="justify-content:center;">
+        <div class="v1-ornament-line"></div>
+        <div class="v1-ornament-dot"></div>
+        <div class="v1-ornament-line"></div>
       </div>
-
-      <p class="v1-hero-subtitle" id="v1HeroSubtitle">{restaurant.heroSubtitle}</p>
-
-      <div class="v1-hero-buttons" id="v1HeroButtons">
-        <a href="#reservations" class="v1-btn-primary">Reserve a Table</a>
-        <a href="#menu" class="v1-btn-ghost">View Menu</a>
+      <p class="v1-wordmark-tag">{restaurant.heroSubtitle}</p>
+      <div class="v1-wordmark-meta" aria-hidden="true">
+        <span>{restaurant.cuisine}</span>
+        <span>Dinner Nightly</span>
+        <span>Reservations Welcome</span>
+      </div>
+      <div class="v1-wordmark-cta">
+        <a href="#reservations" class="v1-btn-primary" style="background:var(--v1-terra);color:#fff;">Reserve an Evening</a>
+        <a href="#menu" class="v1-btn-primary" style="background:transparent;color:var(--v1-terra);border:1px solid var(--v1-terra);">View the Menu</a>
       </div>
     </div>
   </section>

@@ -191,7 +191,161 @@ const FONT_URL =
     flex-direction: column;
   }
 
-  /* Top text section */
+  /* ── VIDEO-BG TREATMENT ── */
+  .v5-hero--video {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    color: var(--v5-white);
+    padding: 7rem 2rem 0;
+  }
+  .v5-hero__video-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .v5-hero__video-still {
+    position: absolute;
+    inset: -5%;
+    width: 110%;
+    height: 110%;
+    object-fit: cover;
+    filter: brightness(0.55) contrast(1.15) saturate(0.85);
+    animation: v5KenBurns 22s ease-in-out infinite alternate;
+  }
+  @keyframes v5KenBurns {
+    0%   { transform: scale(1.0)  translate3d(0, 0, 0); }
+    100% { transform: scale(1.10) translate3d(-2%, -1%, 0); }
+  }
+  .v5-hero__video-flicker {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(198,162,87,0.18) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(140,40,20,0.20) 0%, transparent 55%);
+    animation: v5Flicker 6s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+  }
+  @keyframes v5Flicker {
+    0%   { opacity: 0.55; }
+    50%  { opacity: 0.85; }
+    100% { opacity: 0.65; }
+  }
+  .v5-hero__video-tint {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(11,10,8,0.55) 0%, rgba(11,10,8,0.20) 35%, rgba(11,10,8,0.75) 100%);
+  }
+
+  .v5-hero__video-brand {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .v5-hero__video-brand .v5-hero__h1 {
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+  .v5-hero__video-brand .v5-hero__subtitle {
+    color: rgba(255,255,255,0.78);
+    text-align: center;
+  }
+
+  .v5-hero__overlay-menu {
+    position: relative;
+    z-index: 2;
+    margin: 0 auto;
+    width: min(46rem, 100%);
+    background: rgba(11,10,8,0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(198,162,87,0.25);
+    padding: 1.5rem 2rem 1.75rem;
+    margin-bottom: 3rem;
+  }
+  .v5-overlay-menu__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .v5-overlay-menu__label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--v5-gold);
+  }
+  .v5-overlay-menu__more {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .v5-overlay-menu__more:hover { color: var(--v5-gold); }
+  .v5-overlay-menu__items {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+  .v5-overlay-menu__item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .v5-overlay-menu__item:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .v5-overlay-menu__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--v5-white);
+    font-weight: 500;
+  }
+  .v5-overlay-menu__dot {
+    flex: 1;
+    border-bottom: 1px dotted rgba(255,255,255,0.2);
+    transform: translateY(-3px);
+  }
+  .v5-overlay-menu__price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--v5-gold);
+    font-weight: 400;
+  }
+  .v5-overlay-menu__cta {
+    display: block;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--v5-black);
+    background: var(--v5-gold);
+    padding: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .v5-overlay-menu__cta:hover { background: var(--v5-gold-light); }
+
+  @media (max-width: 720px) {
+    .v5-hero--video { padding: 6rem 1rem 0; }
+    .v5-hero__overlay-menu { padding: 1.25rem 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  }
+
+  /* Top text section (legacy) */
   .v5-hero__top {
     min-height: 55vh;
     display: flex;
@@ -1034,44 +1188,54 @@ const FONT_URL =
   <a href="#v5-reserve" onclick="closeMobileNav()" class="reserve">Reserve</a>
 </div>
 
-<!-- ===================== HERO ===================== -->
-<section class="v5-hero" id="v5Hero" aria-label="Hero">
-  <!-- Top text -->
-  <div class="v5-hero__top">
+<!-- ===================== HERO — VIDEO-BG + OVERLAY MENU ===================== -->
+<section class="v5-hero v5-hero--video" id="v5Hero" aria-label="Hero">
+  <!-- Full-bleed background "video" (still image with ken-burns + animated gradient as video stand-in) -->
+  <div class="v5-hero__video-bg" aria-hidden="true">
+    <Picture
+      src={restaurant.hero.image}
+      alt=""
+      class="v5-hero__video-still"
+      formats={['avif', 'webp']}
+      widths={[640, 1024, 1600, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="v5-hero__video-flicker"></div>
+    <div class="v5-hero__video-tint"></div>
+  </div>
+
+  <!-- Top: brand line -->
+  <div class="v5-hero__video-brand">
     <div class="v5-hero__eyebrow">
       <div class="v5-hero__eyebrow-line"></div>
       <span class="v5-hero__eyebrow-text">{restaurant.city}</span>
       <div class="v5-hero__eyebrow-line"></div>
     </div>
-
     <h1 class="v5-hero__h1">
       The Art of<br />Fire &amp; Smoke
     </h1>
-
-    <div class="v5-hero__ornament">
-      <div class="v5-hero__ornament-line"></div>
-      <div class="v5-hero__ornament-dot"></div>
-      <div class="v5-hero__ornament-line"></div>
-    </div>
-
     <p class="v5-hero__subtitle">{restaurant.heroSubtitle}</p>
-
-    <a href="#v5-reserve" class="v5-hero__cta">RESERVE YOUR TABLE</a>
   </div>
 
-  <!-- Bottom image -->
-  <div class="v5-hero__image-wrap">
-    <Picture
-      src={restaurant.hero.image}
-      alt={restaurant.hero.imageAlt}
-      class="v5-hero__img"
-      formats={['avif', 'webp']}
-      widths={[320, 640, 1024, 1920]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-    />
-  </div>
+  <!-- Bottom: semi-transparent overlay menu -->
+  <aside class="v5-hero__overlay-menu" aria-label="Tonight's signature dishes">
+    <div class="v5-overlay-menu__header">
+      <span class="v5-overlay-menu__label">Tonight &middot; Featured</span>
+      <a href="#v5-menu" class="v5-overlay-menu__more">Full menu &rarr;</a>
+    </div>
+    <ul class="v5-overlay-menu__items">
+      {restaurant.menu.categories[1].items.slice(0, 3).map((item) => (
+        <li class="v5-overlay-menu__item">
+          <span class="v5-overlay-menu__name">{item.name}</span>
+          <span class="v5-overlay-menu__dot" aria-hidden="true"></span>
+          <span class="v5-overlay-menu__price">${item.price}</span>
+        </li>
+      ))}
+    </ul>
+    <a href="#v5-reserve" class="v5-overlay-menu__cta">Reserve Your Table</a>
+  </aside>
 </section>
 
 <!-- ===================== MENU ===================== -->

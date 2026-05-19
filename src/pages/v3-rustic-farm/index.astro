@@ -10,6 +10,16 @@ const dietaryMap: Record<string, string> = {
   vegan: 'VG',
   'gluten-free': 'GF',
 };
+
+// ── Menu-led hero: pair first 6 dishes with gallery images ──
+const heroDishes = (() => {
+  const allItems = restaurant.menu.categories.flatMap((c) => c.items);
+  const pics = restaurant.gallery;
+  return [0, 1, 2, 3, 4, 5].map((i) => ({
+    item: allItems[i % allItems.length],
+    image: pics[i % pics.length],
+  }));
+})();
 ---
 
 <Layout restaurant={restaurant} theme="v3" fontUrl={fontUrl}>
@@ -37,31 +47,41 @@ const dietaryMap: Record<string, string> = {
   <span class="v3-overlay-est">Est. 2018</span>
 </div>
 
-<!-- ==================== HERO ==================== -->
-<section class="v3-hero" id="home">
-  <div class="v3-hero-left">
-    <span class="v3-hero-eyebrow">Est. 2018 · Woodstock, VT</span>
-    <h1 class="v3-hero-h1">
-      From Our Farm<br><em>to Your Table</em>
+<!-- ==================== HERO — MENU-LED GRID TREATMENT ==================== -->
+<section class="v3-hero v3-hero--menu" id="home" aria-label="This week on the menu">
+  <header class="v3-hero-grid-header">
+    <span class="v3-hero-eyebrow">Est. 2018 · Woodstock, VT · {restaurant.cuisine}</span>
+    <h1 class="v3-hero-grid-h1">
+      This week<br/><em>on the hearth</em>
     </h1>
-    <p class="v3-hero-sub">{restaurant.heroSubtitle}</p>
-    <div class="v3-hero-btns">
-      <a href="#reservations" class="v3-btn-primary">Book a Table</a>
-      <a href="#menu" class="v3-btn-outline">This Week's Menu</a>
-    </div>
+    <p class="v3-hero-grid-sub">{restaurant.heroSubtitle}</p>
+  </header>
+
+  <div class="v3-hero-grid" role="list">
+    {heroDishes.map(({ item, image }, i) => (
+      <a href="#menu" class={`v3-dish v3-dish-${i + 1}`} role="listitem">
+        <Picture
+          src={image.url}
+          alt={image.alt}
+          class="v3-dish-img"
+          formats={['avif', 'webp']}
+          widths={[320, 640, 900]}
+          sizes="(max-width:900px) 50vw, 33vw"
+          loading={i < 2 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+        />
+        <div class="v3-dish-overlay"></div>
+        <div class="v3-dish-body">
+          <div class="v3-dish-name">{item.name}</div>
+          <div class="v3-dish-price">${item.price}</div>
+        </div>
+      </a>
+    ))}
   </div>
-  <div class="v3-hero-right">
-    <Picture
-      src={restaurant.hero.image}
-      alt={restaurant.hero.imageAlt}
-      class="v3-hero-img"
-      formats={['avif', 'webp']}
-      widths={[320, 640, 1024, 1920]}
-      sizes="(max-width:900px) 100vw, 50vw"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <div class="v3-hero-overlay"></div>
+
+  <div class="v3-hero-grid-cta">
+    <a href="#menu" class="v3-btn-primary">See the full menu &rarr;</a>
+    <a href="#reservations" class="v3-btn-outline v3-btn-outline--dark">Reserve a table</a>
   </div>
 </section>
 
@@ -386,15 +406,22 @@ const dietaryMap: Record<string, string> = {
         </ul>
       </div>
       <div class="v3-footer-hours-col">
-        <span class="v3-footer-col-head">Hours</span>
-        <ul class="v3-footer-hours">
-          {restaurant.hours.map((h) => (
-            <li class={`v3-footer-hour-row${h.open === null ? ' v3-footer-hour-closed' : ''}`}>
-              <span>{h.day.slice(0,3)}</span>
-              <span>{h.open ? `${h.open} – ${h.close}` : 'Closed'}</span>
-            </li>
-          ))}
-        </ul>
+        <span class="v3-footer-col-head">The Weekly Dispatch</span>
+        <p class="v3-footer-dispatch-blurb">
+          A short Sunday note — what's coming in from the farms, what's on the
+          board this week, who's playing the back room.
+        </p>
+        <form class="v3-footer-dispatch-form" onsubmit="return false;" aria-label="Subscribe to weekly dispatch">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            class="v3-footer-dispatch-input"
+            aria-label="Email address"
+            required
+          />
+          <button type="submit" class="v3-footer-dispatch-btn">Subscribe</button>
+        </form>
+        <span class="v3-footer-dispatch-hint">No spam. Unsubscribe anytime.</span>
       </div>
     </div>
     <div class="v3-footer-bottom">
@@ -566,71 +593,132 @@ const dietaryMap: Record<string, string> = {
   }
 
   /* =============================================
-     HERO
+     HERO — MENU-LED GRID
   ============================================= */
   .v3-hero {
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    padding-top: 64px; /* nav height */
+    padding-top: 64px;
+    background: var(--v3-cream, #F6EFE2);
   }
 
-  .v3-hero-left {
-    width: 50%;
-    background: var(--v3-green);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 5rem 4rem 5rem 5rem;
-    min-height: calc(100vh - 64px);
+  .v3-hero--menu {
+    display: block;
+    min-height: 0;
+    padding: calc(64px + 3rem) 2rem 4rem;
+  }
+
+  .v3-hero-grid-header {
+    max-width: 1120px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
   }
 
   .v3-hero-eyebrow {
     font-family: var(--v3-font-hand);
     font-size: 1.1rem;
-    color: var(--v3-butter);
+    color: var(--v3-green);
     letter-spacing: 0.04em;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     display: block;
-    opacity: 0;
-    animation: v3FadeUp 0.9s ease 0.15s forwards;
   }
 
-  .v3-hero-h1 {
+  .v3-hero-grid-h1 {
     font-family: var(--v3-font-display);
-    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 600;
-    color: #ffffff;
-    line-height: 1.05;
-    margin: 0 0 1.5rem 0;
+    color: var(--v3-dark, #2A1A0A);
+    line-height: 1.02;
+    margin: 0 0 1rem;
     letter-spacing: -0.02em;
-    opacity: 0;
-    animation: v3FadeUp 0.9s ease 0.3s forwards;
   }
-
-  .v3-hero-h1 em {
+  .v3-hero-grid-h1 em {
     font-weight: 400;
     font-style: italic;
+    color: var(--v3-green);
   }
 
-  .v3-hero-sub {
+  .v3-hero-grid-sub {
     font-family: var(--v3-font-body);
     font-size: 1rem;
-    color: rgba(255,255,255,0.75);
-    max-width: 28rem;
-    line-height: 1.65;
-    margin: 0 0 2.5rem 0;
-    opacity: 0;
-    animation: v3FadeUp 0.9s ease 0.45s forwards;
+    color: rgba(42,26,10,0.75);
+    max-width: 36rem;
+    line-height: 1.6;
+    margin: 0 auto;
   }
 
-  .v3-hero-btns {
+  .v3-hero-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 240px);
+    gap: 0.85rem;
+  }
+  .v3-dish {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    background: var(--v3-dark, #2A1A0A);
+  }
+  .v3-dish-1 { grid-column: span 2; grid-row: span 2; }
+  .v3-dish-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .v3-dish:hover .v3-dish-img { transform: scale(1.04); }
+  .v3-dish-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.20) 55%, rgba(0,0,0,0.05) 100%);
+  }
+  .v3-dish-body {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.9rem;
     display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .v3-dish-name {
+    font-family: var(--v3-font-display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+  .v3-dish-1 .v3-dish-name { font-size: 1.5rem; }
+  .v3-dish-price {
+    font-family: var(--v3-font-hand);
+    font-size: 1.3rem;
+    color: var(--v3-butter);
+    white-space: nowrap;
+  }
+
+  .v3-hero-grid-cta {
+    max-width: 1200px;
+    margin: 2.5rem auto 0;
+    display: flex;
+    justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
-    opacity: 0;
-    animation: v3FadeUp 0.9s ease 0.6s forwards;
   }
+  .v3-btn-outline--dark {
+    color: var(--v3-dark, #2A1A0A);
+    border-color: rgba(42,26,10,0.35);
+  }
+  .v3-btn-outline--dark:hover {
+    border-color: var(--v3-dark, #2A1A0A);
+    background: rgba(42,26,10,0.06);
+  }
+
+  /* Legacy hero stubs (no longer used in markup) */
+  .v3-hero-left, .v3-hero-right, .v3-hero-img,
+  .v3-hero-overlay, .v3-hero-h1, .v3-hero-sub, .v3-hero-btns { /* unused */ }
 
   .v3-btn-primary {
     background: var(--v3-butter);
@@ -672,28 +760,7 @@ const dietaryMap: Record<string, string> = {
     transform: translateY(-1px);
   }
 
-  .v3-hero-right {
-    width: 50%;
-    position: relative;
-    min-height: calc(100vh - 64px);
-    overflow: hidden;
-  }
-
-  .v3-hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: saturate(1.05) brightness(0.97);
-  }
-
-  .v3-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(42,26,10,0.12), rgba(42,26,10,0.12));
-    pointer-events: none;
-  }
+  /* (Legacy split-hero CSS removed — replaced by .v3-hero-grid above.) */
 
   /* =============================================
      INFO STRIP
@@ -1536,23 +1603,15 @@ const dietaryMap: Record<string, string> = {
       padding: 0 1.25rem;
     }
 
-    /* Hero stacks: image on top, text below */
-    .v3-hero {
-      flex-direction: column;
-      padding-top: 64px;
+    /* Hero menu grid: 2-col then single */
+    .v3-hero--menu {
+      padding: calc(64px + 1.5rem) 1rem 2.5rem;
     }
-
-    .v3-hero-right {
-      width: 100%;
-      min-height: 280px;
-      order: -1;
+    .v3-hero-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 180px);
     }
-
-    .v3-hero-left {
-      width: 100%;
-      min-height: auto;
-      padding: 3rem 1.75rem 3.5rem;
-    }
+    .v3-dish-1 { grid-column: span 2; grid-row: span 2; }
 
     /* Menu single column */
     .v3-items-grid {

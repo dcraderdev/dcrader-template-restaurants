@@ -22,20 +22,8 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     <a href={`tel:${restaurant.phone}`} class="v2-nav__phone">{restaurant.phone}</a>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO — RESERVATION-WIDGET TREATMENT -->
   <section class="v2-hero">
-    <div class="v2-hero__text-block">
-      <div class="v2-hero__inner sr">
-        <p class="v2-hero__eyebrow">{restaurant.tagline}</p>
-        <h1 class="v2-hero__h1">Precision.<br />Pleasure.</h1>
-        <div class="v2-hero__divider"></div>
-        <p class="v2-hero__subtitle">{restaurant.heroSubtitle}</p>
-        <div class="v2-hero__ctas">
-          <a href="#reservations" class="v2-cta-reserve">Reserve</a>
-          <a href="#menu" class="v2-cta-menu">Menu</a>
-        </div>
-      </div>
-    </div>
     <div class="v2-hero__photo-block">
       <Picture
         src={restaurant.hero.image}
@@ -43,10 +31,57 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
         class="v2-hero__photo"
         formats={['avif', 'webp']}
         widths={[320, 640, 1024, 1920]}
-        sizes="(max-width:768px) 100vw, 50vw"
+        sizes="100vw"
         loading="eager"
         fetchpriority="high"
       />
+      <div class="v2-hero__photo-tint" aria-hidden="true"></div>
+    </div>
+
+    <div class="v2-hero__widget-wrap">
+      <div class="v2-hero__widget sr">
+        <p class="v2-widget__eyebrow">{restaurant.tagline}</p>
+        <h1 class="v2-widget__h1">Book your table.</h1>
+        <p class="v2-widget__sub">Most evenings book a week ahead — check availability now.</p>
+
+        <form class="v2-widget__form" action="#reservations" method="GET" aria-label="Check availability">
+          <div class="v2-widget__field">
+            <label for="v2HeroDate" class="v2-widget__label">Date</label>
+            <input id="v2HeroDate" name="date" type="date" class="v2-widget__input" required />
+          </div>
+          <div class="v2-widget__field">
+            <label for="v2HeroTime" class="v2-widget__label">Time</label>
+            <select id="v2HeroTime" name="time" class="v2-widget__input" required>
+              <option>5:30 PM</option>
+              <option>6:00 PM</option>
+              <option>6:30 PM</option>
+              <option>7:00 PM</option>
+              <option>7:30 PM</option>
+              <option>8:00 PM</option>
+              <option>8:30 PM</option>
+              <option>9:00 PM</option>
+            </select>
+          </div>
+          <div class="v2-widget__field">
+            <label for="v2HeroParty" class="v2-widget__label">Party</label>
+            <select id="v2HeroParty" name="party" class="v2-widget__input" required>
+              <option>2 guests</option>
+              <option>3 guests</option>
+              <option>4 guests</option>
+              <option>5 guests</option>
+              <option>6 guests</option>
+              <option>7+ guests</option>
+            </select>
+          </div>
+          <button type="submit" class="v2-widget__cta">Find a table</button>
+        </form>
+
+        <div class="v2-widget__meta">
+          <span>Walk-ins welcome at the bar</span>
+          <span class="v2-widget__sep">·</span>
+          <a href={`tel:${restaurant.reservationPhone}`} class="v2-widget__phone">{restaurant.reservationPhone}</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -354,68 +389,165 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     text-transform: uppercase;
   }
 
-  /* ── HERO ── */
+  /* ── HERO — RESERVATION WIDGET ── */
   .v2-hero {
-    padding-top: 3.5rem; /* offset for fixed nav */
+    padding-top: 3.5rem;
+    position: relative;
+    min-height: calc(100vh - 3.5rem);
+    overflow: hidden;
+    background: var(--v2-off-white);
   }
 
-  .v2-hero__text-block {
-    min-height: 85vh;
-    background: var(--v2-white);
+  .v2-hero__photo-block {
+    position: absolute;
+    inset: 3.5rem 0 0 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .v2-hero__photo-tint {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(12,12,10,0.55) 0%, rgba(26,58,46,0.35) 100%);
+    z-index: 1;
+  }
+
+  .v2-hero__widget-wrap {
+    position: relative;
+    z-index: 2;
+    min-height: calc(100vh - 3.5rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5rem 2rem;
+    padding: 4rem 1.5rem;
   }
 
-  .v2-hero__inner {
-    max-width: 60rem;
+  .v2-hero__widget {
     width: 100%;
+    max-width: 44rem;
+    background: var(--v2-white);
+    padding: 3rem 3rem 2.25rem;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.45);
     text-align: center;
   }
 
-  .v2-hero__eyebrow {
+  .v2-widget__eyebrow {
     font-family: var(--v2-sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.35em;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--v2-green);
-    margin: 0 0 2.5rem;
+    margin: 0 0 1rem;
   }
 
-  .v2-hero__h1 {
+  .v2-widget__h1 {
     font-family: var(--v2-serif);
-    font-style: normal;
-    font-size: clamp(5rem, 13vw, 11rem);
-    line-height: 0.88;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1;
     color: var(--v2-black);
-    margin: 0 0 3rem;
-    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
   }
 
-  .v2-hero__divider {
-    width: 100%;
-    height: 1px;
-    background: rgba(12, 12, 10, 0.1);
-    margin: 0 0 2.5rem;
-  }
-
-  .v2-hero__subtitle {
+  .v2-widget__sub {
     font-family: var(--v2-sans);
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
     color: var(--v2-gray);
-    max-width: 24rem;
-    margin: 0 auto 2.5rem;
+    margin: 0 0 2rem;
     font-weight: 300;
   }
 
-  .v2-hero__ctas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
+  .v2-widget__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 0.75rem;
+    text-align: left;
+    align-items: end;
   }
+
+  .v2-widget__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .v2-widget__label {
+    font-family: var(--v2-sans);
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--v2-gray);
+    font-weight: 500;
+  }
+
+  .v2-widget__input {
+    font-family: var(--v2-sans);
+    font-size: 0.9rem;
+    color: var(--v2-black);
+    background: var(--v2-off-white);
+    border: 1px solid var(--v2-border);
+    padding: 0.75rem 0.85rem;
+    border-radius: 0;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+  }
+  .v2-widget__input:focus {
+    border-color: var(--v2-green);
+  }
+
+  .v2-widget__cta {
+    font-family: var(--v2-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--v2-black);
+    color: var(--v2-white);
+    border: none;
+    padding: 0.95rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+  }
+  .v2-widget__cta:hover { background: var(--v2-green); }
+
+  .v2-widget__meta {
+    margin-top: 1.5rem;
+    font-family: var(--v2-sans);
+    font-size: 0.7rem;
+    color: var(--v2-gray);
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .v2-widget__sep { color: var(--v2-border-strong); }
+  .v2-widget__phone {
+    color: var(--v2-green);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .v2-widget__phone:hover { text-decoration: underline; }
+
+  @media (max-width: 720px) {
+    .v2-hero__widget { padding: 2rem 1.25rem 1.5rem; }
+    .v2-widget__form {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .v2-widget__cta { width: 100%; }
+  }
+
+  /* Legacy hero stubs (no longer used but referenced by sr animations) */
+  .v2-hero__inner, .v2-hero__h1, .v2-hero__divider,
+  .v2-hero__subtitle, .v2-hero__ctas, .v2-hero__eyebrow,
+  .v2-hero__text-block { /* unused in new treatment */ }
+
+  .v2-cta-reserve, .v2-cta-menu { /* unused but kept for backward-compat */ }
 
   .v2-cta-reserve {
     display: inline-block;
@@ -452,16 +584,13 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
     opacity: 0.7;
   }
 
-  .v2-hero__photo-block {
-    height: 60vh;
-    overflow: hidden;
-  }
-
+  /* (legacy .v2-hero__photo-block / .v2-hero__photo definitions removed —
+     redefined above in the reservation-widget treatment) */
   .v2-hero__photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(0.35) contrast(1.05);
+    filter: grayscale(0.2) contrast(1.05);
     display: block;
   }
 
@@ -1021,14 +1150,7 @@ const closedDays = restaurant.hours.filter(h => h.open === null).map(h => h.day)
       letter-spacing: 0.08em;
     }
 
-    .v2-hero__text-block {
-      min-height: 75vh;
-      padding: 4rem 1.25rem;
-    }
-
-    .v2-hero__photo-block {
-      height: 45vh;
-    }
+    /* hero overrides handled in widget media query above */
 
     .v2-section-title {
       font-size: 2.75rem;

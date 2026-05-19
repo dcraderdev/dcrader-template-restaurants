@@ -303,6 +303,152 @@ const firstCategory = restaurant.menu.categories[0];
     }
 
     /* ============================================================
+       HERO — CHEF QUOTE + SPLIT-SCREEN
+    ============================================================ */
+    .v4-hero--chef { display: flex; flex-direction: row; min-height: 100vh; padding-top: 4rem; }
+
+    .v4-hero-chef-left {
+      width: 48%;
+      position: relative;
+      overflow: hidden;
+      background: var(--v4-dark);
+    }
+    .v4-hero-chef-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.05) saturate(1.05);
+      display: block;
+    }
+    .v4-hero-chef-tint {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,107,107,0.10) 0%, rgba(20,20,20,0.55) 70%, rgba(20,20,20,0.85) 100%);
+      z-index: 1;
+    }
+    .v4-hero-chef-yellow-tag {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      z-index: 2;
+      background: var(--v4-yellow);
+      color: var(--v4-dark);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      font-family: 'Oswald', sans-serif;
+    }
+    .v4-chef-tag-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .v4-chef-tag-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .v4-hero-chef-quote {
+      position: absolute;
+      left: 2.5rem;
+      right: 2.5rem;
+      bottom: 2.5rem;
+      z-index: 2;
+      margin: 0;
+      color: #fff;
+      max-width: 32rem;
+    }
+    .v4-quote-mark {
+      font-family: 'Oswald', serif;
+      font-size: 5rem;
+      line-height: 0.6;
+      color: var(--v4-yellow);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .v4-quote-body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+      line-height: 1.5;
+      font-weight: 300;
+      margin: 0 0 1rem;
+      color: #fff;
+    }
+    .v4-quote-author {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--v4-yellow);
+    }
+
+    .v4-hero-story-right {
+      width: 52%;
+      background: var(--v4-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 4rem;
+      color: var(--v4-white);
+    }
+    .v4-hero-h1--story {
+      font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.5rem;
+    }
+    .v4-hero-story-body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.75);
+      max-width: 32rem;
+      margin: 0 0 2rem;
+    }
+    .v4-hero-story-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin: 0 0 2.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .v4-hero-story-stats div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .v4-hero-story-stats dt {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .v4-hero-story-stats dd {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--v4-yellow);
+      margin: 0;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 900px) {
+      .v4-hero--chef { flex-direction: column; }
+      .v4-hero-chef-left { width: 100%; min-height: 65vh; }
+      .v4-hero-story-right { width: 100%; padding: 3rem 1.5rem; }
+      .v4-hero-chef-quote { left: 1.25rem; right: 1.25rem; bottom: 1.25rem; }
+      .v4-hero-story-stats { gap: 1.25rem; flex-wrap: wrap; }
+    }
+
+    /* ============================================================
        YELLOW TAGLINE BAR
     ============================================================ */
     .v4-tagline-bar {
@@ -1176,38 +1322,66 @@ const firstCategory = restaurant.menu.categories[0];
   </div>
 
   <!-- ============================================================
-       HERO
+       HERO — CHEF QUOTE + SPLIT-SCREEN TREATMENT
   ============================================================ -->
-  <section class="v4-hero" id="v4-hero">
-    <!-- Left color-block panel -->
-    <div class="v4-hero-left">
-      <div class="v4-hero-yellow-stripe"></div>
-      <p class="v4-hero-eyebrow">Echo Park &middot; Los Angeles</p>
-      <h1 class="v4-hero-h1">
-        Bold.<br>Bright.<br>Fresh.
-      </h1>
-      <hr class="v4-hero-rule" />
-      <p class="v4-hero-subtitle">{restaurant.heroSubtitle}</p>
-      <div class="v4-hero-buttons">
-        <a href="#v4-reservations" class="v4-btn-yellow">Reserve Now</a>
-        <a href="#v4-menu" class="v4-btn-outline-white">Menu</a>
-      </div>
-    </div>
-
-    <!-- Right image panel -->
-    <div class="v4-hero-right">
+  <section class="v4-hero v4-hero--chef" id="v4-hero" aria-labelledby="v4HeroQuoteAuthor">
+    <!-- Left: chef portrait + pull-quote -->
+    <div class="v4-hero-chef-left">
       <Picture
-        src={restaurant.hero.image}
-        alt={restaurant.hero.imageAlt}
-        class="v4-hero-img"
+        src={restaurant.about.chef.photo}
+        alt={restaurant.about.chef.photoAlt}
+        class="v4-hero-chef-img"
         formats={['avif', 'webp']}
-        widths={[320, 640, 1024, 1920]}
+        widths={[320, 640, 1024]}
         sizes="(max-width:900px) 100vw, 50vw"
         loading="eager"
         fetchpriority="high"
       />
-      <div class="v4-hero-teal-overlay"></div>
-      <div class="v4-hero-img-frame"></div>
+      <div class="v4-hero-chef-tint" aria-hidden="true"></div>
+      <div class="v4-hero-chef-yellow-tag">
+        <span class="v4-chef-tag-label">Chef</span>
+        <span class="v4-chef-tag-name">{restaurant.about.chef.name}</span>
+      </div>
+      <figure class="v4-hero-chef-quote">
+        <span class="v4-quote-mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="v4-quote-body">
+          We don't choose between Barcelona and L.A. — we celebrate both.
+          Loud music, wood-fire smoke, fresh produce from the farmers market
+          every Saturday. Come as you are.
+        </blockquote>
+        <figcaption class="v4-quote-author" id="v4HeroQuoteAuthor">
+          &mdash; {restaurant.about.chef.name}, {restaurant.about.chef.title}
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Right: restaurant story / identity -->
+    <div class="v4-hero-story-right">
+      <div class="v4-hero-yellow-stripe"></div>
+      <p class="v4-hero-eyebrow">Echo Park &middot; Los Angeles</p>
+      <h1 class="v4-hero-h1 v4-hero-h1--story">
+        {restaurant.about.headline}
+      </h1>
+      <hr class="v4-hero-rule" />
+      <p class="v4-hero-story-body">{restaurant.about.story.split('\n\n')[0]}</p>
+      <dl class="v4-hero-story-stats">
+        <div>
+          <dt>Est.</dt>
+          <dd>2021</dd>
+        </div>
+        <div>
+          <dt>Open</dt>
+          <dd>Tue–Sun, late</dd>
+        </div>
+        <div>
+          <dt>Style</dt>
+          <dd>{restaurant.cuisine}</dd>
+        </div>
+      </dl>
+      <div class="v4-hero-buttons">
+        <a href="#v4-menu" class="v4-btn-yellow">See the Menu &rarr;</a>
+        <a href="#v4-reservations" class="v4-btn-outline-white">Reserve a Table</a>
+      </div>
     </div>
   </section>
 
