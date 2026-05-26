@@ -1,0 +1,334 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { restaurant } from '../../data/restaurants/v1';
+
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Italianno&family=Raleway:wght@300;400;500;600;700&display=swap';
+
+const pageTitle = `Wine Program — ${restaurant.name}`;
+const pageDescription = 'Bella Sole\'s wine program: Italian regional bottles, Pacific-coast California natural wines, and a coastal-focused by-the-glass list curated by our sommelier.';
+
+const regions = [
+  {
+    label: 'Liguria & The Cinque Terre',
+    blurb: 'Saline, mineral whites from the cliffs above Marco\'s grandmother\'s kitchen. We pour these by the glass through the summer because they belong on a table next to anchovy, anchovy, anchovy.',
+    bottles: [
+      { name: 'Bisson — Vermentino, Cinque Terre DOC', vintage: '2023', region: 'Liguria, Italy', notes: 'Sea-salt finish, white peach, almond skin. A wine that tastes like the rocks the vines grow on.' },
+      { name: 'Walter De Battè — Carlaz', vintage: '2021', region: 'Riomaggiore, Liguria', notes: 'Skin-contact Albarola from terraced vines above the Mediterranean. Bruised pear, dried herbs.' },
+      { name: 'Possa — Sciacchetrà', vintage: '2018', region: 'Riomaggiore, Liguria', notes: 'A traditional dessert wine — air-dried grapes pressed slowly. Apricot, beeswax, candied citrus peel. 50 ml pour.' },
+    ],
+  },
+  {
+    label: 'Sicily & The South',
+    blurb: 'Volcanic soils, ancient varietals, sun-soaked acidity. Our southern Italian selection leans toward growers working small parcels on Etna, Vulture, and the Aeolian islands.',
+    bottles: [
+      { name: 'Frank Cornelissen — MunJebel Bianco', vintage: '2022', region: 'Mount Etna, Sicily', notes: 'Carricante and Grecanico, no sulfur added. Wet stone, citrus rind, salinity from the volcanic ash.' },
+      { name: 'Graci — Etna Rosso', vintage: '2021', region: 'Mount Etna, Sicily', notes: 'Pure Nerello Mascalese. Sour cherry, rosewater, smoked tea. Pairs beautifully with our wood-fired branzino.' },
+      { name: 'Elena Fucci — Titolo Aglianico del Vulture', vintage: '2020', region: 'Basilicata, Italy', notes: 'Single-vineyard Aglianico from volcanic Vulture. Black cherry, leather, cocoa powder, iron.' },
+      { name: 'COS — Pithos Rosso', vintage: '2021', region: 'Vittoria, Sicily', notes: 'Amphora-aged Nero d\'Avola and Frappato. Light enough to chill on a summer night. Smells like a sun-warmed orchard.' },
+    ],
+  },
+  {
+    label: 'Piedmont & Friuli',
+    blurb: 'The north — where pasta gets pulled by hand and white wines age the way reds do. Our list goes deep on Radikon, Gravner, and the orange-wine pioneers who changed what Italian white could be.',
+    bottles: [
+      { name: 'Radikon — Ribolla Gialla', vintage: '2017', region: 'Oslavia, Friuli', notes: 'Six months on skins, three years in oak. Dried apricot, honeycomb, walnut. Pour it slightly warm.' },
+      { name: 'Gravner — Ribolla Anfora', vintage: '2014', region: 'Oslavia, Friuli', notes: 'Aged in Georgian clay qvevri, then large Slavonian oak. Profound. Sip it slowly with the tagliatelle al tartufo.' },
+      { name: 'Vajra — Barolo Albe', vintage: '2019', region: 'Barolo, Piedmont', notes: 'Three-vineyard Nebbiolo blend. Rose petals, dried cherry, tar — the classic Barolo trifecta at a fair price.' },
+      { name: 'Roagna — Barbaresco Pajè', vintage: '2017', region: 'Barbaresco, Piedmont', notes: 'Old-vine Nebbiolo, traditional macerations. A wine that opens slowly over the course of dinner — give it time.' },
+    ],
+  },
+  {
+    label: 'Coastal California & The Americas',
+    blurb: 'We believe in our place. Half the bar pours come from growers within a four-hour drive of Bella Sole — natural producers working with Mediterranean varietals on California soils.',
+    bottles: [
+      { name: 'Stolpman — Combe Trousseau', vintage: '2022', region: 'Ballard Canyon, CA', notes: 'A Jura grape grown in Santa Barbara. Crunchy red fruit, white pepper, served with a chill.' },
+      { name: 'Sandlands — Mataró, Contra Costa', vintage: '2021', region: 'Contra Costa, CA', notes: 'Tegan Passalacqua\'s love letter to old California vines. Wild strawberry, dried lavender.' },
+      { name: 'Lo-Fi — Trousseau Gris, Fanucchi Vineyard', vintage: '2023', region: 'Russian River, CA', notes: 'A rare, faintly pink Trousseau. Drinks like rosé but with structure. Our most-poured glass.' },
+      { name: 'Birichino — Malvasia Bianca', vintage: '2023', region: 'Monterey, CA', notes: 'Floral, dry, deeply aromatic. The perfect aperitivo on the patio.' },
+    ],
+  },
+];
+
+const byTheGlass = [
+  { name: 'Prosecco di Valdobbiadene, Bisol', type: 'Sparkling', glass: '14', bottle: '52' },
+  { name: 'Vermentino, Bisson — Liguria', type: 'White', glass: '16', bottle: '60' },
+  { name: 'Trousseau Gris, Lo-Fi — Russian River', type: 'White / Skin', glass: '15', bottle: '56' },
+  { name: 'Etna Rosso, Graci — Sicily', type: 'Red', glass: '18', bottle: '68' },
+  { name: 'Pithos Rosso, COS — Vittoria', type: 'Red, lightly chilled', glass: '17', bottle: '64' },
+  { name: 'Barbera d\'Alba, G.D. Vajra — Piedmont', type: 'Red', glass: '15', bottle: '56' },
+  { name: 'Sciacchetrà, Possa', type: 'Dessert (50ml)', glass: '22', bottle: '120' },
+];
+---
+
+<Layout restaurant={restaurant} theme="v1" fontUrl={fontUrl} title={pageTitle}>
+
+<style>
+  :root {
+    --v1-cream: #FDFAF4;
+    --v1-warm-white: #FAF5EC;
+    --v1-terra: #C4714A;
+    --v1-terra-dark: #A05A38;
+    --v1-olive: #4A5E3A;
+    --v1-dark: #1C1208;
+    --v1-gold: #8E6C20;
+    --v1-muted: #6E6356;
+    --v1-border: rgba(28,18,8,0.12);
+  }
+
+  .v1-page { font-family: 'Raleway', sans-serif; background-color: var(--v1-cream); color: var(--v1-dark); margin: 0; padding: 0; }
+  .sr, .sr-visible { opacity: 1; transform: none; transition: none; }
+
+  /* NAV (matches v1) */
+  .v1-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; background: var(--v1-cream); box-shadow: 0 1px 0 var(--v1-border); }
+  .v1-nav-logo { font-family: 'Italianno', cursive; font-size: 2.2rem; color: var(--v1-dark); text-decoration: none; line-height: 1; }
+  .v1-nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; margin: 0; padding: 0; }
+  .v1-nav-links a { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--v1-muted); text-decoration: none; transition: color 0.3s ease; }
+  .v1-nav-links a:hover { color: var(--v1-terra); }
+  .v1-nav-links .v1-nav-active { color: var(--v1-terra) !important; border-bottom: 1px solid var(--v1-terra); padding-bottom: 2px; }
+  .v1-nav-links .v1-nav-reserve { color: var(--v1-terra) !important; border-bottom: 1px solid var(--v1-terra); padding-bottom: 2px; }
+
+  /* HERO */
+  .wine-hero {
+    background: radial-gradient(ellipse at 50% 35%, rgba(196,113,74,0.10), transparent 60%), var(--v1-cream);
+    padding: 10rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+  }
+  .wine-eyebrow { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.55em; text-transform: uppercase; color: var(--v1-terra); margin-bottom: 1.5rem; display: block; }
+  .wine-title { font-family: 'Italianno', cursive; font-size: clamp(5rem, 14vw, 11rem); line-height: 0.88; color: var(--v1-terra-dark); margin: 0; letter-spacing: -0.01em; text-shadow: 0 4px 40px rgba(196,113,74,0.18); }
+  .wine-lede { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.05rem, 1.6vw, 1.4rem); max-width: 44rem; margin: 1.75rem auto 0; color: var(--v1-dark); opacity: 0.82; line-height: 1.6; }
+  .wine-meta { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--v1-muted); }
+  .wine-meta span + span::before { content: '·'; margin-right: 2rem; color: var(--v1-gold); }
+
+  .v1-ornament { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin: 1.5rem auto; }
+  .v1-ornament-line { width: 60px; height: 1px; background: var(--v1-gold); }
+  .v1-ornament-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--v1-gold); }
+
+  /* INTRO LETTER */
+  .wine-letter { background: var(--v1-warm-white); padding: 6rem 2.5rem; }
+  .wine-letter-inner { max-width: 52rem; margin: 0 auto; }
+  .wine-letter h2 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--v1-dark); margin: 0 0 1.5rem; line-height: 1.15; }
+  .wine-letter p { font-family: 'Raleway', sans-serif; font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: var(--v1-dark); opacity: 0.85; margin: 0 0 1.25rem; }
+  .wine-letter p.lede { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; line-height: 1.6; opacity: 0.9; }
+  .wine-letter .sig { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--v1-border); display: flex; align-items: baseline; gap: 1rem; }
+  .wine-letter .sig-name { font-family: 'Italianno', cursive; font-size: 2.4rem; color: var(--v1-terra-dark); line-height: 1; }
+  .wine-letter .sig-meta { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--v1-muted); }
+
+  /* BY THE GLASS */
+  .wine-glass { background: var(--v1-cream); padding: 6rem 2.5rem; }
+  .wine-glass-inner { max-width: 60rem; margin: 0 auto; }
+  .wine-section-head { text-align: center; margin-bottom: 3.5rem; }
+  .wine-section-label { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--v1-terra); margin-bottom: 0.75rem; display: block; }
+  .wine-section-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 300; color: var(--v1-dark); margin: 0; line-height: 1.1; }
+  .wine-section-blurb { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--v1-muted); max-width: 38rem; margin: 1rem auto 0; line-height: 1.65; }
+
+  .glass-table { width: 100%; border-collapse: collapse; font-family: 'Raleway', sans-serif; font-size: 0.92rem; font-weight: 300; }
+  .glass-table th { font-family: 'Raleway', sans-serif; font-size: 0.55rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--v1-terra); text-align: left; padding: 0 0 1rem; border-bottom: 1px solid var(--v1-border); font-weight: 600; }
+  .glass-table th.num { text-align: right; }
+  .glass-table td { padding: 1rem 0; border-bottom: 1px solid var(--v1-border); color: var(--v1-dark); vertical-align: top; }
+  .glass-table td.wine-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500; }
+  .glass-table td.wine-type { color: var(--v1-muted); font-size: 0.78rem; }
+  .glass-table td.wine-price { text-align: right; color: var(--v1-terra); font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1rem; white-space: nowrap; }
+
+  /* REGIONS */
+  .wine-regions { background: var(--v1-warm-white); padding: 6rem 2.5rem; }
+  .wine-regions-inner { max-width: 60rem; margin: 0 auto; }
+  .region-block { margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--v1-border); }
+  .region-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .region-header { display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 1rem; }
+  .region-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.85rem; font-weight: 400; color: var(--v1-dark); white-space: nowrap; }
+  .region-rule { flex: 1; height: 1px; background: var(--v1-border); }
+  .region-blurb { font-family: 'Raleway', sans-serif; font-size: 0.9rem; font-weight: 300; line-height: 1.8; color: var(--v1-muted); margin: 0 0 2rem; max-width: 44rem; }
+
+  .bottle { padding: 1.4rem 0; border-top: 1px dashed var(--v1-border); }
+  .bottle:first-of-type { border-top: none; padding-top: 0.5rem; }
+  .bottle-head { display: flex; align-items: baseline; gap: 1rem; }
+  .bottle-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500; color: var(--v1-dark); flex: 1; }
+  .bottle-vintage { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--v1-gold); }
+  .bottle-region { font-family: 'Raleway', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--v1-terra); margin-top: 0.35rem; }
+  .bottle-notes { font-family: 'Raleway', sans-serif; font-size: 0.85rem; font-weight: 300; line-height: 1.65; color: var(--v1-muted); margin: 0.75rem 0 0; }
+
+  /* PAIRING NOTE */
+  .wine-pair { background: var(--v1-dark); color: rgba(255,255,255,0.9); padding: 6rem 2.5rem; text-align: center; }
+  .wine-pair-inner { max-width: 50rem; margin: 0 auto; }
+  .wine-pair-eyebrow { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--v1-gold); margin-bottom: 1.25rem; display: block; }
+  .wine-pair h2 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 300; color: #fff; margin: 0 0 1.5rem; line-height: 1.1; }
+  .wine-pair p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.25rem; line-height: 1.7; color: rgba(255,255,255,0.75); margin: 0 0 1.25rem; }
+  .wine-pair .cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+  .wine-pair .btn { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; padding: 0.95rem 2.2rem; text-decoration: none; transition: background 0.25s, border-color 0.25s, color 0.25s; }
+  .wine-pair .btn-primary { background: var(--v1-terra); color: #fff; border: 1px solid var(--v1-terra); }
+  .wine-pair .btn-primary:hover { background: var(--v1-terra-dark); border-color: var(--v1-terra-dark); }
+  .wine-pair .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+  .wine-pair .btn-ghost:hover { border-color: #fff; }
+
+  /* FOOTER (mirror v1) */
+  .v1-footer { background: var(--v1-dark); padding: 5rem 2.5rem 3rem; }
+  .v1-footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+  .v1-footer-logo { font-family: 'Italianno', cursive; font-size: 2.5rem; color: #fff; text-decoration: none; }
+  .v1-footer-tagline { font-family: 'Raleway', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.5rem; }
+  .v1-footer-nav { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .v1-footer-nav a { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; }
+  .v1-footer-nav a:hover { color: var(--v1-terra); }
+  .v1-footer-bar { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 3rem; padding-top: 1.75rem; max-width: 1100px; margin-left: auto; margin-right: auto; text-align: center; }
+  .v1-footer-copy { font-family: 'Raleway', sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.25); }
+
+  @media (max-width: 768px) {
+    .v1-nav { padding: 1.1rem 1.25rem; }
+    .v1-nav-links { display: none; }
+    .wine-hero { padding: 7rem 1.25rem 3rem; }
+    .wine-letter, .wine-glass, .wine-regions, .wine-pair { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .region-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .region-rule { width: 100%; }
+    .bottle-head { flex-direction: column; gap: 0.25rem; }
+    .v1-footer-inner { flex-direction: column; }
+  }
+</style>
+
+<div class="v1-page">
+
+  <!-- NAV -->
+  <header class="v1-nav" role="banner">
+    <a href="/v1-warm-italian" class="v1-nav-logo" aria-label={`${restaurant.name} home`}>{restaurant.name}</a>
+    <nav aria-label="Primary navigation">
+      <ul class="v1-nav-links">
+        <li><a href="/v1-warm-italian#menu">Menu</a></li>
+        <li><a href="/v1-warm-italian/wine" class="v1-nav-active">Wine</a></li>
+        <li><a href="/v1-warm-italian#gallery">Gallery</a></li>
+        <li><a href="/v1-warm-italian#about">Our Story</a></li>
+        <li><a href="/v1-warm-italian#contact">Find Us</a></li>
+        <li><a href="/v1-warm-italian#reservations" class="v1-nav-reserve">Reserve</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="wine-hero" aria-label="Wine program intro">
+    <span class="wine-eyebrow">The Cellar at Bella Sole</span>
+    <h1 class="wine-title">Vino</h1>
+    <div class="v1-ornament" aria-hidden="true">
+      <div class="v1-ornament-line"></div>
+      <div class="v1-ornament-dot"></div>
+      <div class="v1-ornament-line"></div>
+    </div>
+    <p class="wine-lede">A coastal-leaning list of three hundred Italian and California natural wines — sourced direct, opened generously, poured with conversation.</p>
+    <div class="wine-meta" aria-hidden="true">
+      <span>300+ Bottles</span>
+      <span>Italian &amp; Coastal CA</span>
+      <span>Corkage Welcome</span>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section class="wine-letter" aria-label="A note from the sommelier">
+    <div class="wine-letter-inner">
+      <h2>A note from our cellar</h2>
+      <p class="lede">A great wine list shouldn't be a contest. It should be a conversation between the table, the kitchen, and the place the wine came from.</p>
+      <p>We built the Bella Sole cellar around two ideas. First — when the chef is sourcing branzino from a Point Loma dayboat and tonnarelli from a hand-cranked extruder in the back of the kitchen, the wine has to live in the same key. That means low-intervention growers, transparent farming, and bottles that taste like the soil they came from rather than the spreadsheet they were optimized for.</p>
+      <p>Second — Italy is bigger than Tuscany. We pour Carricante from the black volcanic soils of Etna, Vermentino from the cliffs of the Cinque Terre, and skin-contact Ribolla from Friuli that has spent six months on its skins and three years in oak before it ever sees a table. There are pinot grigios on this list, but they are not the pinot grigios you remember from the airport in Milan.</p>
+      <p>And because Bella Sole sits on the California coast, half the by-the-glass program comes from growers within a four-hour drive — Sandlands, Lo-Fi, Stolpman, Birichino. These are people working with Mediterranean varietals on Mediterranean soils, just on the other side of the planet. The conversation between an Etna Rosso and a Santa Barbara Trousseau is, to my mind, the most interesting thing happening in wine right now.</p>
+      <p>If you're not sure where to start, ask. The list is long on purpose. The bar pours change constantly. And if you bring in a bottle that means something to you, our corkage is $35 — waived if you share a glass.</p>
+      <div class="sig">
+        <span class="sig-name">Caterina Volpe</span>
+        <span class="sig-meta">Wine Director · Bella Sole</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BY THE GLASS -->
+  <section class="wine-glass" aria-label="By the glass">
+    <div class="wine-glass-inner">
+      <div class="wine-section-head">
+        <span class="wine-section-label">Tonight at the Bar</span>
+        <h2 class="wine-section-title">By the glass</h2>
+        <p class="wine-section-blurb">Seven rotating pours. Updated every Tuesday when the new allocations come in from our importer in San Pedro.</p>
+      </div>
+      <table class="glass-table" aria-label="Wines by the glass">
+        <thead>
+          <tr>
+            <th>Wine</th>
+            <th>Style</th>
+            <th class="num">Glass</th>
+            <th class="num">Bottle</th>
+          </tr>
+        </thead>
+        <tbody>
+          {byTheGlass.map((w) => (
+            <tr>
+              <td class="wine-name">{w.name}</td>
+              <td class="wine-type">{w.type}</td>
+              <td class="wine-price">${w.glass}</td>
+              <td class="wine-price">${w.bottle}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- REGIONS -->
+  <section class="wine-regions" aria-label="By region">
+    <div class="wine-regions-inner">
+      <div class="wine-section-head">
+        <span class="wine-section-label">A Geographical Tour</span>
+        <h2 class="wine-section-title">By region</h2>
+        <p class="wine-section-blurb">A small selection from each section of the cellar. The full list — and a sommelier to walk you through it — is at every table.</p>
+      </div>
+
+      {regions.map((region) => (
+        <div class="region-block">
+          <div class="region-header">
+            <span class="region-name">{region.label}</span>
+            <span class="region-rule" aria-hidden="true"></span>
+          </div>
+          <p class="region-blurb">{region.blurb}</p>
+          {region.bottles.map((b) => (
+            <div class="bottle">
+              <div class="bottle-head">
+                <span class="bottle-name">{b.name}</span>
+                <span class="bottle-vintage">{b.vintage}</span>
+              </div>
+              <div class="bottle-region">{b.region}</div>
+              <p class="bottle-notes">{b.notes}</p>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PAIRING / CTA -->
+  <section class="wine-pair" aria-label="Reserve a tasting">
+    <div class="wine-pair-inner">
+      <span class="wine-pair-eyebrow">Sommelier's Table</span>
+      <h2>Let us choose the wine.</h2>
+      <p>Our seven-course chef's tasting can be paired flight-by-flight with five wines drawn from the night's open bottles, the new arrivals, and the things Caterina has been thinking about. Reservations recommended for tables of four or more.</p>
+      <div class="cta">
+        <a href="/v1-warm-italian#reservations" class="btn btn-primary">Reserve a table</a>
+        <a href={`tel:${restaurant.phone}`} class="btn btn-ghost">Call the cellar — {restaurant.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="v1-footer" role="contentinfo">
+    <div class="v1-footer-inner">
+      <div>
+        <a href="/v1-warm-italian" class="v1-nav-logo v1-footer-logo">{restaurant.name}</a>
+        <p class="v1-footer-tagline">{restaurant.tagline}</p>
+      </div>
+      <ul class="v1-footer-nav">
+        <li><a href="/v1-warm-italian#menu">Menu</a></li>
+        <li><a href="/v1-warm-italian/wine">Wine</a></li>
+        <li><a href="/v1-warm-italian#about">Our Story</a></li>
+        <li><a href="/v1-warm-italian#contact">Find Us</a></li>
+        <li><a href="/v1-warm-italian#reservations">Reserve</a></li>
+      </ul>
+    </div>
+    <div class="v1-footer-bar">
+      <p class="v1-footer-copy">© {new Date().getFullYear()} {restaurant.name}. All rights reserved.</p>
+    </div>
+  </footer>
+
+</div>
+
+</Layout>

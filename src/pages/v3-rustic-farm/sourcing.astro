@@ -1,0 +1,331 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { restaurant } from '../../data/restaurants/v3';
+
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Caveat:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap';
+const pageTitle = `Where Our Food Comes From — ${restaurant.name}`;
+
+const farms = [
+  {
+    name: 'Boyden Family Farm',
+    town: 'Cambridge, VT',
+    distance: '38 miles',
+    since: '2018',
+    products: 'Grass-fed beef, heritage pork, lamb',
+    detail: 'Four generations on the same land along the Lamoille River. The Boydens rotate their herd through silvopasture — cattle grazing under maple and apple — which is what gives the beef its distinct sweetness. We buy whole animals, half at a time, and break them down in our kitchen. The shoulder becomes Sunday\'s braise; the bones, Tuesday\'s stock.',
+  },
+  {
+    name: 'Sweet Rowen Farmstead',
+    town: 'West Glover, VT',
+    distance: '64 miles',
+    since: '2018',
+    products: 'Raw cream, cultured butter, A2 milk',
+    detail: 'Paul and Louisa run a small herd of Jersey and Normande cows on rolling pasture up by the Northeast Kingdom. Their cream — pasteurized at low temperature, never homogenized — is what makes our pastry program possible. The butter on every table came out of their churn fewer than seven days ago.',
+  },
+  {
+    name: 'Pete\'s Greens',
+    town: 'Craftsbury, VT',
+    distance: '52 miles',
+    since: '2019',
+    products: 'Year-round vegetables, root cellars, ferments',
+    detail: 'Pete Johnson built one of the most ambitious year-round vegetable operations in northern New England. Heated greenhouses in February. Cold-stored carrots that sweeten in the dark until April. Hen & Hearth\'s vegetable menu in February is essentially a love letter to Pete\'s root cellar.',
+  },
+  {
+    name: 'Misty Knoll Farms',
+    town: 'New Haven, VT',
+    distance: '71 miles',
+    since: '2018',
+    products: 'Pasture-raised chicken, turkey, eggs',
+    detail: 'John and Robert Palmer raise their birds in moveable shelters on rotating pasture — the way chickens were raised before factory farming. The yolks of the eggs are nearly orange. The birds taste like chicken used to taste. We use everything: legs for the daily roast, breasts for the cassoulet, feet for stock.',
+  },
+  {
+    name: 'Tangletown Farm',
+    town: 'West Glover, VT',
+    distance: '63 miles',
+    since: '2019',
+    products: 'Heritage pork, charcuterie collaborations',
+    detail: 'Dave runs his Berkshires on woodland pasture and finishes them on whey from the dairy across the road. We co-cure a 90-day prosciutto with him every February — twenty-six legs at a time, hung in the cellar of our restaurant. It\'s the most local prosciutto you\'ll eat in America.',
+  },
+  {
+    name: 'Jasper Hill Farm',
+    town: 'Greensboro, VT',
+    distance: '58 miles',
+    since: '2018',
+    products: 'Cellar-aged cheeses, Bayley Hazen, Harbison',
+    detail: 'There is no better cheese cellar in America. Mateo and Andy Kehler dug seven aging caves into a Vermont hillside and have been refining the art of New England farmstead cheese for two decades. Our cheese course rotates with whatever they bring through the door.',
+  },
+  {
+    name: 'High Mowing Organic Seeds',
+    town: 'Wolcott, VT',
+    distance: '46 miles',
+    since: '2020',
+    products: 'Seed for our kitchen garden',
+    detail: 'We grow about eighty percent of our summer herbs and a third of our salad greens out our back door, from High Mowing\'s seed. Open-pollinated, organic, regionally adapted. The cilantro you taste in August started as a seed in March, in a tray on the kitchen windowsill.',
+  },
+  {
+    name: 'Champlain Orchards',
+    town: 'Shoreham, VT',
+    distance: '88 miles',
+    since: '2018',
+    products: 'Heirloom apples, cider, pressed juice',
+    detail: 'A hundred and forty varieties of apple, including the kinds nobody grows anymore — Northern Spy, Esopus Spitzenburg, Roxbury Russet. Bill Suhr and his team press a single-varietal cider for us every October. It goes in the Sunday braise.',
+  },
+  {
+    name: 'Caretaker Farm',
+    town: 'Williamstown, MA',
+    distance: '92 miles',
+    since: '2019',
+    products: 'Summer berries, stone fruit, garlic',
+    detail: 'A worker-owned cooperative in the Berkshires. Their garlic — twelve heritage varietals braided and cellared — runs through our kitchen from August to April. We buy two hundred pounds of it at harvest and store it in a closet by the back door.',
+  },
+];
+
+const stats = [
+  { num: '94%', label: 'of menu ingredients sourced within 100 miles' },
+  { num: '32', label: 'farms in our regular rotation' },
+  { num: '12', label: 'years of relationships with our oldest partners' },
+  { num: '0', label: 'food-service distributors — we buy direct, full stop' },
+];
+
+const seasons = [
+  { name: 'Spring', months: 'Mar – May', body: 'Fiddleheads, ramps, the first asparagus, baby radishes. The hardest season to cook in New England — the cellar is empty, the garden hasn\'t started. Our menu shrinks to twelve dishes and leans on cured proteins from the winter.' },
+  { name: 'Summer', months: 'Jun – Aug', body: 'The garden out back peaks. Tomatoes hit the menu in mid-July and stay through frost. Cucumbers, peppers, eggplant, herbs. Half the salad course comes from forty feet behind the kitchen.' },
+  { name: 'Autumn', months: 'Sep – Nov', body: 'Squash, apples, every kind of root. The cellars fill. Pigs are slaughtered. We cure, we ferment, we pack the lard. Our heaviest, most generous menu of the year.' },
+  { name: 'Winter', months: 'Dec – Feb', body: 'The hardest season is also the most honest one. Root cellars. Long braises. The bread program at its peak. Whatever was put up in October is what we cook with — and that constraint is, frankly, where most of our best dishes come from.' },
+];
+---
+
+<Layout restaurant={restaurant} theme="v3" fontUrl={fontUrl} title={pageTitle}>
+
+<style>
+  :root {
+    --v3-parchment: #F5F0E5;
+    --v3-cream: #EDE5D0;
+    --v3-green: #2D5016;
+    --v3-green-dark: #1A3009;
+    --v3-green-light: #3D6B1E;
+    --v3-brown: #7A5230;
+    --v3-butter: #D4A843;
+    --v3-dark: #1A0E04;
+    --v3-text: #2A1A0A;
+    --v3-muted: #6A5840;
+    --v3-border: rgba(42,26,10,0.15);
+    --v3-font-display: 'Fraunces', Georgia, serif;
+    --v3-font-hand: 'Caveat', cursive;
+    --v3-font-body: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  body { background: var(--v3-parchment); color: var(--v3-text); font-family: var(--v3-font-body); }
+
+  /* NAV */
+  .v3-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: var(--v3-green); }
+  .v3-nav-logo { font-family: var(--v3-font-display); font-style: italic; font-size: 1.5rem; color: var(--v3-parchment); text-decoration: none; }
+  .v3-nav-links { display: flex; align-items: center; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+  .v3-nav-links a { font-family: var(--v3-font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245,240,229,0.75); text-decoration: none; }
+  .v3-nav-links a:hover { color: var(--v3-butter); }
+  .v3-nav-active { color: var(--v3-butter) !important; border-bottom: 1px solid var(--v3-butter); padding-bottom: 3px; }
+
+  /* HERO */
+  .src-hero { padding: 9rem 2rem 5rem; background: var(--v3-parchment); position: relative; }
+  .src-hero__inner { max-width: 64rem; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+  .src-eyebrow { font-family: var(--v3-font-hand); font-size: 1.5rem; color: var(--v3-green); margin-bottom: 0.5rem; }
+  .src-h1 { font-family: var(--v3-font-display); font-weight: 300; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.05; color: var(--v3-dark); margin: 0; letter-spacing: -0.01em; }
+  .src-h1 em { font-style: italic; color: var(--v3-green); }
+  .src-lede { font-family: var(--v3-font-body); font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: var(--v3-muted); max-width: 42rem; margin: 1.75rem auto 0; }
+
+  /* MAP RIBBON */
+  .src-map { background: var(--v3-green); color: var(--v3-parchment); padding: 1.5rem 2rem; text-align: center; font-family: var(--v3-font-hand); font-size: 1.4rem; line-height: 1.4; }
+  .src-map strong { color: var(--v3-butter); font-weight: 700; }
+
+  /* STATS */
+  .src-stats { padding: 5rem 2rem; background: var(--v3-cream); border-top: 1px solid var(--v3-border); border-bottom: 1px solid var(--v3-border); }
+  .src-stats__inner { max-width: 64rem; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+  .src-stat { text-align: center; }
+  .src-stat__num { font-family: var(--v3-font-display); font-size: clamp(2.4rem, 4vw, 3.6rem); font-weight: 500; color: var(--v3-green); line-height: 1; margin-bottom: 0.5rem; }
+  .src-stat__label { font-family: var(--v3-font-body); font-size: 0.85rem; font-weight: 300; line-height: 1.5; color: var(--v3-muted); }
+
+  /* FARMS */
+  .src-farms { padding: 6rem 2rem; background: var(--v3-parchment); }
+  .src-farms__inner { max-width: 64rem; margin: 0 auto; }
+  .src-section-header { text-align: center; margin-bottom: 4rem; }
+  .src-section-label { font-family: var(--v3-font-hand); font-size: 1.6rem; color: var(--v3-green); }
+  .src-section-h2 { font-family: var(--v3-font-display); font-style: italic; font-weight: 400; font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--v3-dark); margin: 0.5rem 0 0; line-height: 1.1; }
+
+  .farm-list { display: grid; gap: 0; }
+  .farm { padding: 2.5rem 0; border-top: 2px solid var(--v3-border); display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: flex-start; }
+  .farm:last-child { border-bottom: 2px solid var(--v3-border); }
+  .farm__name { font-family: var(--v3-font-display); font-size: 1.6rem; font-weight: 500; color: var(--v3-green-dark); margin: 0 0 0.35rem; line-height: 1.1; }
+  .farm__town { font-family: var(--v3-font-hand); font-size: 1.25rem; color: var(--v3-brown); margin-bottom: 1rem; }
+  .farm__meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1rem; font-family: var(--v3-font-body); font-size: 0.78rem; }
+  .farm__meta dt { font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v3-green); font-size: 0.65rem; }
+  .farm__meta dd { margin: 0; color: var(--v3-text); }
+  .farm__products { font-family: var(--v3-font-body); font-style: italic; font-size: 0.92rem; color: var(--v3-brown); margin: 0 0 1rem; padding-left: 1rem; border-left: 2px solid var(--v3-butter); }
+  .farm__detail { font-family: var(--v3-font-body); font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: var(--v3-text); margin: 0; }
+
+  /* SEASONS */
+  .src-seasons { padding: 6rem 2rem; background: var(--v3-green-dark); color: var(--v3-parchment); }
+  .src-seasons__inner { max-width: 64rem; margin: 0 auto; }
+  .src-seasons .src-section-label { color: var(--v3-butter); }
+  .src-seasons .src-section-h2 { color: var(--v3-parchment); }
+  .seasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-top: 3.5rem; }
+  .season { padding: 1.75rem; border: 1px solid rgba(245,240,229,0.18); background: rgba(245,240,229,0.04); }
+  .season__name { font-family: var(--v3-font-display); font-style: italic; font-size: 1.8rem; color: var(--v3-butter); margin: 0 0 0.3rem; }
+  .season__months { font-family: var(--v3-font-body); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245,240,229,0.55); margin-bottom: 1rem; }
+  .season__body { font-family: var(--v3-font-body); font-size: 0.92rem; font-weight: 300; line-height: 1.8; color: rgba(245,240,229,0.85); margin: 0; }
+
+  /* PHILOSOPHY */
+  .src-philosophy { padding: 6rem 2rem; background: var(--v3-cream); }
+  .src-philosophy__inner { max-width: 50rem; margin: 0 auto; text-align: center; }
+  .src-philosophy h2 { font-family: var(--v3-font-display); font-style: italic; font-weight: 400; font-size: clamp(2rem, 4vw, 2.8rem); color: var(--v3-green-dark); margin: 0 0 1.5rem; line-height: 1.15; }
+  .src-philosophy p { font-family: var(--v3-font-body); font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--v3-text); margin: 0 0 1.25rem; }
+  .src-philosophy p.script { font-family: var(--v3-font-hand); font-size: 1.5rem; color: var(--v3-green); margin-top: 2rem; }
+
+  /* CTA */
+  .src-cta { padding: 5rem 2rem; background: var(--v3-parchment); text-align: center; border-top: 1px solid var(--v3-border); }
+  .src-cta__inner { max-width: 40rem; margin: 0 auto; }
+  .src-cta h2 { font-family: var(--v3-font-display); font-style: italic; font-size: 2.4rem; color: var(--v3-dark); margin: 0 0 1rem; font-weight: 400; }
+  .src-cta p { font-family: var(--v3-font-body); color: var(--v3-muted); margin: 0 0 2rem; line-height: 1.7; }
+  .src-cta__btns { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn { font-family: var(--v3-font-body); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem 2.2rem; text-decoration: none; font-weight: 600; transition: background 0.2s, color 0.2s, border 0.2s; }
+  .btn-primary { background: var(--v3-green); color: var(--v3-parchment); }
+  .btn-primary:hover { background: var(--v3-green-dark); }
+  .btn-outline { background: transparent; color: var(--v3-green); border: 1px solid var(--v3-green); }
+  .btn-outline:hover { background: var(--v3-green); color: var(--v3-parchment); }
+
+  /* FOOTER */
+  .v3-footer { padding: 3rem 2rem; background: var(--v3-green-dark); color: var(--v3-parchment); text-align: center; }
+  .v3-footer__copy { font-family: var(--v3-font-body); font-size: 0.78rem; color: rgba(245,240,229,0.55); }
+  .v3-footer__links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; list-style: none; margin: 0 0 1.5rem; padding: 0; }
+  .v3-footer__links a { font-family: var(--v3-font-body); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,229,0.65); text-decoration: none; }
+  .v3-footer__links a:hover { color: var(--v3-butter); }
+
+  @media (max-width: 768px) {
+    .v3-nav { padding: 0.75rem 1rem; }
+    .v3-nav-links { gap: 1rem; }
+    .v3-nav-links a:not(.v3-nav-active) { display: none; }
+    .src-hero { padding: 7rem 1.25rem 3rem; }
+    .src-stats__inner { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .src-stats, .src-farms, .src-seasons, .src-philosophy, .src-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .farm { grid-template-columns: 1fr; gap: 1rem; }
+    .seasons-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  }
+</style>
+
+<!-- NAV -->
+<nav class="v3-nav" aria-label="Primary">
+  <a href="/v3-rustic-farm" class="v3-nav-logo">Hen &amp; Hearth</a>
+  <ul class="v3-nav-links">
+    <li><a href="/v3-rustic-farm#menu">Menu</a></li>
+    <li><a href="/v3-rustic-farm/sourcing" class="v3-nav-active">Sourcing</a></li>
+    <li><a href="/v3-rustic-farm#about">Story</a></li>
+    <li><a href="/v3-rustic-farm#reservations">Reserve</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="src-hero" aria-label="Sourcing intro">
+  <div class="src-hero__inner">
+    <p class="src-eyebrow">~ From the Field to the Hearth ~</p>
+    <h1 class="src-h1">The names of every <em>farm</em> on the menu.</h1>
+    <p class="src-lede">Hen &amp; Hearth doesn’t buy from a distributor. We buy from people — by name, by handshake, often by phone call at six in the morning when the weather changes. This page lists every one of them.</p>
+  </div>
+</section>
+
+<!-- MAP RIBBON -->
+<div class="src-map">
+  All thirty-two farms within <strong>a hundred miles</strong> of the kitchen. Most within fifty.
+</div>
+
+<!-- STATS -->
+<section class="src-stats" aria-label="At a glance">
+  <div class="src-stats__inner">
+    {stats.map((s) => (
+      <div class="src-stat">
+        <div class="src-stat__num">{s.num}</div>
+        <div class="src-stat__label">{s.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- FARMS -->
+<section class="src-farms" aria-label="Our farm partners">
+  <div class="src-farms__inner">
+    <div class="src-section-header">
+      <p class="src-section-label">Our partners</p>
+      <h2 class="src-section-h2">A few of the people we cook with.</h2>
+    </div>
+    <div class="farm-list">
+      {farms.map((f) => (
+        <article class="farm">
+          <div>
+            <h3 class="farm__name">{f.name}</h3>
+            <div class="farm__town">{f.town}</div>
+            <dl class="farm__meta">
+              <dt>Distance</dt><dd>{f.distance}</dd>
+              <dt>Partner since</dt><dd>{f.since}</dd>
+            </dl>
+          </div>
+          <div>
+            <p class="farm__products">{f.products}</p>
+            <p class="farm__detail">{f.detail}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section class="src-seasons" aria-label="The seasons">
+  <div class="src-seasons__inner">
+    <div class="src-section-header">
+      <p class="src-section-label">~ The Calendar ~</p>
+      <h2 class="src-section-h2">How a Vermont kitchen breathes through the year.</h2>
+    </div>
+    <div class="seasons-grid">
+      {seasons.map((s) => (
+        <article class="season">
+          <h3 class="season__name">{s.name}</h3>
+          <p class="season__months">{s.months}</p>
+          <p class="season__body">{s.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="src-philosophy" aria-label="Why we do it this way">
+  <div class="src-philosophy__inner">
+    <h2>It costs more. And we wouldn’t do it any other way.</h2>
+    <p>Buying direct is harder. The Boyden beef is twice the price of commodity beef. Jasper Hill cheese costs four times what a wholesaler would charge for a similar wheel. Pete’s vegetables come in funny shapes and rough sizes — a cook has to peel them, trim them, learn each one.</p>
+    <p>We pay the difference because it’s the right way to feed people. Because the farms that built this valley deserve to still be here in twenty years. Because a carrot that grew in real soil tastes like something, and a cow that ate grass tastes like the field it came from. And because, ultimately, the best meal you’ll ever eat is the one where you can name the farms.</p>
+    <p class="script">— with gratitude, the kitchen at Hen &amp; Hearth</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="src-cta" aria-label="Come visit">
+  <div class="src-cta__inner">
+    <h2>Come taste the difference.</h2>
+    <p>The full menu changes every Tuesday. Reservations open thirty days ahead.</p>
+    <div class="src-cta__btns">
+      <a href="/v3-rustic-farm#reservations" class="btn btn-primary">Reserve a table</a>
+      <a href="/v3-rustic-farm#menu" class="btn btn-outline">See this week’s menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="v3-footer" role="contentinfo">
+  <ul class="v3-footer__links">
+    <li><a href="/v3-rustic-farm#menu">Menu</a></li>
+    <li><a href="/v3-rustic-farm/sourcing">Sourcing</a></li>
+    <li><a href="/v3-rustic-farm#about">Our Story</a></li>
+    <li><a href="/v3-rustic-farm#reservations">Reserve</a></li>
+  </ul>
+  <p class="v3-footer__copy">© {new Date().getFullYear()} Hen &amp; Hearth · Woodstock, Vermont</p>
+</footer>
+
+</Layout>

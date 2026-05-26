@@ -1,0 +1,297 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { restaurant } from '../../data/restaurants/v2';
+
+const pageTitle = `The Tasting Menu — ${restaurant.name}`;
+
+const courses = [
+  { num: 'I', name: 'First Snow', kind: 'Amuse', detail: 'A single oyster from Peconic Bay, dressed with horseradish snow, frozen apple, and a drop of lardo emulsion.' },
+  { num: 'II', name: 'Sea & Pine', kind: 'Crudo', detail: 'Hand-cut Hokkaido scallop. Smoked spruce oil pressed in our kitchen each Monday. Salt-cured citrus. Served on a chilled river stone.' },
+  { num: 'III', name: 'Bread Course', kind: 'Bakery', detail: 'Country sourdough, milled and baked daily. Cultured butter from a single Hudson Valley dairy. Maine sea salt.' },
+  { num: 'IV', name: 'Forest Floor', kind: 'Vegetable', detail: 'Wood-roasted celery root, fermented black garlic, pine needle oil, smoked egg yolk. The most-photographed plate on the menu.' },
+  { num: 'V', name: 'The Fish', kind: 'Sea', detail: 'Wild striped bass from a single-line fisherman out of Montauk. Aged seven days. Brown butter dashi, charred leek, sea lettuce.' },
+  { num: 'VI', name: 'Quail & Embers', kind: 'Game', detail: 'Whole quail roasted over Japanese binchotan. Buckwheat porridge, juniper jus, pickled blackberry from upstate.' },
+  { num: 'VII', name: 'The Main', kind: 'Land', detail: 'Forty-day dry-aged Hudson Valley beef. Bone-marrow custard, charred allium, fermented chili. Carved tableside.' },
+  { num: 'VIII', name: 'A Cheese', kind: 'Cheese', detail: 'One cheese from Jasper Hill Farm, served at room temperature with honeycomb and a slice of yesterday\'s bread, toasted.' },
+  { num: 'IX', name: 'Sorbet, Briefly', kind: 'Palate', detail: 'Concord grape sorbet, verjus, shaved fennel pollen. Lasts thirty seconds. Designed to.' },
+  { num: 'X', name: 'Chocolate, Bay Leaf', kind: 'Dessert', detail: 'Single-origin Madagascar chocolate, bay-leaf cream, brown-butter ice. Finished with cocoa nibs cracked at the pass.' },
+  { num: 'XI', name: 'Petits Fours', kind: 'Mignardises', detail: 'Three small things, made that morning, served with coffee from a Brooklyn roaster we\'ve worked with since opening.' },
+];
+
+const principles = [
+  { label: 'Eleven courses', body: 'Each one designed to be eaten in three to five bites. The whole menu lands in roughly two hours and twenty minutes — long enough to feel like a meal, short enough to feel like an evening.' },
+  { label: 'Hyper-local', body: 'Eighty-five percent of what crosses your plate was grown, raised, or caught within two hundred miles of the West Village. We list the farms in the menu, not the dish names.' },
+  { label: 'Whole-animal cooking', body: 'When we buy a lamb, we use the lamb. The shoulder feeds the staff. The bones become the night\'s jus. The fat renders into next week\'s bread course. Nothing leaves the kitchen as waste.' },
+  { label: 'No substitutions', body: 'We accommodate any dietary restriction told to us at booking. We do not change individual courses on request — the menu is a single composition and we want you to taste it the way the kitchen built it.' },
+];
+
+const team = [
+  { role: 'Executive Chef', name: 'Sarah Lin', bio: 'Per Se, Eleven Madison Park, three years with René Redzepi at Noma. Opened North & Pine in 2020. Food & Wine Best New Chef, 2022.' },
+  { role: 'Chef de Cuisine', name: 'Daniel Park', bio: 'Eleven years between Atomix and Cosme. Runs the line, builds the daily mise, and is responsible for the bread program.' },
+  { role: 'Pastry Chef', name: 'Imani Brooks', bio: 'Trained at Le Cordon Bleu and Lyle\'s in London. Writes every dessert course around a single seasonal ingredient.' },
+  { role: 'Wine Director', name: 'Jules Tessier', bio: 'Curates the pairing flights. Specializes in low-intervention growers from the Loire, Jura, and the Finger Lakes.' },
+];
+---
+
+<Layout restaurant={restaurant} theme="v2" fontUrl="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" title={pageTitle}>
+
+<style>
+  :root {
+    --v2-white: #FAFAF8;
+    --v2-off-white: #F0EEE8;
+    --v2-black: #0C0C0A;
+    --v2-gray: #66665E;
+    --v2-green: #1A3A2E;
+    --v2-border: rgba(12, 12, 10, 0.08);
+    --v2-border-strong: rgba(12, 12, 10, 0.15);
+    --v2-serif: 'DM Serif Display', Georgia, serif;
+    --v2-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+  body { background: var(--v2-white); color: var(--v2-black); font-family: var(--v2-sans); }
+
+  /* NAV */
+  .v2-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 3.5rem; background: var(--v2-white); border-bottom: 1px solid var(--v2-border); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; }
+  .v2-nav__name { font-family: var(--v2-serif); font-size: 1rem; color: var(--v2-black); text-decoration: none; letter-spacing: 0.01em; }
+  .v2-nav__links { display: flex; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+  .v2-nav__links a { font-family: var(--v2-sans); font-size: 0.7rem; letter-spacing: 0.15em; color: rgba(12,12,10,0.6); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .v2-nav__links a:hover, .v2-nav__active { color: var(--v2-black) !important; }
+  .v2-nav__phone { font-family: var(--v2-sans); font-size: 0.7rem; letter-spacing: 0.15em; color: rgba(12, 12, 10, 0.6); text-decoration: none; text-transform: uppercase; }
+
+  /* HERO */
+  .tasting-hero { padding: 9rem 2.5rem 5rem; background: var(--v2-white); border-bottom: 1px solid var(--v2-border); }
+  .tasting-hero__inner { max-width: 64rem; margin: 0 auto; }
+  .tasting-eyebrow { font-family: var(--v2-sans); font-size: 0.7rem; letter-spacing: 0.3em; color: var(--v2-gray); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .tasting-h1 { font-family: var(--v2-serif); font-size: clamp(2.6rem, 5.5vw, 4.6rem); line-height: 1.05; color: var(--v2-black); margin: 0; font-weight: 400; }
+  .tasting-h1 em { font-style: italic; }
+  .tasting-lede { font-family: var(--v2-sans); font-size: 1.1rem; font-weight: 300; line-height: 1.65; color: var(--v2-gray); max-width: 36rem; margin: 2rem 0 0; }
+  .tasting-meta { display: flex; gap: 3rem; margin-top: 3rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--v2-border); }
+  .tasting-meta__item { font-family: var(--v2-sans); }
+  .tasting-meta__label { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--v2-gray); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .tasting-meta__value { font-family: var(--v2-serif); font-size: 1.5rem; color: var(--v2-black); }
+
+  /* PRINCIPLES */
+  .tasting-principles { padding: 6rem 2.5rem; background: var(--v2-off-white); }
+  .tasting-principles__inner { max-width: 64rem; margin: 0 auto; }
+  .tasting-section-label { font-family: var(--v2-sans); font-size: 0.65rem; letter-spacing: 0.35em; color: var(--v2-gray); text-transform: uppercase; margin-bottom: 1rem; }
+  .tasting-section-h2 { font-family: var(--v2-serif); font-size: clamp(2rem, 4vw, 3rem); color: var(--v2-black); margin: 0 0 3rem; line-height: 1.1; font-weight: 400; }
+  .principles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+  .principle { padding: 2rem; background: var(--v2-white); border: 1px solid var(--v2-border); }
+  .principle__label { font-family: var(--v2-serif); font-size: 1.4rem; color: var(--v2-black); margin-bottom: 0.75rem; line-height: 1.2; }
+  .principle__body { font-family: var(--v2-sans); font-size: 0.92rem; font-weight: 300; line-height: 1.75; color: var(--v2-gray); margin: 0; }
+
+  /* COURSES */
+  .tasting-courses { padding: 6rem 2.5rem; background: var(--v2-white); }
+  .tasting-courses__inner { max-width: 56rem; margin: 0 auto; }
+  .courses-intro { font-family: var(--v2-serif); font-style: italic; font-size: 1.4rem; line-height: 1.5; color: var(--v2-gray); margin: 0 0 3.5rem; max-width: 38rem; }
+  .course { display: grid; grid-template-columns: 4rem 1fr; gap: 2.5rem; padding: 2.25rem 0; border-top: 1px solid var(--v2-border); align-items: baseline; }
+  .course:last-child { border-bottom: 1px solid var(--v2-border); }
+  .course__num { font-family: var(--v2-serif); font-style: italic; font-size: 1.8rem; color: var(--v2-green); line-height: 1; }
+  .course__name { font-family: var(--v2-serif); font-size: 1.5rem; color: var(--v2-black); margin: 0 0 0.4rem; line-height: 1.15; }
+  .course__kind { font-family: var(--v2-sans); font-size: 0.6rem; letter-spacing: 0.35em; color: var(--v2-gray); text-transform: uppercase; margin-bottom: 0.85rem; }
+  .course__detail { font-family: var(--v2-sans); font-size: 0.95rem; font-weight: 300; line-height: 1.75; color: var(--v2-gray); margin: 0; }
+
+  /* PRICING */
+  .tasting-pricing { padding: 5rem 2.5rem; background: var(--v2-green); color: var(--v2-white); }
+  .tasting-pricing__inner { max-width: 56rem; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .pricing-h2 { font-family: var(--v2-serif); font-size: clamp(2rem, 4vw, 2.8rem); margin: 0; color: var(--v2-white); line-height: 1.1; font-weight: 400; }
+  .pricing-rows { display: grid; gap: 1.1rem; }
+  .pricing-row { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid rgba(250,250,248,0.18); gap: 1rem; }
+  .pricing-row__label { font-family: var(--v2-serif); font-size: 1.15rem; }
+  .pricing-row__sub { font-family: var(--v2-sans); font-size: 0.78rem; opacity: 0.65; margin-top: 0.2rem; font-weight: 300; }
+  .pricing-row__price { font-family: var(--v2-serif); font-size: 1.4rem; white-space: nowrap; }
+  .pricing-note { grid-column: 1 / -1; font-family: var(--v2-sans); font-size: 0.85rem; font-weight: 300; line-height: 1.7; opacity: 0.7; padding-top: 1rem; }
+
+  /* TEAM */
+  .tasting-team { padding: 6rem 2.5rem; background: var(--v2-off-white); }
+  .tasting-team__inner { max-width: 64rem; margin: 0 auto; }
+  .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+  .member { padding: 2rem 0; border-top: 1px solid var(--v2-border); }
+  .member__role { font-family: var(--v2-sans); font-size: 0.6rem; letter-spacing: 0.35em; color: var(--v2-green); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .member__name { font-family: var(--v2-serif); font-size: 1.6rem; color: var(--v2-black); margin: 0 0 0.75rem; line-height: 1.1; }
+  .member__bio { font-family: var(--v2-sans); font-size: 0.92rem; font-weight: 300; line-height: 1.75; color: var(--v2-gray); margin: 0; }
+
+  /* CTA */
+  .tasting-cta { padding: 6rem 2.5rem; background: var(--v2-black); color: var(--v2-white); text-align: center; }
+  .tasting-cta__inner { max-width: 36rem; margin: 0 auto; }
+  .tasting-cta h2 { font-family: var(--v2-serif); font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 1.25rem; color: var(--v2-white); font-weight: 400; }
+  .tasting-cta p { font-family: var(--v2-sans); font-size: 1rem; font-weight: 300; line-height: 1.7; color: rgba(250,250,248,0.65); margin: 0 0 2.5rem; }
+  .tasting-cta__buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn { font-family: var(--v2-sans); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem 2.4rem; text-decoration: none; font-weight: 500; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .btn-primary { background: var(--v2-white); color: var(--v2-black); }
+  .btn-primary:hover { background: rgba(250,250,248,0.85); }
+  .btn-ghost { background: transparent; color: var(--v2-white); border: 1px solid rgba(250,250,248,0.35); }
+  .btn-ghost:hover { border-color: var(--v2-white); }
+
+  /* FOOTER */
+  .v2-footer { padding: 3rem 2.5rem; background: var(--v2-white); border-top: 1px solid var(--v2-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .v2-footer__copy { font-family: var(--v2-sans); font-size: 0.72rem; color: var(--v2-gray); }
+  .v2-footer__nav { display: flex; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+  .v2-footer__nav a { font-family: var(--v2-sans); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--v2-gray); text-decoration: none; text-transform: uppercase; }
+  .v2-footer__nav a:hover { color: var(--v2-black); }
+
+  @media (max-width: 768px) {
+    .v2-nav { padding: 0 1.25rem; }
+    .v2-nav__links { display: none; }
+    .tasting-hero { padding: 7rem 1.25rem 3rem; }
+    .tasting-meta { gap: 1.5rem; }
+    .tasting-principles, .tasting-courses, .tasting-pricing, .tasting-team, .tasting-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .principles-grid, .team-grid, .tasting-pricing__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .course { grid-template-columns: 2.5rem 1fr; gap: 1rem; padding: 1.5rem 0; }
+    .course__num { font-size: 1.3rem; }
+    .v2-footer { padding: 2rem 1.25rem; }
+  }
+</style>
+
+<!-- NAV -->
+<nav class="v2-nav" aria-label="Primary">
+  <a href="/v2-modern-minimal" class="v2-nav__name">North &amp; Pine</a>
+  <ul class="v2-nav__links">
+    <li><a href="/v2-modern-minimal#menu">Menu</a></li>
+    <li><a href="/v2-modern-minimal/tasting" class="v2-nav__active">Tasting</a></li>
+    <li><a href="/v2-modern-minimal#about">About</a></li>
+    <li><a href="/v2-modern-minimal#reservations">Reserve</a></li>
+  </ul>
+  <a href={`tel:${restaurant.phone}`} class="v2-nav__phone">{restaurant.phone}</a>
+</nav>
+
+<!-- HERO -->
+<section class="tasting-hero">
+  <div class="tasting-hero__inner">
+    <p class="tasting-eyebrow">The Eleven-Course Tasting</p>
+    <h1 class="tasting-h1">A single menu, <em>built in eleven movements</em>, served once a night.</h1>
+    <p class="tasting-lede">North &amp; Pine is a tasting-only restaurant. Every guest receives the same eleven courses, prepared by the same kitchen, on the same evening. The menu shifts with the seasons — and with whatever the farms send through the door that week — but the structure stays.</p>
+    <div class="tasting-meta">
+      <div class="tasting-meta__item">
+        <div class="tasting-meta__label">Courses</div>
+        <div class="tasting-meta__value">Eleven</div>
+      </div>
+      <div class="tasting-meta__item">
+        <div class="tasting-meta__label">Duration</div>
+        <div class="tasting-meta__value">~2 hr 20 min</div>
+      </div>
+      <div class="tasting-meta__item">
+        <div class="tasting-meta__label">Seatings</div>
+        <div class="tasting-meta__value">6 &amp; 8:45 pm</div>
+      </div>
+      <div class="tasting-meta__item">
+        <div class="tasting-meta__label">Per Guest</div>
+        <div class="tasting-meta__value">$245</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="tasting-principles" aria-label="Kitchen principles">
+  <div class="tasting-principles__inner">
+    <p class="tasting-section-label">How the kitchen works</p>
+    <h2 class="tasting-section-h2">Four things we don't compromise on.</h2>
+    <div class="principles-grid">
+      {principles.map((p) => (
+        <article class="principle">
+          <h3 class="principle__label">{p.label}</h3>
+          <p class="principle__body">{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="tasting-courses" aria-label="The eleven courses">
+  <div class="tasting-courses__inner">
+    <p class="tasting-section-label">The Menu</p>
+    <h2 class="tasting-section-h2">Tonight you will eat:</h2>
+    <p class="courses-intro">A glimpse at the autumn menu. By the time you read this, three or four dishes will have changed — the menu is rewritten every Tuesday morning when the farms call in.</p>
+    {courses.map((c) => (
+      <article class="course">
+        <div class="course__num">{c.num}</div>
+        <div>
+          <div class="course__kind">{c.kind}</div>
+          <h3 class="course__name">{c.name}</h3>
+          <p class="course__detail">{c.detail}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="tasting-pricing" aria-label="Pricing">
+  <div class="tasting-pricing__inner">
+    <h2 class="pricing-h2">The menu, the pairings, the room.</h2>
+    <div class="pricing-rows">
+      <div class="pricing-row">
+        <div>
+          <div class="pricing-row__label">The Tasting Menu</div>
+          <div class="pricing-row__sub">Eleven courses, evolving weekly</div>
+        </div>
+        <div class="pricing-row__price">$245</div>
+      </div>
+      <div class="pricing-row">
+        <div>
+          <div class="pricing-row__label">Wine Pairing</div>
+          <div class="pricing-row__sub">Seven pours, low-intervention growers</div>
+        </div>
+        <div class="pricing-row__price">+ $185</div>
+      </div>
+      <div class="pricing-row">
+        <div>
+          <div class="pricing-row__label">Non-alcoholic Pairing</div>
+          <div class="pricing-row__sub">House ferments, infusions, broths</div>
+        </div>
+        <div class="pricing-row__price">+ $85</div>
+      </div>
+      <div class="pricing-row">
+        <div>
+          <div class="pricing-row__label">Chef's Counter</div>
+          <div class="pricing-row__sub">Six seats facing the pass — two extra courses</div>
+        </div>
+        <div class="pricing-row__price">+ $95</div>
+      </div>
+    </div>
+    <p class="pricing-note">Service charge of 20% added in lieu of tipping — distributed across the full team. A $50 deposit per guest holds the reservation; the balance is settled at the table. We ask for cancellations 72 hours in advance so the kitchen can plan its purchasing.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="tasting-team" aria-label="The team">
+  <div class="tasting-team__inner">
+    <p class="tasting-section-label">The Kitchen</p>
+    <h2 class="tasting-section-h2">Who's cooking tonight.</h2>
+    <div class="team-grid">
+      {team.map((m) => (
+        <article class="member">
+          <div class="member__role">{m.role}</div>
+          <h3 class="member__name">{m.name}</h3>
+          <p class="member__bio">{m.bio}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="tasting-cta" aria-label="Reserve">
+  <div class="tasting-cta__inner">
+    <h2>Reserve a seat.</h2>
+    <p>Tables release thirty days out at 10:00 am Eastern. Counter seats and large parties are best booked by phone.</p>
+    <div class="tasting-cta__buttons">
+      <a href="/v2-modern-minimal#reservations" class="btn btn-primary">Book online</a>
+      <a href={`tel:${restaurant.phone}`} class="btn btn-ghost">Call {restaurant.phone}</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="v2-footer" role="contentinfo">
+  <p class="v2-footer__copy">© {new Date().getFullYear()} North &amp; Pine · {restaurant.address.full}</p>
+  <ul class="v2-footer__nav">
+    <li><a href="/v2-modern-minimal#menu">Menu</a></li>
+    <li><a href="/v2-modern-minimal/tasting">Tasting</a></li>
+    <li><a href="/v2-modern-minimal#about">About</a></li>
+    <li><a href="/v2-modern-minimal#reservations">Reserve</a></li>
+  </ul>
+</footer>
+
+</Layout>

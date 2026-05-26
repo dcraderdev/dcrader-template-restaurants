@@ -1,0 +1,340 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { restaurant } from '../../data/restaurants/v4';
+
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap';
+const pageTitle = `Private Events & Buyouts — ${restaurant.name}`;
+
+const spaces = [
+  {
+    name: 'The Courtyard',
+    capacity: 'Up to 60 seated · 90 cocktail',
+    feel: 'String lights overhead, succulents underfoot, the Echo Park hills going gold at sunset. Our most-requested space.',
+    use: 'Wedding receptions · Long-table dinners · Cocktail-style launches',
+    rate: 'From $4,500 food + beverage minimum',
+  },
+  {
+    name: 'The Olive Room',
+    capacity: 'Up to 28 seated · 40 cocktail',
+    feel: 'A semi-private interior space anchored by a 200-year-old olive tree we trucked in from Ojai. Warm terracotta walls, custom Moroccan tilework, a single long table.',
+    use: 'Birthday dinners · Rehearsal dinners · Corporate offsites',
+    rate: 'From $2,800 food + beverage minimum',
+  },
+  {
+    name: 'The Chef’s Counter',
+    capacity: '8 to 14 seated',
+    feel: 'Six bar seats and a fourteen-seat communal table directly across from the wood-fired grill. Loud, alive, the heart of the room. Chef talks you through every course.',
+    use: 'Intimate celebrations · Investor dinners · Friends with strong opinions about food',
+    rate: 'From $185 per guest, seven courses',
+  },
+  {
+    name: 'The Full Buyout',
+    capacity: 'Up to 140 across all spaces',
+    feel: 'The whole restaurant for a single evening. Courtyard, dining room, bar, kitchen. Live mariachi, custom menu, run of the patio gardens until midnight.',
+    use: 'Weddings · Product launches · Milestone birthdays',
+    rate: 'From $18,000 food + beverage minimum',
+  },
+];
+
+const menus = [
+  {
+    name: 'Family-Style Mezze',
+    price: '$85 / guest',
+    desc: 'Twelve mezze brought to the table in waves — labneh, smoked eggplant, charred peppers, lamb meatballs, sumac fries — followed by a single shared protein and a sweet finish. Built for talking. Easy to extend the conversation.',
+    pieces: [
+      'Six house-made dips with warm pita',
+      'Wood-fired vegetable spread',
+      'Lamb meatballs in pomegranate jus',
+      'Whole branzino, salsa verde',
+      'Honey-walnut baklava, rose ice cream',
+    ],
+  },
+  {
+    name: 'The Long-Table Dinner',
+    price: '$135 / guest',
+    desc: 'A four-course seated dinner with shared center-of-table proteins and an interactive crudo course passed by the kitchen team. Our most popular wedding menu.',
+    pieces: [
+      'Passed canapés: tuna crudo on cucumber, whipped feta on grilled bread',
+      'Composed first course (choice of three)',
+      'Family-style mains (lamb shoulder, branzino, vegetable tagine)',
+      'Plated dessert by our pastry chef',
+    ],
+  },
+  {
+    name: 'The Chef’s Tasting',
+    price: '$185 / guest',
+    desc: 'Seven courses, no menu, no choices. Chef Lily decides the morning of the event, based on the farm box that came in and her current obsessions. The Chef’s Counter signature.',
+    pieces: [
+      'Three small bites at the bar',
+      'Two seasonal vegetable courses',
+      'A pasta or grain course',
+      'A protein from the wood fire',
+      'A dessert built around one ingredient',
+    ],
+  },
+  {
+    name: 'Cocktail-Style Reception',
+    price: '$95 / guest',
+    desc: 'Eight passed bites circulated by our team for two hours, supplemented by two grazing stations and a dessert bar. Stand-up format — ideal for launches, mingling parties, and large groups.',
+    pieces: [
+      'Eight passed bites (rotating with the season)',
+      'Mediterranean mezze grazing station',
+      'Wood-fired flatbread station carved to order',
+      'Mini-dessert assortment and Turkish coffee',
+    ],
+  },
+];
+
+const timeline = [
+  { step: 'Day 1', title: 'Inquiry', body: 'You tell us the date, the headcount, the vibe, and the budget. We respond within 24 hours with availability and a starting proposal.' },
+  { step: 'Week 1', title: 'Walkthrough', body: 'You visit the space, taste a few signature dishes, and meet our events lead. We sketch out a custom menu and floor plan together.' },
+  { step: '60 days out', title: 'Deposit & contract', body: '25% deposit holds the date. Menu is locked, beverage program confirmed, vendor list shared (florist, music, photographer if needed).' },
+  { step: '14 days out', title: 'Final headcount', body: 'You give us a final guest count, dietary restrictions, and the run-of-show. Our kitchen begins sourcing for your specific event.' },
+  { step: '48 hours out', title: 'The walkthrough call', body: 'A 30-minute call with the chef, the events lead, and the floor manager. Every detail confirmed.' },
+  { step: 'The night', title: 'Run the room', body: 'Our team handles everything. You enjoy the party. We send you a stack of polaroids the next morning.' },
+];
+
+const inclusions = [
+  'Dedicated event captain on the floor',
+  'House table linens, glassware, flatware',
+  'Custom printed menus (one per guest)',
+  'Setup and breakdown by our team',
+  'Coat check during winter months',
+  'Off-menu access for chef discussion',
+];
+---
+
+<Layout restaurant={restaurant} theme="v4" fontUrl={fontUrl} title={pageTitle}>
+
+<style>
+  :root {
+    --v4-terra: #D64A1A;
+    --v4-terra-dark: #B23A10;
+    --v4-yellow: #F5C842;
+    --v4-teal: #0A6B6B;
+    --v4-white: #FFFFFF;
+    --v4-dark: #180A00;
+    --v4-black: #0D0500;
+    --v4-muted: #6B5A48;
+    --v4-border: rgba(24,10,0,0.12);
+  }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--v4-white); color: var(--v4-dark); }
+
+  /* NAV */
+  .v4-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--v4-terra); padding: 1rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .v4-nav-logo { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1.4rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--v4-white); text-decoration: none; }
+  .v4-nav-links { display: flex; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+  .v4-nav-links a { font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.78); text-decoration: none; transition: color 0.2s; }
+  .v4-nav-links a:hover { color: var(--v4-yellow); }
+  .v4-nav-active { color: var(--v4-yellow) !important; border-bottom: 2px solid var(--v4-yellow); padding-bottom: 3px; }
+  .v4-nav-reserve { font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--v4-white); text-decoration: none; border: 2px solid rgba(255,255,255,0.65); padding: 0.5rem 1.1rem; }
+  .v4-nav-reserve:hover { border-color: var(--v4-yellow); color: var(--v4-yellow); }
+
+  /* HERO */
+  .ev-hero { padding: 8rem 2.5rem 5rem; background: var(--v4-yellow); position: relative; overflow: hidden; }
+  .ev-hero::before { content: ''; position: absolute; right: -10%; top: -30%; width: 60rem; height: 60rem; background: radial-gradient(circle, var(--v4-terra) 0%, transparent 60%); opacity: 0.18; }
+  .ev-hero__inner { max-width: 64rem; margin: 0 auto; position: relative; z-index: 1; }
+  .ev-hero__eyebrow { font-family: 'Oswald', sans-serif; font-size: 0.9rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--v4-terra-dark); margin-bottom: 1.5rem; font-weight: 600; }
+  .ev-hero__h1 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.95; color: var(--v4-dark); margin: 0; text-transform: uppercase; letter-spacing: -0.01em; }
+  .ev-hero__h1 span { color: var(--v4-terra); }
+  .ev-hero__lede { font-family: 'Source Sans 3', sans-serif; font-size: 1.15rem; line-height: 1.7; color: var(--v4-dark); max-width: 38rem; margin: 2rem 0 0; font-weight: 400; }
+  .ev-hero__row { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .ev-hero__pill { font-family: 'Oswald', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.6rem 1.2rem; background: var(--v4-dark); color: var(--v4-yellow); font-weight: 500; }
+
+  /* SPACES */
+  .ev-spaces { padding: 6rem 2.5rem; background: var(--v4-white); }
+  .ev-spaces__inner { max-width: 72rem; margin: 0 auto; }
+  .ev-section-label { font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--v4-terra); margin-bottom: 0.5rem; font-weight: 600; }
+  .ev-section-h2 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: clamp(2.4rem, 5vw, 3.8rem); color: var(--v4-dark); margin: 0 0 3rem; text-transform: uppercase; line-height: 1; }
+  .spaces-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .space { padding: 2rem; background: var(--v4-white); border: 3px solid var(--v4-dark); position: relative; transition: transform 0.2s; }
+  .space:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--v4-terra); }
+  .space__num { position: absolute; top: -1.25rem; left: 1.5rem; background: var(--v4-terra); color: var(--v4-white); font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 0.9rem; }
+  .space__name { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1.75rem; color: var(--v4-dark); margin: 0.5rem 0 0.5rem; text-transform: uppercase; line-height: 1.1; }
+  .space__capacity { font-family: 'Source Sans 3', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--v4-teal); margin-bottom: 1rem; letter-spacing: 0.05em; }
+  .space__feel { font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; line-height: 1.65; color: var(--v4-dark); margin: 0 0 1.25rem; }
+  .space__use { font-family: 'Source Sans 3', sans-serif; font-size: 0.82rem; color: var(--v4-muted); margin: 0 0 1rem; font-style: italic; }
+  .space__rate { font-family: 'Oswald', sans-serif; font-size: 0.95rem; color: var(--v4-terra); font-weight: 600; letter-spacing: 0.05em; border-top: 2px dashed var(--v4-border); padding-top: 1rem; }
+
+  /* MENUS */
+  .ev-menus { padding: 6rem 2.5rem; background: var(--v4-dark); color: var(--v4-white); }
+  .ev-menus__inner { max-width: 64rem; margin: 0 auto; }
+  .ev-menus .ev-section-label { color: var(--v4-yellow); }
+  .ev-menus .ev-section-h2 { color: var(--v4-white); }
+  .menu-card { padding: 2.5rem; background: var(--v4-black); border-left: 6px solid var(--v4-terra); margin-bottom: 2rem; }
+  .menu-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .menu-card__name { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1.7rem; color: var(--v4-yellow); margin: 0; text-transform: uppercase; line-height: 1.1; }
+  .menu-card__price { font-family: 'Oswald', sans-serif; font-size: 1.4rem; color: var(--v4-terra); font-weight: 500; }
+  .menu-card__desc { font-family: 'Source Sans 3', sans-serif; font-size: 0.98rem; font-weight: 300; line-height: 1.75; color: rgba(255,255,255,0.78); margin: 0 0 1.5rem; }
+  .menu-card__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .menu-card__list li { font-family: 'Source Sans 3', sans-serif; font-size: 0.92rem; color: rgba(255,255,255,0.88); padding-left: 1.25rem; position: relative; }
+  .menu-card__list li::before { content: '✦'; position: absolute; left: 0; color: var(--v4-terra); }
+
+  /* TIMELINE */
+  .ev-timeline { padding: 6rem 2.5rem; background: var(--v4-teal); color: var(--v4-white); }
+  .ev-timeline__inner { max-width: 64rem; margin: 0 auto; }
+  .ev-timeline .ev-section-label { color: var(--v4-yellow); }
+  .ev-timeline .ev-section-h2 { color: var(--v4-white); }
+  .timeline-list { display: grid; gap: 0; counter-reset: tl; }
+  .timeline-step { padding: 1.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.18); display: grid; grid-template-columns: 8rem 1fr; gap: 2rem; align-items: baseline; }
+  .timeline-step:last-child { border-bottom: none; }
+  .timeline-step__when { font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--v4-yellow); font-weight: 500; }
+  .timeline-step__title { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1.4rem; color: var(--v4-white); text-transform: uppercase; margin: 0 0 0.4rem; line-height: 1.1; }
+  .timeline-step__body { font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.82); margin: 0; }
+
+  /* INCLUSIONS */
+  .ev-inclusions { padding: 5rem 2.5rem; background: var(--v4-yellow); }
+  .ev-inclusions__inner { max-width: 64rem; margin: 0 auto; }
+  .ev-inclusions h2 { font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--v4-dark); margin: 0 0 2rem; line-height: 1.1; }
+  .inclusions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem 2rem; }
+  .inclusions-grid li { font-family: 'Source Sans 3', sans-serif; font-size: 1rem; color: var(--v4-dark); padding-left: 2rem; position: relative; font-weight: 500; }
+  .inclusions-grid li::before { content: '✓'; position: absolute; left: 0; color: var(--v4-terra); font-weight: 700; font-size: 1.2rem; }
+
+  /* CTA */
+  .ev-cta { padding: 6rem 2.5rem; background: var(--v4-terra); color: var(--v4-white); text-align: center; }
+  .ev-cta__inner { max-width: 48rem; margin: 0 auto; }
+  .ev-cta h2 { font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase; font-size: clamp(2.4rem, 5vw, 4rem); margin: 0 0 1.5rem; line-height: 1; }
+  .ev-cta p { font-family: 'Source Sans 3', sans-serif; font-size: 1.1rem; line-height: 1.7; margin: 0 0 2.5rem; }
+  .ev-cta__btns { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn { font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 1.1rem 2.5rem; text-decoration: none; transition: background 0.2s, color 0.2s, transform 0.2s; }
+  .btn-primary { background: var(--v4-dark); color: var(--v4-yellow); }
+  .btn-primary:hover { background: var(--v4-black); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--v4-white); border: 2px solid var(--v4-white); }
+  .btn-ghost:hover { background: var(--v4-white); color: var(--v4-terra); }
+
+  /* FOOTER */
+  .v4-footer { padding: 3rem 2.5rem; background: var(--v4-black); color: var(--v4-white); text-align: center; }
+  .v4-footer__links { display: flex; gap: 1.75rem; flex-wrap: wrap; justify-content: center; list-style: none; margin: 0 0 1rem; padding: 0; }
+  .v4-footer__links a { font-family: 'Oswald', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-decoration: none; }
+  .v4-footer__links a:hover { color: var(--v4-yellow); }
+  .v4-footer__copy { font-family: 'Source Sans 3', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 768px) {
+    .v4-nav { padding: 0.85rem 1.25rem; }
+    .v4-nav-links { display: none; }
+    .ev-hero { padding: 6rem 1.25rem 3rem; }
+    .ev-spaces, .ev-menus, .ev-timeline, .ev-inclusions, .ev-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .spaces-grid, .inclusions-grid { grid-template-columns: 1fr; }
+    .timeline-step { grid-template-columns: 1fr; gap: 0.4rem; }
+  }
+</style>
+
+<!-- NAV -->
+<nav class="v4-nav" aria-label="Primary">
+  <a href="/v4-bold-color" class="v4-nav-logo">Casa Verde</a>
+  <ul class="v4-nav-links">
+    <li><a href="/v4-bold-color#v4-menu">Menu</a></li>
+    <li><a href="/v4-bold-color/events" class="v4-nav-active">Events</a></li>
+    <li><a href="/v4-bold-color#v4-about">About</a></li>
+    <li><a href="/v4-bold-color#v4-contact">Visit</a></li>
+  </ul>
+  <a href="/v4-bold-color#v4-reservations" class="v4-nav-reserve">Reservations →</a>
+</nav>
+
+<!-- HERO -->
+<section class="ev-hero" aria-label="Private events">
+  <div class="ev-hero__inner">
+    <p class="ev-hero__eyebrow">Private Events &amp; Buyouts</p>
+    <h1 class="ev-hero__h1">Throw the<br/>party<br/><span>they’ll remember.</span></h1>
+    <p class="ev-hero__lede">From a sixteen-person wedding rehearsal to a hundred-and-forty-person full buyout — Casa Verde’s courtyard, kitchen, and crew know exactly what to do.</p>
+    <div class="ev-hero__row">
+      <span class="ev-hero__pill">8 – 140 guests</span>
+      <span class="ev-hero__pill">Four distinct spaces</span>
+      <span class="ev-hero__pill">Bookings 12 mo. out</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPACES -->
+<section class="ev-spaces" aria-label="Our spaces">
+  <div class="ev-spaces__inner">
+    <p class="ev-section-label">Pick your room</p>
+    <h2 class="ev-section-h2">Four ways to take over the restaurant.</h2>
+    <div class="spaces-grid">
+      {spaces.map((s, i) => (
+        <article class="space">
+          <span class="space__num">No. {String(i + 1).padStart(2, '0')}</span>
+          <h3 class="space__name">{s.name}</h3>
+          <div class="space__capacity">{s.capacity}</div>
+          <p class="space__feel">{s.feel}</p>
+          <p class="space__use">{s.use}</p>
+          <div class="space__rate">{s.rate}</div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- MENUS -->
+<section class="ev-menus" aria-label="Event menus">
+  <div class="ev-menus__inner">
+    <p class="ev-section-label">Eat well, together</p>
+    <h2 class="ev-section-h2">Four event menus, infinite combinations.</h2>
+    {menus.map((m) => (
+      <article class="menu-card">
+        <div class="menu-card__head">
+          <h3 class="menu-card__name">{m.name}</h3>
+          <span class="menu-card__price">{m.price}</span>
+        </div>
+        <p class="menu-card__desc">{m.desc}</p>
+        <ul class="menu-card__list">
+          {m.pieces.map((p) => (<li>{p}</li>))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="ev-timeline" aria-label="How it works">
+  <div class="ev-timeline__inner">
+    <p class="ev-section-label">How it works</p>
+    <h2 class="ev-section-h2">From inquiry to last call.</h2>
+    <div class="timeline-list">
+      {timeline.map((t) => (
+        <article class="timeline-step">
+          <div class="timeline-step__when">{t.step}</div>
+          <div>
+            <h3 class="timeline-step__title">{t.title}</h3>
+            <p class="timeline-step__body">{t.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- INCLUSIONS -->
+<section class="ev-inclusions" aria-label="What's included">
+  <div class="ev-inclusions__inner">
+    <h2>What every event includes.</h2>
+    <ul class="inclusions-grid">
+      {inclusions.map((i) => (<li>{i}</li>))}
+    </ul>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="ev-cta" aria-label="Get in touch">
+  <div class="ev-cta__inner">
+    <h2>Let’s plan something loud.</h2>
+    <p>Tell us the date and the rough size — we’ll come back within a day with available spaces, custom menus, and a starting proposal.</p>
+    <div class="ev-cta__btns">
+      <a href={`mailto:${restaurant.email}?subject=Private%20Event%20Inquiry`} class="btn btn-primary">Email events team →</a>
+      <a href={`tel:${restaurant.phone}`} class="btn btn-ghost">Call {restaurant.phone}</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="v4-footer" role="contentinfo">
+  <ul class="v4-footer__links">
+    <li><a href="/v4-bold-color#v4-menu">Menu</a></li>
+    <li><a href="/v4-bold-color/events">Events</a></li>
+    <li><a href="/v4-bold-color#v4-about">About</a></li>
+    <li><a href="/v4-bold-color#v4-reservations">Reservations</a></li>
+  </ul>
+  <p class="v4-footer__copy">© {new Date().getFullYear()} Casa Verde · Echo Park, Los Angeles</p>
+</footer>
+
+</Layout>
